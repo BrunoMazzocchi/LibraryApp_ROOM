@@ -4,9 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/layout/activity_main.xml" value="0.12409420289855072" />
-        <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/layout/fragment_libro.xml" value="0.12409420289855072" />
+        <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/layout/fragment_libro.xml" value="0.18" />
         <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/layout/fragment_prestamo.xml" value="0.12409420289855072" />
+        <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/layout/lista_libro.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/menu/bottom_nav_menu.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/menu/menu_activity_main.xml" value="0.18489583333333334" />
       </map>
     </option>
   </component>

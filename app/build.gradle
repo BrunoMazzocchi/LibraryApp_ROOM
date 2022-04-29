@@ -48,7 +48,10 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
     //Persistencia
-
+    // universal image loader
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    // circular image view library
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
 //https://developer.android.com/jetpack/androidx/releases/room
     def room_version = "2.4.2"
     implementation "androidx.room:room-runtime:$room_version"

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ClFila"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        >
+
+        <ImageView
+            android:id="@+id/IvCover"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/Halo"
+
+            />
+
+        <TextView
+            android:id="@+id/TvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@id/IvCover"
+            android:layout_toRightOf="@+id/IvCover"
+            android:text="Nombre del libro"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/TvAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Autor"
+            android:textStyle="bold"
+            android:layout_below="@+id/TvName"
+            android:layout_toEndOf="@id/IvCover"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            />
+        <TextView
+            android:id="@+id/TvGenre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Genero"
+            android:textStyle="bold"
+            android:layout_below="@+id/TvAuthor"
+            android:layout_toEndOf="@id/IvCover"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            />
+        <TextView
+            android:id="@+id/TvPageCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Paginas"
+            android:textStyle="bold"
+            android:layout_below="@+id/TvGenre"
+            android:layout_toEndOf="@id/IvCover"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            />
+        <TextView
+            android:id="@+id/TvId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID:"
+            android:textStyle="bold"
+            android:layout_below="@+id/TvGenre"
+            android:layout_toEndOf="@id/IvCover"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

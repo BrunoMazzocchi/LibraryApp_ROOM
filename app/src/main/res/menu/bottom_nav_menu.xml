@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/book"
+        android:icon="@drawable/ic_book_24"
+        android:title="Libros"/>
+    <item
+        android:id="@+id/borrow"
+        android:icon="@drawable/ic_borrowbook_color_24"
+        android:title="Prestamos"/>
+</menu>

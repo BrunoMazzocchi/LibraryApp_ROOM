@@ -6,12 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.libraryapproom.LibrosProvider
-import com.example.libraryapproom.R
-import com.example.libraryapproom.databinding.FragmentLibroBinding
 import com.example.libraryapproom.databinding.FragmentPrestamoBinding
-import com.example.libraryapproom.fragments.lista.adapter.LibrosAdapter
-import kotlinx.android.synthetic.main.fragment_prestamo.*
+import com.example.libraryapproom.fragments.adapter.LibrosAdapter
 
 class FragmentPrestamo : Fragment() {
     lateinit var binding: FragmentPrestamoBinding
@@ -28,14 +24,9 @@ class FragmentPrestamo : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecyclerView()
-    }
-    fun initRecyclerView(){
-
-        binding.RcvPrestamos.layoutManager = LinearLayoutManager(this.context)
-        binding.RcvPrestamos.adapter = LibrosAdapter(LibrosProvider.BookList)
 
     }
+
 
 
 }

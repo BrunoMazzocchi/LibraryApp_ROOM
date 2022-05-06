@@ -17,7 +17,21 @@
         tools:layout="@layout/fragment_prestamo" />
     <fragment
         android:id="@+id/fragmentAddlibro"
-        android:name="com.example.libraryapproom.fragments.lista.add.FragmentAddlibro"
+        android:name="com.example.libraryapproom.fragments.agregar.FragmentAddlibro"
         android:label="fragment_addlibro"
-        tools:layout="@layout/fragment_addlibro" /><action android:id="@+id/action_global_fragmentAddlibro" app:destination="@id/fragmentAddlibro"/>
+        tools:layout="@layout/fragment_addlibro" />
+    <action android:id="@+id/action_global_fragmentAddlibro" app:destination="@id/fragmentAddlibro"/>
+    <action android:id="@+id/ir_a_actualizarlibro" app:destination="@id/actualizarLibro"/>
+    <action android:id="@+id/ir_a_listalibro" app:destination="@id/fragmentLibro"/>
+
+
+    <fragment
+        android:id="@+id/actualizarLibro"
+        android:name="com.example.libraryapproom.fragments.actualizar.ActualizarLibro"
+        android:label="fragment_actualizar_libro"
+        tools:layout="@layout/fragment_actualizar_libro" >
+        <argument android:name="currentLibro"
+            app:argType="com.example.libraryapproom.bd.entidades.LibrosModels" />
+        />
+    </fragment>
 </navigation>

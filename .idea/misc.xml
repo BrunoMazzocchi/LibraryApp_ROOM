@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/LibraryApp_ROOM/app/src/main/res/layout/activity_main.xml" value="0.25317028985507245" />
+        <entry key="..\:/LibraryApp_ROOM/app/src/main/res/layout/fragment_actualizar_libro.xml" value="0.14356884057971014" />
+        <entry key="..\:/LibraryApp_ROOM/app/src/main/res/layout/fragment_addlibro.xml" value="0.25317028985507245" />
+        <entry key="..\:/LibraryApp_ROOM/app/src/main/res/layout/fragment_libro.xml" value="0.25317028985507245" />
+        <entry key="..\:/LibraryApp_ROOM/app/src/main/res/menu/delete_menu.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/layout/activity_main.xml" value="0.12409420289855072" />
         <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/layout/fragment_libro.xml" value="0.18" />
         <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/layout/fragment_prestamo.xml" value="0.12409420289855072" />

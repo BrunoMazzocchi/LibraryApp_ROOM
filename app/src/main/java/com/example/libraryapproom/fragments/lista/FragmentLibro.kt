@@ -32,8 +32,8 @@ class FragmentLibro : Fragment() {
         viewModel =
             ViewModelProvider(this).get(LibrosViewModel::class.java)
         viewModel.lista.observe(viewLifecycleOwner, Observer
-        {clasificacion->
-            adapter.setData(clasificacion)
+        {libro->
+            adapter.setData(libro)
         })
         //Agregar el menu
         setHasOptionsMenu(true)

@@ -18,5 +18,5 @@ data class LibrosModels(
     @ColumnInfo(name = "genero")
     val genero:String,
     @ColumnInfo(name = "Paginas")
-    val Paginas:Int,
+    val Paginas:String,
 ): Parcelable

@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.libraryapproom.R
 import com.example.libraryapproom.bd.viewmodel.PrestamoViewModel
 import com.example.libraryapproom.databinding.FragmentPrestamoBinding
-import com.example.libraryapproom.fragments.adapter.LibrosAdapter
 import com.example.libraryapproom.fragments.adapter.PrestamosAdapter
 
 class FragmentPrestamo : Fragment() {

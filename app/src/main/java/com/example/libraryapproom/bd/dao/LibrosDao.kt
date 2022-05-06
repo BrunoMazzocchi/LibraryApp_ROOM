@@ -3,10 +3,11 @@ package com.example.libraryapproom.bd.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.libraryapproom.bd.entidades.LibrosModels
+
 @Dao
 interface LibrosDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(vararg libros: LibrosModels):List<Long>
+    suspend fun insert(vararg libros: LibrosModels)
 
     @Query("SELECT * FROM LibrosModels")
     suspend fun getAll(): List<LibrosModels>

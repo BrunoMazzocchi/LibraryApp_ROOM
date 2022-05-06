@@ -43,13 +43,13 @@ class ActualizarLibro: Fragment()  {
         val nombre = fBinding.txtNombre.text.toString()
         val Autor = fBinding.txtAutor.text.toString()
         val Genero = fBinding.txtGenero.text.toString()
-        val Paginas = fBinding.txtPaginas.text.toString().toInt()
+        val Paginas = fBinding.txtPaginas.text.toString()
         //Crear el objeto
-        val clasificacion =
+        val libro =
             LibrosModels(args.currentLibro.ID,
                 nombre, Autor, Genero, Paginas )
         //Actualizar
-        viewModel.actualizarLibro(clasificacion)
+        viewModel.actualizarLibro(libro)
         Toast.makeText(requireContext(), "Registro actualizado",
             Toast.LENGTH_LONG).show()
         findNavController().navigate(R.id.ir_a_listalibro)

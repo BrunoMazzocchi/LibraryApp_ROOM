@@ -37,7 +37,7 @@ class FragmentAddlibro: Fragment() {
         val nombre = fBinding.txtNombre.text.toString()
         val autor = fBinding.txtAutor.text.toString()
         val genero = fBinding.txtGenero.text.toString()
-        val paginas = fBinding.txtPaginas.text.toString().toInt()
+        val paginas = fBinding.txtPaginas.text.toString()
         //Crear objeto
         val libro = LibrosModels(0, nombre, autor, genero, paginas)
         //Agregar nuevo usuario

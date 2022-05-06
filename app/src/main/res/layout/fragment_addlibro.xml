@@ -59,7 +59,8 @@
         android:hint="Numero de Paginas"
         android:textAlignment="center"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+        android:inputType="number"/>
 
     <EditText
         android:id="@+id/txtAutor"

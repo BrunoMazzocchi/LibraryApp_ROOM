@@ -5,21 +5,25 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.libraryapproom.bd.entidades.LibrosModels
+import com.example.libraryapproom.bd.entidades.PrestamosEntity
 
 interface MainDataBaseProvider {
     fun librosDao(): LibrosDao
-
+    fun prestamosDao(): PrestamosDao
 }
+
 @Database(
-    entities = [LibrosModels::class],
-    version = 1
+    entities = [LibrosModels::class, PrestamosEntity::class],
+    version = 2
 )
 abstract class MainBaseDatos : RoomDatabase(),
     MainDataBaseProvider {
     abstract override fun librosDao(): LibrosDao
+    abstract override fun prestamosDao(): PrestamosDao
     companion object {
         @Volatile
         private var INSTANCE: MainBaseDatos? = null
+
         fun getDataBase(context: Context): MainBaseDatos {
             synchronized(this) {
                 var instance = INSTANCE

@@ -10,7 +10,7 @@ import java.util.*
 
 @Parcelize
 @Entity (tableName = "TblPrestamos")
-data class PrestamosEntity (
+data class PrestamosEntity(
 
     @PrimaryKey(autoGenerate = true)
     val id: Int,
@@ -22,8 +22,8 @@ data class PrestamosEntity (
     val book_id: String,
 
     @ColumnInfo(name = "fechaRetiro")
-    val taken_date: Date,
+    val taken_date: String,
 
     @ColumnInfo(name = "fechaEntrega")
-    val brought_date: Date
+    val brought_date: String
     ):Parcelable

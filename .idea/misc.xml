@@ -3,17 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/LibraryApp_ROOM/app/src/main/res/layout/activity_main.xml" value="0.25317028985507245" />
-        <entry key="..\:/LibraryApp_ROOM/app/src/main/res/layout/fragment_actualizar_libro.xml" value="0.14356884057971014" />
-        <entry key="..\:/LibraryApp_ROOM/app/src/main/res/layout/fragment_addlibro.xml" value="0.25317028985507245" />
-        <entry key="..\:/LibraryApp_ROOM/app/src/main/res/layout/fragment_libro.xml" value="0.25317028985507245" />
-        <entry key="..\:/LibraryApp_ROOM/app/src/main/res/menu/delete_menu.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/layout/activity_main.xml" value="0.12409420289855072" />
         <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/layout/fragment_libro.xml" value="0.18" />
         <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/layout/fragment_prestamo.xml" value="0.12409420289855072" />
         <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/layout/lista_libro.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/menu/bottom_nav_menu.xml" value="0.18489583333333334" />
         <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/menu/menu_activity_main.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/Gary/Desktop/LibraryApp_ROOM/app/src/main/res/layout/activity_main.xml" value="0.15092592592592594" />
+        <entry key="..\:/Users/Gary/Desktop/LibraryApp_ROOM/app/src/main/res/layout/fragment_actualizar_libro.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/Gary/Desktop/LibraryApp_ROOM/app/src/main/res/layout/fragment_actualizar_prestamo.xml" value="0.33" />
+        <entry key="..\:/Users/Gary/Desktop/LibraryApp_ROOM/app/src/main/res/layout/fragment_add_prestamo.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/Gary/Desktop/LibraryApp_ROOM/app/src/main/res/layout/fragment_addlibro.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/Gary/Desktop/LibraryApp_ROOM/app/src/main/res/layout/fragment_libro.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/Gary/Desktop/LibraryApp_ROOM/app/src/main/res/layout/fragment_prestamo.xml" value="0.2667572463768116" />
+        <entry key="..\:/Users/Gary/Desktop/LibraryApp_ROOM/app/src/main/res/layout/lista_libro.xml" value="0.2667572463768116" />
+        <entry key="..\:/Users/Gary/Desktop/LibraryApp_ROOM/app/src/main/res/layout/lista_prestamo.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/Gary/Desktop/LibraryApp_ROOM/app/src/main/res/menu/bottom_nav_menu.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/Gary/Desktop/LibraryApp_ROOM/app/src/main/res/menu/delete_menu.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/campo/Desktop/LibraryApp_ROOM/app/src/main/res/layout/activity_main.xml" value="0.26510416666666664" />
         <entry key="..\:/Users/campo/Desktop/LibraryApp_ROOM/app/src/main/res/layout/fragment_addlibro.xml" value="0.358695652173913" />
         <entry key="..\:/Users/campo/Desktop/LibraryApp_ROOM/app/src/main/res/layout/fragment_libro.xml" value="0.25" />

@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".fragments.actualizar.ActualizarLibro">
+    tools:context=".fragments.actualizar.ActualizarLibro"
+    android:background="@color/white"
+    android:backgroundTint="#E3DAC9">
 
     <ImageView
         android:layout_width="200dp"

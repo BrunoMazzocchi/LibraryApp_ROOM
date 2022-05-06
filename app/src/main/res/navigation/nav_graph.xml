@@ -34,4 +34,22 @@
             app:argType="com.example.libraryapproom.bd.entidades.LibrosModels" />
         />
     </fragment>
+    <fragment
+        android:id="@+id/addPrestamoFragment"
+        android:name="com.example.libraryapproom.fragments.agregar.AddPrestamoFragment"
+        android:label="fragment_add_prestamo"
+        tools:layout="@layout/fragment_add_prestamo" />
+    <fragment
+        android:id="@+id/actualizarPrestamoFragment"
+        android:name="com.example.libraryapproom.fragments.actualizar.ActualizarPrestamoFragment"
+        android:label="fragment_actualizar_prestamo"
+        tools:layout="@layout/fragment_actualizar_prestamo" >
+        <argument
+            android:name="currentPrestamo"
+            app:argType="com.example.libraryapproom.bd.entidades.PrestamosEntity" />
+    </fragment>
+
+    <action android:id="@+id/agregarPrestamo" app:destination="@+id/addPrestamoFragment"/>
+    <action android:id="@+id/editarPrestamo" app:destination="@+id/actualizarPrestamoFragment"/>
+    <action android:id="@+id/listaPrestamo" app:destination="@+id/fragmentPrestamo"/>
 </navigation>

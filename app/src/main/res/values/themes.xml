@@ -3,7 +3,7 @@
     <style name="Theme.LibraryAppRoom" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#5870d4</item>
-        <item name="colorPrimaryVariant">#2a3380</item>
+        <item name="colorPrimaryVariant">#5870d4</item>
         <item name="colorOnPrimary">#E3DAC9</item>
 
         <!-- Secondary brand color. -->

@@ -16,4 +16,8 @@
 
 
     </style>
+
+
+    <style name="ThemeSplash" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    </style>
 </resources>

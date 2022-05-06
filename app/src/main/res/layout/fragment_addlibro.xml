@@ -22,53 +22,54 @@
         android:id="@+id/txtNombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="192dp"
         android:drawableLeft="@drawable/ic_book_24"
         android:hint="Nombre"
         android:textAlignment="center"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="10dp" />
-
-    <EditText
-        android:id="@+id/txtAutor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="320dp"
-        android:drawableLeft="@drawable/ic_baseline_person_24"
-        android:hint="Autor"
-        android:textAlignment="center"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="10dp" />
-
-    <EditText
-        android:id="@+id/txtGenero"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="390dp"
-        android:drawableLeft="@drawable/ic_baseline_collections_bookmark_24"
-        android:hint="Genero"
-        android:textAlignment="center"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="10dp" />
-
-    <EditText
-        android:id="@+id/txtPaginas"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="460dp"
-        android:drawableLeft="@drawable/ic_baseline_pages_24"
-        android:hint="Numero de Paginas"
-        android:textAlignment="center"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="10dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnGuardar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="540dp"
+        android:layout_marginTop="484dp"
         android:text="Agregar"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="30dp" />
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/txtGenero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="332dp"
+        android:drawableLeft="@drawable/ic_baseline_collections_bookmark_24"
+        android:hint="Genero"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/txtPaginas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="404dp"
+        android:drawableLeft="@drawable/ic_baseline_pages_24"
+        android:hint="Numero de Paginas"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/txtAutor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="264dp"
+        android:drawableLeft="@drawable/ic_baseline_person_24"
+        android:hint="Autor"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

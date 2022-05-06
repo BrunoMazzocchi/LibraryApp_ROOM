@@ -9,60 +9,62 @@
     android:backgroundTint="#E3DAC9">
 
     <EditText
-        android:id="@+id/TxtEstudiante"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:inputType="text"
-        android:drawableStart="@drawable/ic_baseline_person_24"
-        android:hint=" Nombre del Estudiante"
-        android:textAlignment="center"
-        app:layout_constraintBaseline_toTopOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="10dp" />
-
-    <EditText
         android:id="@+id/TxtLibro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="320dp"
-        android:inputType="text"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="280dp"
         android:drawableStart="@drawable/ic_book_24"
         android:hint="Nombre del libro"
+        android:inputType="text"
         android:textAlignment="center"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="10dp" />
-
-    <EditText
-        android:id="@+id/TxtFechaRetiro"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="390dp"
-        android:inputType="date"
-        android:drawableStart="@drawable/ic_date_24"
-        android:hint="Fecha de Retiro"
-        android:textAlignment="center"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="10dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/TxtFechaEntrega"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="460dp"
-        android:inputType="date"
+        android:layout_marginTop="420dp"
         android:drawableStart="@drawable/ic_date_24"
         android:hint="Fecha de Entrega"
+        android:inputType="date"
         android:textAlignment="center"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="10dp" />
+        tools:layout_editor_absoluteX="16dp" />
 
     <Button
         android:id="@+id/btnGuardarP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="536dp"
+        android:layout_marginTop="496dp"
         android:text="Agregar"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <EditText
+        android:id="@+id/TxtEstudiante"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="212dp"
+        android:drawableStart="@drawable/ic_baseline_person_24"
+        android:hint=" Nombre del Estudiante"
+        android:inputType="text"
+        android:textAlignment="center"
+        app:layout_constraintBaseline_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <EditText
+        android:id="@+id/TxtFechaRetiro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="352dp"
+        android:drawableStart="@drawable/ic_date_24"
+        android:hint="Fecha de Retiro"
+        android:inputType="date"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

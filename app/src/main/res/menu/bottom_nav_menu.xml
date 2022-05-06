@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+    <item
+        android:id="@+id/homeScreen_Fragment"
+        android:icon="@drawable/ic_home"
+        android:title="Home"/>
+
     <item
         android:id="@+id/fragmentLibro"
         android:icon="@drawable/ic_book_24"
@@ -9,4 +15,5 @@
         android:id="@+id/fragmentPrestamo"
         android:icon="@drawable/ic_borrowbook_color_24"
         android:title="Prestamos"/>
+
 </menu>

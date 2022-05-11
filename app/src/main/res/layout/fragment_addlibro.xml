@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.agregar.FragmentAddlibro"
-    android:background="@color/white"
-    android:backgroundTint="#E3DAC9">
+    android:background="?attr/backgroundColor">
 
     <ImageView
         android:id="@+id/image"

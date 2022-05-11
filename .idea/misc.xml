@@ -12,13 +12,17 @@
         <entry key="..\:/Users/campo/Desktop/LibraryApp_ROOM/app/src/main/res/drawable/ic_baseline_cloud_queue_24.xml" value="0.3115" />
         <entry key="..\:/Users/campo/Desktop/LibraryApp_ROOM/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.3115" />
         <entry key="..\:/Users/campo/Desktop/LibraryApp_ROOM/app/src/main/res/layout/activity_main.xml" value="0.26510416666666664" />
+        <entry key="..\:/Users/campo/Desktop/LibraryApp_ROOM/app/src/main/res/layout/activity_splash_screen.xml" value="0.1762917933130699" />
+        <entry key="..\:/Users/campo/Desktop/LibraryApp_ROOM/app/src/main/res/layout/fragment_actualizar_libro.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/campo/Desktop/LibraryApp_ROOM/app/src/main/res/layout/fragment_actualizar_prestamo.xml" value="0.14722222222222223" />
         <entry key="..\:/Users/campo/Desktop/LibraryApp_ROOM/app/src/main/res/layout/fragment_add_prestamo.xml" value="0.3625" />
         <entry key="..\:/Users/campo/Desktop/LibraryApp_ROOM/app/src/main/res/layout/fragment_addlibro.xml" value="0.358695652173913" />
         <entry key="..\:/Users/campo/Desktop/LibraryApp_ROOM/app/src/main/res/layout/fragment_home_screen_.xml" value="0.25" />
-        <entry key="..\:/Users/campo/Desktop/LibraryApp_ROOM/app/src/main/res/layout/fragment_libro.xml" value="0.25" />
+        <entry key="..\:/Users/campo/Desktop/LibraryApp_ROOM/app/src/main/res/layout/fragment_libro.xml" value="0.33" />
         <entry key="..\:/Users/campo/Desktop/LibraryApp_ROOM/app/src/main/res/layout/fragment_lista_libros.xml" value="0.26510416666666664" />
         <entry key="..\:/Users/campo/Desktop/LibraryApp_ROOM/app/src/main/res/layout/fragment_prestamo.xml" value="0.26510416666666664" />
         <entry key="..\:/Users/campo/Desktop/LibraryApp_ROOM/app/src/main/res/layout/lista_libro.xml" value="0.25" />
+        <entry key="..\:/Users/campo/Desktop/LibraryApp_ROOM/app/src/main/res/layout/lista_prestamo.xml" value="0.33" />
         <entry key="..\:/Users/campo/Desktop/LibraryApp_ROOM/app/src/main/res/menu/bottom_nav_menu.xml" value="0.33" />
       </map>
     </option>

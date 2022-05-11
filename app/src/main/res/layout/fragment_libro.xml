@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".fragments.lista.FragmentLibro"
-    android:background="@color/white"
-    android:backgroundTint="#E3DAC9">
+    android:background="?attr/backgroundColor"
+    >
     <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RcvLibro"

@@ -29,7 +29,6 @@
         android:layout_height="wrap_content"
         android:text="Estudiante"
         android:textStyle="bold"
-        android:textColor="@color/black"
         android:layout_below="@+id/TvNombreLibro"
         android:layout_marginStart="10dp"
         />
@@ -39,7 +38,6 @@
         android:layout_height="wrap_content"
         android:text="Fecha R"
         android:textStyle="bold"
-        android:textColor="@color/black"
         android:layout_below="@+id/TvEstudiante"
         android:layout_marginStart="10dp"
         />
@@ -49,7 +47,6 @@
         android:layout_height="wrap_content"
         android:text="Fecha E"
         android:textStyle="bold"
-        android:textColor="@color/black"
         android:layout_below="@+id/TvFechaRetiro"
         android:layout_marginStart="10dp"
         />
@@ -59,7 +56,6 @@
         android:layout_height="wrap_content"
         android:text="ID"
         android:textStyle="bold"
-        android:textColor="@color/black"
         android:layout_below="@+id/TvFechaEntrega"
         android:layout_marginStart="10dp"
         />

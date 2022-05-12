@@ -8,24 +8,28 @@
     android:background="?attr/backgroundColor">
 
     <EditText
-        android:id="@+id/TxtEstudiante"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:drawableStart="@drawable/ic_baseline_person_24"
-        android:hint=" Nombre del Estudiante"
-        android:textAlignment="center"
-        app:layout_constraintBaseline_toTopOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="10dp" />
+    android:id="@+id/TxtEstudiante"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="190dp"
+    android:drawableStart="@drawable/ic_baseline_person_24"
+    android:hint=" Nombre del Estudiante"
+    android:textAlignment="center"
+    android:layout_marginStart="50dp"
+    android:layout_marginEnd="50dp"
+    app:layout_constraintBaseline_toTopOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:layout_editor_absoluteX="10dp" />
 
     <EditText
         android:id="@+id/TxtLibro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="320dp"
+        android:layout_marginTop="240dp"
         android:drawableStart="@drawable/ic_book_24"
         android:hint="Nombre del libro"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
         android:textAlignment="center"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="10dp" />
@@ -34,9 +38,11 @@
         android:id="@+id/TxtFechaRetiro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="390dp"
+        android:layout_marginTop="290dp"
         android:drawableStart="@drawable/ic_date_24"
         android:hint="Fecha de Retiro"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
         android:textAlignment="center"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="10dp" />
@@ -45,9 +51,11 @@
         android:id="@+id/TxtFechaEntrega"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="460dp"
+        android:layout_marginTop="340dp"
         android:drawableStart="@drawable/ic_date_24"
         android:hint="Fecha de Entrega"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
         android:textAlignment="center"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="10dp" />
@@ -56,7 +64,9 @@
         android:id="@+id/BtnEditarP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="536dp"
+        android:layout_marginTop="450dp"
+        android:layout_marginStart="90dp"
+        android:layout_marginEnd="90dp"
         android:text="Editar"
         app:layout_constraintTop_toTopOf="parent" />
 

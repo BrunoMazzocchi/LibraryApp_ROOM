@@ -32,13 +32,13 @@
         tools:layout_editor_absoluteX="10dp"
         android:inputType="number"/>
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/txtAutor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="240dp"
         android:drawableLeft="@drawable/ic_baseline_person_24"
-        android:hint="Autor"
+        android:hint="Autores"
         android:textAlignment="center"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"

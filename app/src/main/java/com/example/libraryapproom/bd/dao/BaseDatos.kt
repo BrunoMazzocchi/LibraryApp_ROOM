@@ -10,16 +10,18 @@ import com.example.libraryapproom.bd.entidades.PrestamosEntity
 interface MainDataBaseProvider {
     fun librosDao(): LibrosDao
     fun prestamosDao(): PrestamosDao
+    fun autoresDao(): AutoresDao
 }
 
 @Database(
     entities = [LibrosModels::class, PrestamosEntity::class],
-    version = 3
+    version = 4
 )
 abstract class MainBaseDatos : RoomDatabase(),
     MainDataBaseProvider {
     abstract override fun librosDao(): LibrosDao
     abstract override fun prestamosDao(): PrestamosDao
+    abstract override fun autoresDao(): AutoresDao
     companion object {
         @Volatile
         private var INSTANCE: MainBaseDatos? = null

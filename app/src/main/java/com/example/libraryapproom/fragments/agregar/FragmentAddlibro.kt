@@ -1,8 +1,6 @@
 package com.example.libraryapproom.fragments.agregar
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +13,6 @@ import com.example.libraryapproom.R
 import com.example.libraryapproom.bd.entidades.LibrosModels
 import com.example.libraryapproom.bd.viewmodel.LibrosViewModel
 import com.example.libraryapproom.databinding.FragmentAddlibroBinding
-import kotlinx.android.synthetic.main.fragment_addlibro.*
 
 class FragmentAddlibro: Fragment() {
     lateinit var fBinding: FragmentAddlibroBinding
@@ -30,12 +27,13 @@ class FragmentAddlibro: Fragment() {
         fBinding.btnGuardar.setOnClickListener {
             guardarRegistro()
         }
+
         return fBinding.root
     }
     private fun guardarRegistro() {
         //val baseDatos = MainBaseDatos.getDataBase(this)
         val nombre = fBinding.txtNombre.text.toString()
-        val autor = fBinding.txtAutor.text.toString()
+        val autor = fBinding.txtAutor.selectedItem.toString()
         val genero = fBinding.txtGenero.text.toString()
         val paginas = fBinding.txtPaginas.text.toString()
         //Crear objeto
@@ -47,5 +45,5 @@ class FragmentAddlibro: Fragment() {
         findNavController().navigate(R.id.ir_a_listalibro)
     }
 
-
 }
+

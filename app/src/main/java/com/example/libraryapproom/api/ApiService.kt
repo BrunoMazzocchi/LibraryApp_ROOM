@@ -2,6 +2,7 @@ package com.example.libraryapproom.api
 
 import com.example.libraryapproom.api.dataClass.Author
 import com.example.libraryapproom.api.dataClass.Books
+import com.example.libraryapproom.api.dataClass.Borrow
 import com.example.libraryapproom.api.dataClass.Type
 import retrofit2.Response
 
@@ -18,4 +19,6 @@ interface ApiService {
 
     @GET
     suspend fun getType (@Url url: String): Response<Type>
+    @GET
+    suspend fun getBorrow(@Url url: String): Response<Borrow>
 }

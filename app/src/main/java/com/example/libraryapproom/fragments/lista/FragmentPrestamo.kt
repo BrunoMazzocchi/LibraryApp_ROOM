@@ -10,9 +10,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.libraryapproom.R
+import com.example.libraryapproom.api.ApiService
 import com.example.libraryapproom.bd.viewmodel.PrestamoViewModel
 import com.example.libraryapproom.databinding.FragmentPrestamoBinding
 import com.example.libraryapproom.fragments.adapter.PrestamosAdapter
+import com.squareup.picasso.Picasso
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class FragmentPrestamo : Fragment() {
     lateinit var vBinding: FragmentPrestamoBinding
@@ -64,6 +73,35 @@ class FragmentPrestamo : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    fun getRetrofit():Retrofit{
+        return Retrofit
+            .Builder()
+            .baseUrl("http://localhost:9091/")
+            .client(OkHttpClient())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    //fun mostrarborrows(){
+    //CoroutineScope(Dispatchers.Main).launch {
+    // try {
+    //  val call = getRetrofit().create(ApiService::class.java).getBorrow("borrows/all")
+    //   if (call.isSuccessful){
+    //        val serviceTag:String = call.body()?.data?.serviceTag.toString()
+    //       val emblem: String = call.body()?.data?.emblemUrl.toString()
+    //    val backdrop: String = call.body()?.data?.backdropImageUrl.toString()
+    //    val gamer: String = call.body()?.additional?.parameters?.gamertag.toString()
+    //      binding.txtService.text = "Service tag: $serviceTag"
+    //      binding.txGamertag.text = "$gamer"
+    //       Picasso.get().load(emblem).into(binding.imgEmblem)
+    //      Picasso.get().load(backdrop).into(binding.ivBackDrop)
+    //   }
+    // }catch (ex: Exception){
+
+    // }
+    //}
+    //}
 
     private fun eliminarTodo() {
         val alerta = AlertDialog.Builder(requireContext())

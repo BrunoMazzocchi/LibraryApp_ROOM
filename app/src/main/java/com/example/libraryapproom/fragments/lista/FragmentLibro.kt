@@ -11,12 +11,10 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.libraryapproom.R
 import com.example.libraryapproom.api.ApiService
-import com.example.libraryapproom.api.dataClass.Books
 import com.example.libraryapproom.bd.entidades.LibrosModels
 import com.example.libraryapproom.bd.viewmodel.LibrosViewModel
 import com.example.libraryapproom.databinding.FragmentLibroBinding
 import com.example.libraryapproom.fragments.adapter.LibrosAdapter
-import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,7 +31,6 @@ class FragmentLibro : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        guardarLibros()
         // Inflate the layout for this fragment
         fBinding = FragmentLibroBinding.inflate(layoutInflater)
         val adapter = LibrosAdapter()
@@ -49,6 +46,8 @@ class FragmentLibro : Fragment() {
         })
         //Agregar el menu
         setHasOptionsMenu(true)
+        searchByID()
+
         return fBinding.root
     }
     override fun onViewCreated(view: View, savedInstanceState:
@@ -58,39 +57,81 @@ class FragmentLibro : Fragment() {
 
     }
 
+
     private fun getRetrofit(): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl("http://localhost:9091/books/")
+            .baseUrl("http://192.168.56.1:9091/books/")
             .client(OkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
-    private fun guardarLibros(){
+    private fun searchByID() {
 
-        CoroutineScope(Dispatchers.Main).launch {
-            try{
 
-                val call=getRetrofit().create(ApiService::class.java).getBooks("1")
 
-                if(call.isSuccessful){
-                    val nombre = call.body()?.name.toString()
-                    val autor = call.body()?.author.toString()
-                    val genero = call.body()?.typeId.toString()
-                    val paginas = call.body()?.pageCount.toString()
-                    val libro = LibrosModels(0, nombre, autor, genero, paginas)
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val call = getRetrofit().create(ApiService::class.java).getBook("all")
+
+            val books = call.body()
+
+
+            try {
+                if(call.isSuccessful) {
+                    val nombreLibro = books?.name.toString()
+                    val Autor = books?.author?.name.toString() + books?.author?.surname.toString()
+                    val genero = books?.typeId.toString()
+                    val paginas = books?.pageCount.toString()
+
+
+                    val libro = LibrosModels(0, nombreLibro, Autor, genero, paginas)
                     viewModel.agregarLibro(libro)
-                }else{
-                    Toast.makeText(activity,"No se ha encontrado un registro",Toast.LENGTH_SHORT).show()
+
+
+                }else {
+
                 }
-            }catch (ex:Exception){
-                val msg = Toast.makeText(activity,"Error de conexion",Toast.LENGTH_LONG)
+
+
+            } catch (ex: Exception ){
+                val msg = Toast.makeText(activity,"Error de conexion + $ex",Toast.LENGTH_LONG)
                 msg.setGravity(Gravity.CENTER, 0,0)
                 msg.show()
             }
+
+
         }
+
+
     }
+
+
+    //    private fun guardarLibros(){
+//
+//        CoroutineScope(Dispatchers.Main).launch {
+//            try{
+//
+//                val call=getRetrofit().create(ApiService::class.java).getBook("1")
+//
+//                if(call.isSuccessful){
+//                    val nombre = call.body()?.name.toString()
+//                    val autor = call.body()?.author.toString()
+//                    val genero = call.body()?.typeId.toString()
+//                    val paginas = call.body()?.pageCount.toString()
+//                    val libro = LibrosModels(0, nombre, autor, genero, paginas)
+//                    viewModel.agregarLibro(libro)
+//                }else{
+//                    Toast.makeText(activity,"No se ha encontrado un registro",Toast.LENGTH_SHORT).show()
+//                }
+//            }catch (ex:Exception){
+//                val msg = Toast.makeText(activity,"Error de conexion",Toast.LENGTH_LONG)
+//                msg.setGravity(Gravity.CENTER, 0,0)
+//                msg.show()
+//            }
+//        }
+//    }
     private fun setupViews() {
         with(fBinding) {
             BtnAgregar.setOnClickListener {

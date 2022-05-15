@@ -7,6 +7,9 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
+data class todosLibros(
+    val books: List<LibrosModels>
+)
 @Parcelize
 @Entity(tableName = "LibrosModels")
 data class LibrosModels(

@@ -11,7 +11,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.libraryapproom.R
 import com.example.libraryapproom.api.ApiService
+import com.example.libraryapproom.api.dataClass.Books
 import com.example.libraryapproom.bd.entidades.LibrosModels
+import com.example.libraryapproom.bd.entidades.todosLibros
 import com.example.libraryapproom.bd.viewmodel.LibrosViewModel
 import com.example.libraryapproom.databinding.FragmentLibroBinding
 import com.example.libraryapproom.fragments.adapter.LibrosAdapter
@@ -19,9 +21,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.Exception
 
 
 class FragmentLibro : Fragment() {
@@ -46,8 +50,8 @@ class FragmentLibro : Fragment() {
         })
         //Agregar el menu
         setHasOptionsMenu(true)
-        searchByID()
-
+        // searchByID(2)
+            searchAllBooks()
         return fBinding.root
     }
     override fun onViewCreated(view: View, savedInstanceState:
@@ -67,13 +71,13 @@ class FragmentLibro : Fragment() {
             .build()
     }
 
-    private fun searchByID() {
+    private fun searchByID(ID: Int) {
 
 
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val call = getRetrofit().create(ApiService::class.java).getBook("all")
+            val call = getRetrofit().create(ApiService::class.java).getBook("$ID")
 
             val books = call.body()
 
@@ -102,6 +106,33 @@ class FragmentLibro : Fragment() {
             }
 
 
+        }
+
+
+    }
+    private fun searchAllBooks() {
+
+        var list: ArrayList<Books>
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val call=getRetrofit().create(ApiService::class.java).getAllBooks()
+            list = call
+
+               list.forEach{ _ ->
+                   run {
+                       for(i in 0..list.lastIndex) {
+                           var nombre: String = list[i].name.toString()
+                           val autor: String = list[i].author?.name.toString()
+                           val genero: String = list[i].type?.name.toString()
+                           val paginas: String = list[i].pageCount.toString()
+                           val id: Int = (list[i].bookId?.toInt() ?: Int) as Int
+                           val libro = LibrosModels(id, nombre, autor, genero, paginas)
+                           viewModel.agregarLibro(libro)
+                       }
+                   }
+
+
+            }
         }
 
 

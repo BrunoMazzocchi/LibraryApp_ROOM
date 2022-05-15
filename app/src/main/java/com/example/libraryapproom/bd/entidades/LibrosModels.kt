@@ -8,11 +8,7 @@ import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-@Entity(tableName = "LibrosModels",
-
-    foreignKeys = [
-        ForeignKey(entity = AutoresEntity::class, parentColumns = ["autorId"], childColumns = ["autorId"])]
-)
+@Entity(tableName = "LibrosModels")
 data class LibrosModels(
     @PrimaryKey(autoGenerate = true)
     val ID:Int = 0,

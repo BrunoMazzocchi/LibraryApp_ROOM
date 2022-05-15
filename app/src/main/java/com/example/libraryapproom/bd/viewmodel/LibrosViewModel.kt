@@ -9,6 +9,7 @@ import com.example.libraryapproom.bd.entidades.LibrosModels
 import com.example.libraryapproom.bd.repository.LibrosRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
 class LibrosViewModel (application: Application): AndroidViewModel(application) {
     val lista : LiveData<List<LibrosModels>>
@@ -38,5 +39,9 @@ class LibrosViewModel (application: Application): AndroidViewModel(application) 
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAll()
         }
+    }
+
+    fun agregarTodosLosLibros(){
+
     }
 }

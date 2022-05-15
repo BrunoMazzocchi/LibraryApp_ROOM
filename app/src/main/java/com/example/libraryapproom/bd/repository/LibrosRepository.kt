@@ -8,6 +8,7 @@ class LibrosRepository(private val dao: LibrosDao) {
     val listado: LiveData<List<LibrosModels>> =
         dao.getAllRealData()
 
+
     suspend fun addLibro(libros: LibrosModels) {
         dao.insert(libros)
     }

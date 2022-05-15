@@ -10,9 +10,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.libraryapproom.R
+import com.example.libraryapproom.api.ApiService
+import com.example.libraryapproom.api.dataClass.Books
+import com.example.libraryapproom.bd.entidades.LibrosModels
 import com.example.libraryapproom.bd.viewmodel.LibrosViewModel
 import com.example.libraryapproom.databinding.FragmentLibroBinding
 import com.example.libraryapproom.fragments.adapter.LibrosAdapter
+import com.squareup.picasso.Picasso
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.Exception
 
 
 class FragmentLibro : Fragment() {
@@ -22,6 +33,7 @@ class FragmentLibro : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        guardarLibros()
         // Inflate the layout for this fragment
         fBinding = FragmentLibroBinding.inflate(layoutInflater)
         val adapter = LibrosAdapter()
@@ -43,6 +55,41 @@ class FragmentLibro : Fragment() {
     Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
+
+    }
+
+    private fun getRetrofit(): Retrofit {
+        return Retrofit
+            .Builder()
+            .baseUrl("http://localhost:9091/books/")
+            .client(OkHttpClient())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    private fun guardarLibros(){
+
+        CoroutineScope(Dispatchers.Main).launch {
+            try{
+
+                val call=getRetrofit().create(ApiService::class.java).getBooks("1")
+
+                if(call.isSuccessful){
+                    val nombre = call.body()?.name.toString()
+                    val autor = call.body()?.author.toString()
+                    val genero = call.body()?.typeId.toString()
+                    val paginas = call.body()?.pageCount.toString()
+                    val libro = LibrosModels(0, nombre, autor, genero, paginas)
+                    viewModel.agregarLibro(libro)
+                }else{
+                    Toast.makeText(activity,"No se ha encontrado un registro",Toast.LENGTH_SHORT).show()
+                }
+            }catch (ex:Exception){
+                val msg = Toast.makeText(activity,"Error de conexion",Toast.LENGTH_LONG)
+                msg.setGravity(Gravity.CENTER, 0,0)
+                msg.show()
+            }
+        }
     }
     private fun setupViews() {
         with(fBinding) {

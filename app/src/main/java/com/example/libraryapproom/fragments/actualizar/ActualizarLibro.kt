@@ -4,15 +4,22 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.libraryapproom.R
+import com.example.libraryapproom.api.ApiService
 import com.example.libraryapproom.bd.entidades.LibrosModels
 import com.example.libraryapproom.bd.viewmodel.LibrosViewModel
 import com.example.libraryapproom.databinding.FragmentActualizarLibroBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
 
 class ActualizarLibro: Fragment()  {
     lateinit var fBinding: FragmentActualizarLibroBinding
@@ -40,11 +47,30 @@ class ActualizarLibro: Fragment()  {
         setHasOptionsMenu(true)
         return fBinding.root
     }
+
+    private fun getRetrofit(): Retrofit {
+        return Retrofit
+            .Builder()
+            .baseUrl("http://192.168.56.1:9091/books/")
+            .client(OkHttpClient())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    private fun deleteBook(ID: Int){
+        CoroutineScope(Dispatchers.IO).launch {
+
+            getRetrofit().create(ApiService::class.java).deleteBook(ID)
+
+        }
+
+    }
     private fun GuardarCambios() {
         val nombre = fBinding.txtNombre.text.toString()
         val Autor = fBinding.txtAutor.text.toString()
         val Genero = fBinding.txtGenero.text.toString()
         val Paginas = fBinding.txtPaginas.text.toString()
+
         //Crear el objeto
         val libro =
             LibrosModels(args.currentLibro.ID,
@@ -53,6 +79,8 @@ class ActualizarLibro: Fragment()  {
         viewModel.actualizarLibro(libro)
         Toast.makeText(requireContext(), "Registro actualizado",
             Toast.LENGTH_LONG).show()
+
+
         findNavController().navigate(R.id.ir_a_listalibro)
     }
     override fun onCreateOptionsMenu(menu: Menu, inflater:
@@ -67,13 +95,17 @@ class ActualizarLibro: Fragment()  {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    //Hacer refactor y renombrar correctamente
     private fun eliminarClasificacion() {
         val alerta = AlertDialog.Builder(requireContext())
         alerta.setPositiveButton("Si") { _, _ ->
+
             viewModel.eliminarLibro(args.currentLibro)
+            deleteBook(args.currentLibro.ID)
             Toast.makeText(
                 requireContext(),
-                "Registro eliminado satisfactoriamente...",
+                "Registro eliminado satisfactoriamente...  ${args.currentLibro.ID}",
                 Toast.LENGTH_LONG
             ).show()
             findNavController().navigate(R.id.ir_a_listalibro)

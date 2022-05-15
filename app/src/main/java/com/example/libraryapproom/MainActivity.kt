@@ -8,7 +8,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.libraryapproom.databinding.ActivityMainBinding
-
+import com.example.libraryapproom.databinding.FragmentLibroBinding
+import com.example.libraryapproom.fragments.lista.FragmentLibro
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,7 +22,9 @@ class MainActivity : AppCompatActivity() {
         NavHost()
 
 
-}
+
+
+    }
 
     private fun NavHost(){
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment

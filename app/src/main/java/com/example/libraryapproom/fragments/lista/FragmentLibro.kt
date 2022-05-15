@@ -19,6 +19,7 @@ import com.example.libraryapproom.databinding.FragmentLibroBinding
 import com.example.libraryapproom.fragments.adapter.LibrosAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -51,7 +52,9 @@ class FragmentLibro : Fragment() {
         //Agregar el menu
         setHasOptionsMenu(true)
         // searchByID(2)
+        fBinding.BtnFiltrar.setOnClickListener{
             searchAllBooks()
+        }
         return fBinding.root
     }
     override fun onViewCreated(view: View, savedInstanceState:
@@ -110,29 +113,79 @@ class FragmentLibro : Fragment() {
 
 
     }
-    private fun searchAllBooks() {
 
+    private fun searchByID(name: String) {
+
+
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val call = getRetrofit().create(ApiService::class.java).getBook("$name")
+
+            val books = call.body()
+
+
+            try {
+                if(call.isSuccessful) {
+                    val nombreLibro = books?.name.toString()
+                    val Autor = books?.author?.name.toString() + books?.author?.surname.toString()
+                    val genero = books?.typeId.toString()
+                    val paginas = books?.pageCount.toString()
+
+
+                    val libro = LibrosModels(0, nombreLibro, Autor, genero, paginas)
+                    viewModel.agregarLibro(libro)
+
+
+                }else {
+
+                }
+
+
+            } catch (ex: Exception ){
+                val msg = Toast.makeText(activity,"Error de conexion + $ex",Toast.LENGTH_LONG)
+                msg.setGravity(Gravity.CENTER, 0,0)
+                msg.show()
+            }
+
+
+        }
+
+
+    }
+
+
+    private fun searchAllBooks() {
         var list: ArrayList<Books>
 
         CoroutineScope(Dispatchers.IO).launch {
-            val call=getRetrofit().create(ApiService::class.java).getAllBooks()
+            var count: Int = 0
+            val call = getRetrofit().create(ApiService::class.java).getAllBooks()
             list = call
 
-               list.forEach{ _ ->
-                   run {
-                       for(i in 0..list.lastIndex) {
-                           var nombre: String = list[i].name.toString()
-                           val autor: String = list[i].author?.name.toString()
-                           val genero: String = list[i].type?.name.toString()
-                           val paginas: String = list[i].pageCount.toString()
-                           val id: Int = (list[i].bookId?.toInt() ?: Int) as Int
-                           val libro = LibrosModels(id, nombre, autor, genero, paginas)
-                           viewModel.agregarLibro(libro)
-                       }
-                   }
+                    list.forEach { _ ->
+                        run {
+                            for (i in 0..list.lastIndex) {
+                                var nombre: String = list[i].name.toString()
+                                val autor: String = list[i].author?.name.toString()
+                                val genero: String = list[i].type?.name.toString()
+                                val paginas: String = list[i].pageCount.toString()
+                                val id: Int = (list[i].bookId?.toInt() ?: Int) as Int
+                                val libro = LibrosModels(id, nombre, autor, genero, paginas)
+                                count ++
 
 
-            }
+
+                                viewModel.agregarLibro(libro)
+
+                            }
+                        }
+
+                        if(count == list.size){
+                            return@launch
+                        }
+
+                    }
         }
 
 
@@ -204,5 +257,7 @@ class FragmentLibro : Fragment() {
         alerta.setMessage("¿Esta seguro de eliminar los registros?")
         alerta.create().show()
     }
+
+
 
 }

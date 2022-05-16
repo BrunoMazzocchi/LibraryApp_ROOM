@@ -49,9 +49,7 @@ class FragmentLibro : Fragment() {
         //Agregar el menu
         setHasOptionsMenu(true)
         // searchByID(2)
-        fBinding.BtnUpdate.setOnClickListener {
-            searchAllBooks()
-        }
+
         return fBinding.root
     }
 
@@ -59,6 +57,7 @@ class FragmentLibro : Fragment() {
         view: View, savedInstanceState:
         Bundle?
     ) {
+        searchAllBooks()
         super.onViewCreated(view, savedInstanceState)
         setupViews()
 
@@ -68,7 +67,7 @@ class FragmentLibro : Fragment() {
     private fun getRetrofit(): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl("http://192.168.56.1:9091/books/")
+            .baseUrl("http://192.168.1.4:9091/books/")
             .client(OkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -233,20 +232,21 @@ class FragmentLibro : Fragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(
-        menu: Menu, inflater:
-        MenuInflater
-    ) {
-        inflater.inflate(R.menu.delete_menu, menu)
-    }
+    /*override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.search_bar, menu)
+    }*/
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.mnuEliminar) {
-            eliminarTodo()
+    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.BtnBusqueda){
+
         }
-        return super.onOptionsItemSelected(item)
-    }
 
+        return super.onOptionsItemSelected(item)
+    }*/
+
+
+
+    /* Eliminar todo */
     private fun eliminarTodo() {
         val alerta = AlertDialog.Builder(requireContext())
         alerta.setPositiveButton("Si") { _, _ ->

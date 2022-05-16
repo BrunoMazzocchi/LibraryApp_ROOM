@@ -47,8 +47,14 @@ class FragmentAddlibro: Fragment() {
         val autor = fBinding.txtAutor.selectedItem.toString()
         val genero = fBinding.txtGenero.text.toString()
         val paginas = fBinding.txtPaginas.text.toString()
+
+        //Necesita solucionarse como se ingresaran estos datos al agregar, ahorita se estan pasando
+        //vacios porque el fragment no funciona.
+        var point = 0
+        var authorID = 0
+        var typeID = 0
         //Crear objeto
-        val libro = LibrosModels(0, nombre, autor, genero, paginas)
+        val libro = LibrosModels(0, nombre, autor, genero, paginas, point, authorID, typeID)
         //Agregar nuevo usuario
         viewModel.agregarLibro(libro)
         Toast.makeText(requireContext(), "Registro guardado",

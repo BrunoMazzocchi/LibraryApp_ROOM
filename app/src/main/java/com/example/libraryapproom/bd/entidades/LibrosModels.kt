@@ -3,7 +3,6 @@ package com.example.libraryapproom.bd.entidades
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
@@ -20,7 +19,14 @@ data class LibrosModels(
     @ColumnInfo(name = "autorId")
     val Autor: String,
     @ColumnInfo(name = "genero")
-    val genero:String,
+    val genero: String,
     @ColumnInfo(name = "Paginas")
-    val Paginas:String,
-): Parcelable
+    val Paginas: String,
+    @ColumnInfo(name = "point")
+    val point: Int?,
+    @ColumnInfo(name = "TypeID")
+    val typeID: Int?,
+    @ColumnInfo(name = "authorID")
+    val authorID: Int?,
+
+    ): Parcelable

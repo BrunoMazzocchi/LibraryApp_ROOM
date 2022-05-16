@@ -13,13 +13,18 @@ import com.example.libraryapproom.api.ApiService
 import com.example.libraryapproom.bd.entidades.LibrosModels
 import com.example.libraryapproom.bd.viewmodel.LibrosViewModel
 import com.example.libraryapproom.databinding.FragmentActualizarLibroBinding
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonParser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
+import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
 
 class ActualizarLibro: Fragment()  {
     lateinit var fBinding: FragmentActualizarLibroBinding
@@ -34,10 +39,14 @@ class ActualizarLibro: Fragment()  {
         viewModel = ViewModelProvider(this).get(LibrosViewModel::class.java)
         with(fBinding) {
 
+
+
+
             txtNombre.setText(args.currentLibro.nombreLibro)
             txtAutor.setText(args.currentLibro.Autor)
             txtGenero.setText(args.currentLibro.genero)
             txtPaginas.setText(args.currentLibro.Paginas)
+
 
             btnGuardar.setOnClickListener {
                 GuardarCambios()
@@ -48,6 +57,7 @@ class ActualizarLibro: Fragment()  {
         return fBinding.root
     }
 
+
     private fun getRetrofit(): Retrofit {
         return Retrofit
             .Builder()
@@ -57,6 +67,7 @@ class ActualizarLibro: Fragment()  {
             .build()
     }
 
+
     private fun deleteBook(ID: Int){
         CoroutineScope(Dispatchers.IO).launch {
 
@@ -65,16 +76,39 @@ class ActualizarLibro: Fragment()  {
         }
 
     }
+
     private fun GuardarCambios() {
         val nombre = fBinding.txtNombre.text.toString()
         val Autor = fBinding.txtAutor.text.toString()
         val Genero = fBinding.txtGenero.text.toString()
         val Paginas = fBinding.txtPaginas.text.toString()
+        var autorID = args.currentLibro.authorID
+        var typeID = args.currentLibro.typeID
+        var point = args.currentLibro.point
+        var id: Int = args.currentLibro.ID
 
+        val jsonObject = JSONObject()
+        jsonObject.put("bookId", id)
+        jsonObject.put("name", "$nombre")
+        jsonObject.put("pageCount", Paginas.toInt())
+        jsonObject.put("point", point)
+        jsonObject.put("authorId", autorID)
+        jsonObject.put("typeId", typeID)
+
+        val jsonObjectString = jsonObject.toString()
+        val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+
+        CoroutineScope(Dispatchers.IO).launch {
+            getRetrofit().create(ApiService::class.java).editABook(requestBody)
+
+
+        }
+
+        var book = LibrosModels(id, nombre, Autor, Genero, Paginas, point, autorID, typeID)
         //Crear el objeto
         val libro =
             LibrosModels(args.currentLibro.ID,
-                nombre, Autor, Genero, Paginas )
+                nombre, Autor, Genero, Paginas, autorID, typeID, point)
         //Actualizar
         viewModel.actualizarLibro(libro)
         Toast.makeText(requireContext(), "Registro actualizado",

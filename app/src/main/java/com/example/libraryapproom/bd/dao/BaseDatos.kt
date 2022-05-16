@@ -16,7 +16,7 @@ interface MainDataBaseProvider {
 
 @Database(
     entities = [LibrosModels::class, PrestamosEntity::class, AutoresEntity::class],
-    version = 8
+    version = 10
 )
 abstract class MainBaseDatos : RoomDatabase(),
     MainDataBaseProvider {

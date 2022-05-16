@@ -4,6 +4,8 @@ import com.example.libraryapproom.api.dataClass.Author
 import com.example.libraryapproom.api.dataClass.Books
 import com.example.libraryapproom.api.dataClass.Borrow
 import com.example.libraryapproom.api.dataClass.Type
+import com.example.libraryapproom.bd.entidades.LibrosModels
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -32,4 +34,8 @@ interface ApiService {
 
     @POST
     suspend fun postBook()
+
+
+    @POST("save")
+    suspend fun editABook(@Body requestBody: RequestBody):Response<ResponseBody>
 }

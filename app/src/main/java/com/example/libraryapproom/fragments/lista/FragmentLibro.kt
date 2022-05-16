@@ -13,18 +13,13 @@ import com.example.libraryapproom.R
 import com.example.libraryapproom.api.ApiService
 import com.example.libraryapproom.api.dataClass.Books
 import com.example.libraryapproom.bd.entidades.LibrosModels
-import com.example.libraryapproom.bd.entidades.todosLibros
 import com.example.libraryapproom.bd.viewmodel.LibrosViewModel
 import com.example.libraryapproom.databinding.FragmentLibroBinding
 import com.example.libraryapproom.fragments.adapter.LibrosAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -91,9 +86,11 @@ class FragmentLibro : Fragment() {
                     val Autor = books?.author?.name.toString() + books?.author?.surname.toString()
                     val genero = books?.typeId.toString()
                     val paginas = books?.pageCount.toString()
+                    var autorID = books?.authorId
+                    var typeID = books?.typeId
+                    var point = books?.point
 
-
-                    val libro = LibrosModels(0, nombreLibro, Autor, genero, paginas)
+                    val libro = LibrosModels(0, nombreLibro, Autor, genero, paginas, autorID, typeID, point)
                     viewModel.agregarLibro(libro)
 
 
@@ -131,9 +128,11 @@ class FragmentLibro : Fragment() {
                     val Autor = books?.author?.name.toString() + books?.author?.surname.toString()
                     val genero = books?.typeId.toString()
                     val paginas = books?.pageCount.toString()
+                    var autorID = books?.authorId
+                    var typeID = books?.typeId
+                    var point = books?.point
 
-
-                    val libro = LibrosModels(0, nombreLibro, Autor, genero, paginas)
+                    val libro = LibrosModels(0, nombreLibro, Autor, genero, paginas, autorID, typeID, point)
                     viewModel.agregarLibro(libro)
 
 
@@ -171,7 +170,10 @@ class FragmentLibro : Fragment() {
                                 val genero: String = list[i].type?.name.toString()
                                 val paginas: String = list[i].pageCount.toString()
                                 val id: Int = (list[i].bookId?.toInt() ?: Int) as Int
-                                val libro = LibrosModels(id, nombre, autor, genero, paginas)
+                                var autorID = (list[i].authorId)
+                                var typeID = (list[i].typeId)
+                                var point = (list[i].point)
+                                val libro = LibrosModels(id, nombre, autor, genero, paginas,autorID, typeID, point)
                                 count ++
 
 

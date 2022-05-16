@@ -3,6 +3,8 @@ package com.example.libraryapproom.fragments.lista
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -26,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class FragmentLibro : Fragment() {
     lateinit var fBinding: FragmentLibroBinding
-    private lateinit var viewModel : LibrosViewModel
+    private lateinit var viewModel: LibrosViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,19 +43,22 @@ class FragmentLibro : Fragment() {
         viewModel =
             ViewModelProvider(this).get(LibrosViewModel::class.java)
         viewModel.lista.observe(viewLifecycleOwner, Observer
-        {libro->
+        { libro ->
             adapter.setData(libro)
         })
         //Agregar el menu
         setHasOptionsMenu(true)
         // searchByID(2)
-        fBinding.BtnFiltrar.setOnClickListener{
+        fBinding.BtnUpdate.setOnClickListener {
             searchAllBooks()
         }
         return fBinding.root
     }
-    override fun onViewCreated(view: View, savedInstanceState:
-    Bundle?) {
+
+    override fun onViewCreated(
+        view: View, savedInstanceState:
+        Bundle?
+    ) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
 
@@ -72,7 +77,6 @@ class FragmentLibro : Fragment() {
     private fun searchByID(ID: Int) {
 
 
-
         CoroutineScope(Dispatchers.IO).launch {
 
             val call = getRetrofit().create(ApiService::class.java).getBook("$ID")
@@ -81,7 +85,7 @@ class FragmentLibro : Fragment() {
 
 
             try {
-                if(call.isSuccessful) {
+                if (call.isSuccessful) {
                     val nombreLibro = books?.name.toString()
                     val Autor = books?.author?.name.toString() + books?.author?.surname.toString()
                     val genero = books?.typeId.toString()
@@ -90,18 +94,19 @@ class FragmentLibro : Fragment() {
                     var typeID = books?.typeId
                     var point = books?.point
 
-                    val libro = LibrosModels(0, nombreLibro, Autor, genero, paginas, autorID, typeID, point)
+                    val libro =
+                        LibrosModels(0, nombreLibro, Autor, genero, paginas, autorID, typeID, point)
                     viewModel.agregarLibro(libro)
 
 
-                }else {
+                } else {
 
                 }
 
 
-            } catch (ex: Exception ){
-                val msg = Toast.makeText(activity,"Error de conexion + $ex",Toast.LENGTH_LONG)
-                msg.setGravity(Gravity.CENTER, 0,0)
+            } catch (ex: Exception) {
+                val msg = Toast.makeText(activity, "Error de conexion + $ex", Toast.LENGTH_LONG)
+                msg.setGravity(Gravity.CENTER, 0, 0)
                 msg.show()
             }
 
@@ -114,7 +119,6 @@ class FragmentLibro : Fragment() {
     private fun searchByID(name: String) {
 
 
-
         CoroutineScope(Dispatchers.IO).launch {
 
             val call = getRetrofit().create(ApiService::class.java).getBook("$name")
@@ -123,7 +127,7 @@ class FragmentLibro : Fragment() {
 
 
             try {
-                if(call.isSuccessful) {
+                if (call.isSuccessful) {
                     val nombreLibro = books?.name.toString()
                     val Autor = books?.author?.name.toString() + books?.author?.surname.toString()
                     val genero = books?.typeId.toString()
@@ -132,18 +136,19 @@ class FragmentLibro : Fragment() {
                     var typeID = books?.typeId
                     var point = books?.point
 
-                    val libro = LibrosModels(0, nombreLibro, Autor, genero, paginas, autorID, typeID, point)
+                    val libro =
+                        LibrosModels(0, nombreLibro, Autor, genero, paginas, autorID, typeID, point)
                     viewModel.agregarLibro(libro)
 
 
-                }else {
+                } else {
 
                 }
 
 
-            } catch (ex: Exception ){
-                val msg = Toast.makeText(activity,"Error de conexion + $ex",Toast.LENGTH_LONG)
-                msg.setGravity(Gravity.CENTER, 0,0)
+            } catch (ex: Exception) {
+                val msg = Toast.makeText(activity, "Error de conexion + $ex", Toast.LENGTH_LONG)
+                msg.setGravity(Gravity.CENTER, 0, 0)
                 msg.show()
             }
 
@@ -162,32 +167,33 @@ class FragmentLibro : Fragment() {
             val call = getRetrofit().create(ApiService::class.java).getAllBooks()
             list = call
 
-                    list.forEach { _ ->
-                        run {
-                            for (i in 0..list.lastIndex) {
-                                var nombre: String = list[i].name.toString()
-                                val autor: String = list[i].author?.name.toString()
-                                val genero: String = list[i].type?.name.toString()
-                                val paginas: String = list[i].pageCount.toString()
-                                val id: Int = (list[i].bookId?.toInt() ?: Int) as Int
-                                var autorID = (list[i].authorId)
-                                var typeID = (list[i].typeId)
-                                var point = (list[i].point)
-                                val libro = LibrosModels(id, nombre, autor, genero, paginas,autorID, typeID, point)
-                                count ++
+            list.forEach { _ ->
+                run {
+                    for (i in 0..list.lastIndex) {
+                        var nombre: String = list[i].name.toString()
+                        val autor: String = list[i].author?.name.toString()
+                        val genero: String = list[i].type?.name.toString()
+                        val paginas: String = list[i].pageCount.toString()
+                        val id: Int = (list[i].bookId?.toInt() ?: Int) as Int
+                        var autorID = (list[i].authorId)
+                        var typeID = (list[i].typeId)
+                        var point = (list[i].point)
+                        val libro =
+                            LibrosModels(id, nombre, autor, genero, paginas, autorID, typeID, point)
+                        count++
 
 
 
-                                viewModel.agregarLibro(libro)
-
-                            }
-                        }
-
-                        if(count == list.size){
-                            return@launch
-                        }
+                        viewModel.agregarLibro(libro)
 
                     }
+                }
+
+                if (count == list.size) {
+                    return@launch
+                }
+
+            }
         }
 
 
@@ -226,18 +232,21 @@ class FragmentLibro : Fragment() {
             }
         }
     }
-    override fun onCreateOptionsMenu(menu: Menu, inflater:
-    MenuInflater
+
+    override fun onCreateOptionsMenu(
+        menu: Menu, inflater:
+        MenuInflater
     ) {
         inflater.inflate(R.menu.delete_menu, menu)
     }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean
-    {
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.mnuEliminar) {
             eliminarTodo()
         }
         return super.onOptionsItemSelected(item)
     }
+
     private fun eliminarTodo() {
         val alerta = AlertDialog.Builder(requireContext())
         alerta.setPositiveButton("Si") { _, _ ->
@@ -259,7 +268,6 @@ class FragmentLibro : Fragment() {
         alerta.setMessage("¿Esta seguro de eliminar los registros?")
         alerta.create().show()
     }
-
 
 
 }

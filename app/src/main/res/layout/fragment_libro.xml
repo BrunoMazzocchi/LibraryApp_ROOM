@@ -20,8 +20,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/BtnAgregar"
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/BtnExtend"
+        app:fab_addButtonColorNormal="@color/Orange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -30,17 +31,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/BtnFiltrar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        android:src="@drawable/ic_update_24"
-        app:layout_constraintBottom_toTopOf="@+id/BtnAgregar"
-        app:layout_constraintEnd_toEndOf="parent"
-
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck">
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_icon="@drawable/ic_update_24"
+            app:fab_title="Actualizar"
+            android:id="@+id/BtnUpdate"
+            app:fab_colorNormal="@color/Orange"
+            />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_icon="@drawable/ic_add_library"
+            app:fab_title="Agregar"
+            android:id="@+id/BtnAgregar"
+            app:fab_colorNormal="@color/Orange"
+            />
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

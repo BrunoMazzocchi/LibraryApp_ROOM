@@ -16,13 +16,6 @@
         android:padding="10dp"
         >
 
-        <ImageView
-            android:id="@+id/IvCover"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-
-            />
-
         <TextView
             android:id="@+id/TvName"
             android:layout_width="wrap_content"

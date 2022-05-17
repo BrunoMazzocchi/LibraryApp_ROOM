@@ -17,12 +17,16 @@ interface ApiService {
     @GET
     suspend fun getAuthor (@Url url: String): Response<Author>
 
-    @GET("all")
+    @GET("books/all")
     suspend fun getAllBooks(): ArrayList<Books>
 
-    @GET("all")
+    @GET("author/all")
     suspend fun getAllAuthors(): ArrayList<Author>
-    @DELETE("delete/{id}")
+
+    @GET("genre/all")
+    suspend fun getAllGenre(): ArrayList<Type>
+
+    @DELETE("books/delete/{id}")
     suspend fun deleteBook(@Path("id") id: Int?): Response<Void>
 
 
@@ -38,6 +42,6 @@ interface ApiService {
     suspend fun postBook()
 
 
-    @POST("save")
+    @POST("books/save")
     suspend fun editABook(@Body requestBody: RequestBody):Response<ResponseBody>
 }

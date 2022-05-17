@@ -67,7 +67,7 @@ class FragmentLibro : Fragment() {
     private fun getRetrofit(): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl("http://192.168.56.1:9091/books/")
+            .baseUrl("http://192.168.56.1:9091/")
             .client(OkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()

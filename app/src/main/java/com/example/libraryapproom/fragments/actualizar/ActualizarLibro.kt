@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.libraryapproom.R
 import com.example.libraryapproom.api.ApiService
 import com.example.libraryapproom.api.dataClass.Author
+import com.example.libraryapproom.api.dataClass.Type
 import com.example.libraryapproom.bd.entidades.LibrosModels
 import com.example.libraryapproom.bd.viewmodel.LibrosViewModel
 import com.example.libraryapproom.databinding.FragmentActualizarLibroBinding
@@ -42,10 +43,9 @@ class ActualizarLibro : Fragment() {
         with(fBinding) {
 
             populateSpinner()
-
+            populateSpinnerType()
 
             txtNombre.setText(args.currentLibro.nombreLibro)
-            txtGenero.setText(args.currentLibro.genero)
             txtPaginas.setText(args.currentLibro.Paginas)
 
 
@@ -60,19 +60,10 @@ class ActualizarLibro : Fragment() {
         return fBinding.root
     }
 
-    private fun getRetrofitForAuthor(): Retrofit {
-        return Retrofit
-            .Builder()
-            .baseUrl("http://192.168.56.1:9091/author/")
-            .client(OkHttpClient())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
     private fun getRetrofit(): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl("http://192.168.56.1:9091/books/")
+            .baseUrl("http://192.168.56.1:9091/")
             .client(OkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -81,7 +72,7 @@ class ActualizarLibro : Fragment() {
     private fun populateSpinner() {
         CoroutineScope(Dispatchers.IO).launch {
             var authorArray: MutableList<Author>
-            val call = getRetrofitForAuthor().create(ApiService::class.java).getAllAuthors()
+            val call = getRetrofit().create(ApiService::class.java).getAllAuthors()
             authorArray = call
             var count: Int = 0
 
@@ -130,7 +121,57 @@ class ActualizarLibro : Fragment() {
 
         }
     }
+    private fun populateSpinnerType() {
+        CoroutineScope(Dispatchers.IO).launch {
+            var typeArray: MutableList<Type>
+            val call = getRetrofit().create(ApiService::class.java).getAllGenre()
+            typeArray = call
+            var count: Int = 0
 
+            var typeArrayFinal = mutableListOf<String>()
+            typeArray.forEach { _ ->
+
+                run {
+                    for (i in 0..typeArray.lastIndex) {
+                        var typeID: Int? = typeArray[i].typeId
+                        var nombre: String = typeArray[i].name.toString()
+
+                        var genero: String = " $typeID - $nombre"
+
+                        typeArrayFinal.add(genero)
+
+                        count++
+
+                    }
+                }
+                if (count == typeArrayFinal.size) {
+
+                    var listView = fBinding.txtGenero
+
+                    var arrayAdapter = activity?.let {
+                        ArrayAdapter(
+                            it,
+                            android.R.layout.simple_list_item_1,
+                            typeArrayFinal
+                        )
+                    }
+                    listView.adapter = arrayAdapter
+                    var id = args.currentLibro.typeID
+
+
+                    if (id != null) {
+                        listView.setSelection(id - 1)
+                    }
+
+                    return@launch
+                }
+
+
+            }
+
+
+        }
+    }
 
     private fun deleteBook(ID: Int) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -144,10 +185,10 @@ class ActualizarLibro : Fragment() {
     private fun GuardarCambios() {
         val nombre = fBinding.txtNombre.text.toString()
         val Autor = fBinding.txtAutor
-        val Genero = fBinding.txtGenero.text.toString()
+        val Genero = ""
         val Paginas = fBinding.txtPaginas.text.toString()
         var authorID = txtAutor.selectedItemPosition + 1
-        var typeID = args.currentLibro.typeID
+        var generoID = txtGenero.selectedItemPosition + 1
         var point = args.currentLibro.point
         var id: Int = args.currentLibro.ID
 
@@ -157,7 +198,7 @@ class ActualizarLibro : Fragment() {
         jsonObject.put("pageCount", Paginas.toInt())
         jsonObject.put("point", point)
         jsonObject.put("authorId", authorID)
-        jsonObject.put("typeId", typeID)
+        jsonObject.put("typeId", generoID)
 
         val jsonObjectString = jsonObject.toString()
         val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
@@ -169,12 +210,12 @@ class ActualizarLibro : Fragment() {
         }
 
         var book =
-            LibrosModels(id, nombre, Autor.toString(), Genero, Paginas, point, authorID, typeID)
+            LibrosModels(id, nombre, Autor.toString(), Genero.toString(), Paginas, point, authorID, generoID)
         //Crear el objeto
         val libro =
             LibrosModels(
                 args.currentLibro.ID,
-                nombre, Autor.toString(), Genero, Paginas, authorID, typeID, point
+                nombre, Autor.toString(), Genero.toString(), Paginas, authorID, generoID, point
             )
         //Actualizar
         viewModel.actualizarLibro(libro)

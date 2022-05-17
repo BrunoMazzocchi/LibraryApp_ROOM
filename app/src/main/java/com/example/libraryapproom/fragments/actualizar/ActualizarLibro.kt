@@ -1,8 +1,11 @@
 package com.example.libraryapproom.fragments.actualizar
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -10,21 +13,20 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.libraryapproom.R
 import com.example.libraryapproom.api.ApiService
+import com.example.libraryapproom.api.dataClass.Author
 import com.example.libraryapproom.bd.entidades.LibrosModels
 import com.example.libraryapproom.bd.viewmodel.LibrosViewModel
 import com.example.libraryapproom.databinding.FragmentActualizarLibroBinding
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonParser
+import kotlinx.android.synthetic.main.fragment_actualizar_libro.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
 
 class ActualizarLibro: Fragment()  {
     lateinit var fBinding: FragmentActualizarLibroBinding
@@ -37,15 +39,17 @@ class ActualizarLibro: Fragment()  {
         // Inflate the layout for this fragment
         fBinding = FragmentActualizarLibroBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this).get(LibrosViewModel::class.java)
+
         with(fBinding) {
 
 
-
+            populateSpinner()
 
             txtNombre.setText(args.currentLibro.nombreLibro)
-            txtAutor.setText(args.currentLibro.Autor)
             txtGenero.setText(args.currentLibro.genero)
             txtPaginas.setText(args.currentLibro.Paginas)
+
+
 
 
             btnGuardar.setOnClickListener {
@@ -57,7 +61,14 @@ class ActualizarLibro: Fragment()  {
         return fBinding.root
     }
 
-
+    private fun getRetrofitForAuthor(): Retrofit {
+        return Retrofit
+            .Builder()
+            .baseUrl("http://192.168.56.1:9091/author/")
+            .client(OkHttpClient())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
     private fun getRetrofit(): Retrofit {
         return Retrofit
             .Builder()
@@ -65,6 +76,52 @@ class ActualizarLibro: Fragment()  {
             .client(OkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+    }
+
+    private fun populateSpinner(){
+        CoroutineScope(Dispatchers.IO).launch {
+            var authorArray: MutableList<Author>
+            val call = getRetrofitForAuthor().create(ApiService::class.java).getAllAuthors()
+            authorArray = call
+            var count: Int = 0
+
+            var authorArrayFinal = mutableListOf<Author>()
+            authorArray.forEach { _ ->
+
+                run {
+                    for (i in 0..authorArray.lastIndex) {
+                        var autorID: Int? = authorArray[i].authorId
+                        var nombre: String = authorArray[i].name.toString()
+                        var surname: String = authorArray[i].surname.toString()
+
+                        var author = Author(autorID, nombre, surname)
+                        authorArrayFinal.add(author)
+
+                        count++
+
+                    }
+                }
+                if (count == authorArray.size) {
+
+                    var listView = fBinding.txtAutor
+
+                    var arrayAdapter = activity?.let {
+                        ArrayAdapter(
+                            it,
+                            android.R.layout.simple_list_item_1,
+                            authorArrayFinal
+                        )
+                    }
+                    listView.adapter = arrayAdapter
+
+                    return@launch
+                }
+
+
+            }
+
+
+        }
     }
 
 
@@ -79,10 +136,10 @@ class ActualizarLibro: Fragment()  {
 
     private fun GuardarCambios() {
         val nombre = fBinding.txtNombre.text.toString()
-        val Autor = fBinding.txtAutor.text.toString()
+        val Autor = fBinding.txtAutor
         val Genero = fBinding.txtGenero.text.toString()
         val Paginas = fBinding.txtPaginas.text.toString()
-        var autorID = args.currentLibro.authorID
+        var authorID = txtAutor.selectedItemPosition + 1
         var typeID = args.currentLibro.typeID
         var point = args.currentLibro.point
         var id: Int = args.currentLibro.ID
@@ -92,7 +149,7 @@ class ActualizarLibro: Fragment()  {
         jsonObject.put("name", "$nombre")
         jsonObject.put("pageCount", Paginas.toInt())
         jsonObject.put("point", point)
-        jsonObject.put("authorId", autorID)
+        jsonObject.put("authorId", authorID)
         jsonObject.put("typeId", typeID)
 
         val jsonObjectString = jsonObject.toString()
@@ -104,11 +161,11 @@ class ActualizarLibro: Fragment()  {
 
         }
 
-        var book = LibrosModels(id, nombre, Autor, Genero, Paginas, point, autorID, typeID)
+        var book = LibrosModels(id, nombre, Autor.toString(), Genero, Paginas, point, authorID, typeID)
         //Crear el objeto
         val libro =
             LibrosModels(args.currentLibro.ID,
-                nombre, Autor, Genero, Paginas, autorID, typeID, point)
+                nombre, Autor.toString(), Genero, Paginas, authorID, typeID, point)
         //Actualizar
         viewModel.actualizarLibro(libro)
         Toast.makeText(requireContext(), "Registro actualizado",
@@ -156,3 +213,5 @@ class ActualizarLibro: Fragment()  {
         alerta.create().show()
     }
 }
+
+

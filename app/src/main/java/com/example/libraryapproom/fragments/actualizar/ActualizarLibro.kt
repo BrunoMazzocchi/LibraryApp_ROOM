@@ -1,11 +1,9 @@
 package com.example.libraryapproom.fragments.actualizar
 
 import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -28,7 +26,7 @@ import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ActualizarLibro: Fragment()  {
+class ActualizarLibro : Fragment() {
     lateinit var fBinding: FragmentActualizarLibroBinding
     private val args by navArgs<ActualizarLibroArgs>()
     private lateinit var viewModel: LibrosViewModel
@@ -38,12 +36,13 @@ class ActualizarLibro: Fragment()  {
     ): View? {
         // Inflate the layout for this fragment
         fBinding = FragmentActualizarLibroBinding.inflate(layoutInflater)
+        fBinding = FragmentActualizarLibroBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this).get(LibrosViewModel::class.java)
 
         with(fBinding) {
 
-
             populateSpinner()
+
 
             txtNombre.setText(args.currentLibro.nombreLibro)
             txtGenero.setText(args.currentLibro.genero)
@@ -69,6 +68,7 @@ class ActualizarLibro: Fragment()  {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
+
     private fun getRetrofit(): Retrofit {
         return Retrofit
             .Builder()
@@ -78,14 +78,14 @@ class ActualizarLibro: Fragment()  {
             .build()
     }
 
-    private fun populateSpinner(){
+    private fun populateSpinner() {
         CoroutineScope(Dispatchers.IO).launch {
             var authorArray: MutableList<Author>
             val call = getRetrofitForAuthor().create(ApiService::class.java).getAllAuthors()
             authorArray = call
             var count: Int = 0
 
-            var authorArrayFinal = mutableListOf<Author>()
+            var authorArrayFinal = mutableListOf<String>()
             authorArray.forEach { _ ->
 
                 run {
@@ -94,7 +94,8 @@ class ActualizarLibro: Fragment()  {
                         var nombre: String = authorArray[i].name.toString()
                         var surname: String = authorArray[i].surname.toString()
 
-                        var author = Author(autorID, nombre, surname)
+                        var author: String = " $autorID - $nombre -  $surname"
+
                         authorArrayFinal.add(author)
 
                         count++
@@ -113,6 +114,12 @@ class ActualizarLibro: Fragment()  {
                         )
                     }
                     listView.adapter = arrayAdapter
+                    var id = args.currentLibro.authorID
+
+
+                    if (id != null) {
+                        listView.setSelection(id - 1)
+                    }
 
                     return@launch
                 }
@@ -125,7 +132,7 @@ class ActualizarLibro: Fragment()  {
     }
 
 
-    private fun deleteBook(ID: Int){
+    private fun deleteBook(ID: Int) {
         CoroutineScope(Dispatchers.IO).launch {
 
             getRetrofit().create(ApiService::class.java).deleteBook(ID)
@@ -161,26 +168,33 @@ class ActualizarLibro: Fragment()  {
 
         }
 
-        var book = LibrosModels(id, nombre, Autor.toString(), Genero, Paginas, point, authorID, typeID)
+        var book =
+            LibrosModels(id, nombre, Autor.toString(), Genero, Paginas, point, authorID, typeID)
         //Crear el objeto
         val libro =
-            LibrosModels(args.currentLibro.ID,
-                nombre, Autor.toString(), Genero, Paginas, authorID, typeID, point)
+            LibrosModels(
+                args.currentLibro.ID,
+                nombre, Autor.toString(), Genero, Paginas, authorID, typeID, point
+            )
         //Actualizar
         viewModel.actualizarLibro(libro)
-        Toast.makeText(requireContext(), "Registro actualizado",
-            Toast.LENGTH_LONG).show()
+        Toast.makeText(
+            requireContext(), "Registro actualizado",
+            Toast.LENGTH_LONG
+        ).show()
 
 
         findNavController().navigate(R.id.ir_a_listalibro)
     }
-    override fun onCreateOptionsMenu(menu: Menu, inflater:
-    MenuInflater
+
+    override fun onCreateOptionsMenu(
+        menu: Menu, inflater:
+        MenuInflater
     ) {
         inflater.inflate(R.menu.delete_menu, menu)
     }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean
-    {
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.mnuEliminar) {
             eliminarClasificacion()
         }

@@ -131,12 +131,13 @@ class FragmentLibro : Fragment() {
                     val Autor = books?.author?.name.toString() + books?.author?.surname.toString()
                     val genero = books?.typeId.toString()
                     val paginas = books?.pageCount.toString()
-                    var autorID = books?.authorId
-                    var typeID = books?.typeId
                     var point = books?.point
 
+                    var autorID = books?.authorId
+                    var typeID = books?.typeId
+
                     val libro =
-                        LibrosModels(0, nombreLibro, Autor, genero, paginas, autorID, typeID, point)
+                        LibrosModels(0, nombreLibro, Autor, genero, paginas, point,autorID, typeID)
                     viewModel.agregarLibro(libro)
 
 
@@ -170,7 +171,7 @@ class FragmentLibro : Fragment() {
                 run {
                     for (i in 0..list.lastIndex) {
                         var nombre: String = list[i].name.toString()
-                        val autor: String = list[i].author?.name.toString()
+                        val autor: String = list[i].author?.name.toString() + " " + list[i].author?.surname.toString()
                         val genero: String = list[i].type?.name.toString()
                         val paginas: String = list[i].pageCount.toString()
                         val id: Int = (list[i].bookId?.toInt() ?: Int) as Int

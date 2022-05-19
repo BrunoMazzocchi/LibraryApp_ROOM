@@ -23,8 +23,8 @@ interface ApiService {
     @GET("author/all")
     suspend fun getAllAuthors(): ArrayList<Author>
 
-    @GET("genre/all")
-    suspend fun getAllGenre(): ArrayList<Type>
+    @GET("typesad/all")
+    suspend fun getAllType(): ArrayList<Type>
 
     @DELETE("books/delete/{id}")
     suspend fun deleteBook(@Path("id") id: Int?): Response<Void>

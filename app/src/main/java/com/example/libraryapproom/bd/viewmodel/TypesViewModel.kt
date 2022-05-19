@@ -10,7 +10,7 @@ import com.example.libraryapproom.bd.repository.TypesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class typesViewModel(application: Application): AndroidViewModel(application) {
+class TypesViewModel(application: Application): AndroidViewModel(application) {
     val listaT: LiveData<List<TypesEntity>>
     private val repository: TypesRepository
 

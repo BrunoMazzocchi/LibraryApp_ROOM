@@ -9,12 +9,12 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Entity(tableName = "TblAutores")
-data class AutoresEntity(
+data class AuthorsEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "autorId")
-    val autorId:Int = 0,
+    val autor_Id:Int = 0,
     @ColumnInfo(name = "name")
     val name: String,
     @ColumnInfo(name = "surname")
-    val surname:String,
+    val suname:String,
 ): Parcelable

@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.libraryapproom.bd.entidades.AutoresEntity
+import com.example.libraryapproom.bd.entidades.AuthorsEntity
 import com.example.libraryapproom.bd.entidades.LibrosModels
 import com.example.libraryapproom.bd.entidades.PrestamosEntity
 
@@ -15,8 +15,8 @@ interface MainDataBaseProvider {
 }
 
 @Database(
-    entities = [LibrosModels::class, PrestamosEntity::class, AutoresEntity::class],
-    version = 11
+    entities = [LibrosModels::class, PrestamosEntity::class, AuthorsEntity::class],
+    version = 12
 )
 abstract class MainBaseDatos : RoomDatabase(),
     MainDataBaseProvider {

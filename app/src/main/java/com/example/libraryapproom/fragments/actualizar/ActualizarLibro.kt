@@ -63,7 +63,7 @@ class ActualizarLibro : Fragment() {
     private fun getRetrofit(): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl("http://192.168.56.1:9091/")
+            .baseUrl("http://192.168.1.3:9091/")
             .client(OkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()

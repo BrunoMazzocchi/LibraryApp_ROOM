@@ -3,8 +3,7 @@ package com.example.libraryapproom.fragments.lista
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
+
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -13,8 +12,11 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.libraryapproom.R
 import com.example.libraryapproom.api.ApiService
+import com.example.libraryapproom.api.dataClass.Author
 import com.example.libraryapproom.api.dataClass.Books
+import com.example.libraryapproom.bd.entidades.AuthorsEntity
 import com.example.libraryapproom.bd.entidades.LibrosModels
+import com.example.libraryapproom.bd.viewmodel.AutoresViewModel
 import com.example.libraryapproom.bd.viewmodel.LibrosViewModel
 import com.example.libraryapproom.databinding.FragmentLibroBinding
 import com.example.libraryapproom.fragments.adapter.LibrosAdapter
@@ -29,6 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class FragmentLibro : Fragment() {
     lateinit var fBinding: FragmentLibroBinding
     private lateinit var viewModel: LibrosViewModel
+    private lateinit var viewModelAuthor: AutoresViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,6 +61,7 @@ class FragmentLibro : Fragment() {
         Bundle?
     ) {
         searchAllBooks()
+
         super.onViewCreated(view, savedInstanceState)
         setupViews()
 
@@ -67,7 +71,7 @@ class FragmentLibro : Fragment() {
     private fun getRetrofit(): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl("http://192.168.56.1:9091/")
+            .baseUrl("http://192.168.1.3:9091/")
             .client(OkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -190,6 +194,39 @@ class FragmentLibro : Fragment() {
                 }
 
                 if (count == list.size) {
+                    return@launch
+                }
+
+            }
+        }
+
+
+    }
+
+
+    private fun searchAllAuthors() {
+        var lista: ArrayList<Author>
+
+        CoroutineScope(Dispatchers.IO).launch {
+            var count: Int = 0
+            val call = getRetrofit().create(ApiService::class.java).getAllAuthors()
+            lista = call
+
+            lista.forEach { _ ->
+                run {
+                    for (i in 0..lista.lastIndex) {
+                        val idAuthor: Int = lista[i].authorId.toString().toInt()
+                        var name: String = lista[i].name.toString()
+                        val surname: String = lista[i].surname.toString()
+                        val author = AuthorsEntity(idAuthor, name,surname)
+                        count++
+
+                        viewModelAuthor.agregarAutores(author)
+
+                    }
+                }
+
+                if (count == lista.size) {
                     return@launch
                 }
 

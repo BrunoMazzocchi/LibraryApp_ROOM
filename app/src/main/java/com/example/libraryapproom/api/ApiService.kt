@@ -29,7 +29,6 @@ interface ApiService {
     @DELETE("books/delete/{id}")
     suspend fun deleteBook(@Path("id") id: Int?): Response<Void>
 
-
     @GET
     suspend fun getBook(@Url url:String):Response<Books>
 

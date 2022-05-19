@@ -26,12 +26,12 @@ class AddPrestamoFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(PrestamoViewModel::class.java)
 
         aBinding.btnGuardarP.setOnClickListener {
-            guardarRegistro()
+            //guardarRegistro()
         }
         return aBinding.root
     }
 
-    private fun guardarRegistro() {
+   /* private fun guardarRegistro() {
 
        val libro  = aBinding.TxtLibro.text.toString()
         val est = aBinding.TxtEstudiante.text.toString()
@@ -45,6 +45,6 @@ class AddPrestamoFragment : Fragment() {
         Toast.makeText(requireContext(), "Registro guardado",
             Toast.LENGTH_LONG).show()
         findNavController().navigate(R.id.listaPrestamo)
-    }
+    }*/
 
 }

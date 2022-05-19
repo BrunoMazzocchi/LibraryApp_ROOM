@@ -67,7 +67,7 @@ class FragmentLibro : Fragment() {
     private fun getRetrofit(): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl("http://192.168.1.4:9091/books/")
+            .baseUrl("http://192.168.0.15:9091/books/")
             .client(OkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -170,7 +170,7 @@ class FragmentLibro : Fragment() {
                 run {
                     for (i in 0..list.lastIndex) {
                         var nombre: String = list[i].name.toString()
-                        val autor: String = list[i].author?.name.toString()
+                        val autor: String = list[i].author?.name.toString() + " " + list[i].author?.surname.toString()
                         val genero: String = list[i].type?.name.toString()
                         val paginas: String = list[i].pageCount.toString()
                         val id: Int = (list[i].bookId?.toInt() ?: Int) as Int
@@ -198,7 +198,6 @@ class FragmentLibro : Fragment() {
 
     }
 
-
     //    private fun guardarLibros(){
 //
 //        CoroutineScope(Dispatchers.Main).launch {
@@ -223,6 +222,7 @@ class FragmentLibro : Fragment() {
 //            }
 //        }
 //    }
+
     private fun setupViews() {
         with(fBinding) {
             BtnAgregar.setOnClickListener {

@@ -11,6 +11,8 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.libraryapproom.R
 import com.example.libraryapproom.api.ApiService
+import com.example.libraryapproom.api.dataClass.Borrow
+import com.example.libraryapproom.bd.entidades.PrestamosEntity
 import com.example.libraryapproom.bd.viewmodel.PrestamoViewModel
 import com.example.libraryapproom.databinding.FragmentPrestamoBinding
 import com.example.libraryapproom.fragments.adapter.PrestamosAdapter
@@ -52,7 +54,9 @@ class FragmentPrestamo : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
+        searchAllBorrows()
     }
+
 
     private fun setupViews() {
         with(vBinding){
@@ -77,31 +81,45 @@ class FragmentPrestamo : Fragment() {
     fun getRetrofit():Retrofit{
         return Retrofit
             .Builder()
-            .baseUrl("http://localhost:9091/")
+            .baseUrl("http://192.168.0.15:9091/borrows/")
             .client(OkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
-    //fun mostrarborrows(){
-    //CoroutineScope(Dispatchers.Main).launch {
-    // try {
-    //  val call = getRetrofit().create(ApiService::class.java).getBorrow("borrows/all")
-    //   if (call.isSuccessful){
-    //        val serviceTag:String = call.body()?.data?.serviceTag.toString()
-    //       val emblem: String = call.body()?.data?.emblemUrl.toString()
-    //    val backdrop: String = call.body()?.data?.backdropImageUrl.toString()
-    //    val gamer: String = call.body()?.additional?.parameters?.gamertag.toString()
-    //      binding.txtService.text = "Service tag: $serviceTag"
-    //      binding.txGamertag.text = "$gamer"
-    //       Picasso.get().load(emblem).into(binding.imgEmblem)
-    //      Picasso.get().load(backdrop).into(binding.ivBackDrop)
-    //   }
-    // }catch (ex: Exception){
+    private fun searchAllBorrows() {
+        var list: ArrayList<Borrow>
 
-    // }
-    //}
-    //}
+        CoroutineScope(Dispatchers.IO).launch {
+            var count:  Int = 0
+            val call = getRetrofit().create(ApiService::class.java).getAllBorrows()
+
+            list = call
+
+            list.forEach{_ ->
+                run {
+                    for (i in 0..list.lastIndex){
+                        var estudiante: String = list[i].student?.name.toString() + " " + list[i].student?.surname.toString()
+                        var libro: String = list[i].book?.name.toString()
+                        var fechaRetiro: String = list[i].takenDate.toString()
+                        var fechaEntrega: String = list[i].broughtDate.toString()
+                        var id: Int = (list[i].borrowId?.toInt() ?: Int) as Int
+                        var bookID = (list[i].bookId)
+                        var studentID = (list[i].studentId)
+
+                        val prestamo =
+                            PrestamosEntity(id, estudiante, studentID, libro, bookID, fechaRetiro, fechaEntrega)
+                        count++
+
+                        viewModel.agregarPrestamo(prestamo)
+                    }
+                }
+                if (count == list.size){
+                    return@launch
+                }
+            }
+        }
+    }
 
     private fun eliminarTodo() {
         val alerta = AlertDialog.Builder(requireContext())

@@ -15,15 +15,21 @@ data class PrestamosEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
 
-    @ColumnInfo(name = "estudiante")
-    val student_id: String,
+    @ColumnInfo(name = "student_name")
+    val student_name: String?,
 
-    @ColumnInfo(name = "libro")
-    val book_id: String,
+    @ColumnInfo(name = "student_id")
+    val student_id: Int?,
 
-    @ColumnInfo(name = "fechaRetiro")
+    @ColumnInfo(name = "book_name")
+    val book_name: String?,
+
+    @ColumnInfo(name = "book_id")
+    val book_id: Int?,
+
+    @ColumnInfo(name = "taken_date")
     val taken_date: String,
 
-    @ColumnInfo(name = "fechaEntrega")
+    @ColumnInfo(name = "brought_date")
     val brought_date: String
     ):Parcelable

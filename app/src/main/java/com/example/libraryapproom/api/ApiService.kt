@@ -20,6 +20,9 @@ interface ApiService {
     @GET("all")
     suspend fun getAllBooks(): ArrayList<Books>
 
+    @GET("all")
+    suspend fun getAllBorrows(): ArrayList<Borrow>
+
     @DELETE("delete/{id}")
     suspend fun deleteBook(@Path("id") id: Int?): Response<Void>
 

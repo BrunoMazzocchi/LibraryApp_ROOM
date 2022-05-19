@@ -38,8 +38,8 @@ RecyclerView.Adapter<PrestamosAdapter.PrestamosHolder>(){
         fun bind(prestamo: PrestamosEntity){
             with(binding){
                 TvId.text = prestamo.id.toString()
-                TvNombreLibro.text = prestamo.book_id
-                TvEstudiante.text = prestamo.student_id
+                TvNombreLibro.text = prestamo.book_name
+                TvEstudiante.text = prestamo.student_name
                 TvFechaRetiro.text = prestamo.taken_date
                 TvFechaEntrega.text = prestamo.brought_date
 

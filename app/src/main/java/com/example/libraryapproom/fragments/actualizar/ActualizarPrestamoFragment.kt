@@ -29,20 +29,20 @@ class ActualizarPrestamoFragment : Fragment() {
             ViewModelProvider(this).get(PrestamoViewModel::class.java)
 
         with(uBinding){
-            TxtLibro.setText(args.currentPrestamo.book_id)
-            TxtEstudiante.setText(args.currentPrestamo.student_id)
+            TxtLibro.setText(args.currentPrestamo.book_name)
+            TxtEstudiante.setText(args.currentPrestamo.student_name)
             TxtFechaRetiro.setText(args.currentPrestamo.taken_date)
             TxtFechaEntrega.setText(args.currentPrestamo.brought_date)
 
             BtnEditarP.setOnClickListener {
-                guardarCambios()
+                //guardarCambios()
             }
         }
         setHasOptionsMenu(true)
         return uBinding.root
     }
 
-    private fun guardarCambios() {
+    /*private fun guardarCambios() {
         val libro = uBinding.TxtLibro.text.toString()
         val est = uBinding.TxtEstudiante.text.toString()
         val fechaR = uBinding.TxtFechaRetiro.text.toString()
@@ -55,7 +55,7 @@ class ActualizarPrestamoFragment : Fragment() {
         Toast.makeText(requireContext(), "Registro actualizado",
             Toast.LENGTH_LONG).show()
         findNavController().navigate(R.id.listaPrestamo)
-    }
+    }*/
 
     override fun onCreateOptionsMenu(menu: Menu, inflater:
     MenuInflater

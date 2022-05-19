@@ -10,54 +10,125 @@
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp"
-    >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        >
 
-    <TextView
-        android:id="@+id/TvNombreLibro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="Nombre del libro"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/TvEstudiante"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Estudiante"
-        android:textStyle="bold"
-        android:layout_below="@+id/TvNombreLibro"
-        android:layout_marginStart="10dp"
-        />
-    <TextView
-        android:id="@+id/TvFechaRetiro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fecha R"
-        android:textStyle="bold"
-        android:layout_below="@+id/TvEstudiante"
-        android:layout_marginStart="10dp"
-        />
-    <TextView
-        android:id="@+id/TvFechaEntrega"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fecha E"
-        android:textStyle="bold"
-        android:layout_below="@+id/TvFechaRetiro"
-        android:layout_marginStart="10dp"
-        />
-    <TextView
-        android:id="@+id/TvId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ID"
-        android:textStyle="bold"
-        android:layout_below="@+id/TvFechaEntrega"
-        android:layout_marginStart="10dp"
-        />
+        <LinearLayout
+            android:id="@+id/linearlayout1"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/titulo1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Libro: "
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TvNombreLibro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Nombre del libro"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearlayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/linearlayout1">
+
+            <TextView
+                android:id="@+id/titulo2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estudiante: "
+                android:textStyle="bold"
+                android:textSize="16dp"/>
+
+            <TextView
+                android:id="@+id/TvEstudiante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Estudiante"
+                android:textStyle="bold"
+                android:textSize="16dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearlayout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/linearlayout2">
+
+            <TextView
+                android:id="@+id/titulo3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha Retiro: "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TvFechaRetiro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Fecha R"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearlayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/linearlayout3">
+
+            <TextView
+                android:id="@+id/titulo4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha Entrega: "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TvFechaEntrega"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Fecha E"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/linearlayout4">
+
+            <TextView
+                android:id="@+id/TvId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

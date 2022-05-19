@@ -15,6 +15,8 @@ import com.example.libraryapproom.api.ApiService
 import com.example.libraryapproom.api.dataClass.Author
 import com.example.libraryapproom.api.dataClass.Books
 import com.example.libraryapproom.api.dataClass.Type
+import com.example.libraryapproom.api.network.Common
+import com.example.libraryapproom.api.network.NetworkConnection
 import com.example.libraryapproom.bd.entidades.AuthorsEntity
 import com.example.libraryapproom.bd.entidades.LibrosModels
 import com.example.libraryapproom.bd.entidades.TypesEntity
@@ -36,6 +38,7 @@ class FragmentLibro : Fragment() {
     private lateinit var viewModel: LibrosViewModel
     private lateinit var viewModelAuthor: AutoresViewModel
     private lateinit var viewModelType: TypesViewModel
+    private lateinit var mService: ApiService
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -71,6 +74,8 @@ class FragmentLibro : Fragment() {
         setHasOptionsMenu(true)
         // searchByID(2)
 
+
+        mService = Common.retrofitService
         return fBinding.root
     }
 
@@ -78,22 +83,33 @@ class FragmentLibro : Fragment() {
         view: View, savedInstanceState:
         Bundle?
     ) {
-        searchAllBooks()
-        searchAllAuthors()
-        searchAllTypes()
+        checkInternet()
         super.onViewCreated(view, savedInstanceState)
         setupViews()
 
     }
 
+    private fun checkInternet(){
 
-    private fun getRetrofit(): Retrofit {
-        return Retrofit
-            .Builder()
-            .baseUrl("http://192.168.1.3:9091/")
-            .client(OkHttpClient())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        val networkConnection = NetworkConnection(requireContext())
+        networkConnection.observe(viewLifecycleOwner) { isConnected ->
+            if (isConnected) {
+                searchAllBooks()
+                searchAllAuthors()
+                searchAllTypes()
+            }
+            else {
+                // Show No internet connection message
+                Toast.makeText(
+                    requireContext(),
+                    "No internet connection",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
+            }
+
+
     }
 
     private fun searchByID(ID: Int) {
@@ -101,7 +117,7 @@ class FragmentLibro : Fragment() {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val call = getRetrofit().create(ApiService::class.java).getBook("$ID")
+            val call = mService.getBook("$ID")
 
             val books = call.body()
 
@@ -143,7 +159,7 @@ class FragmentLibro : Fragment() {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val call = getRetrofit().create(ApiService::class.java).getBook("$name")
+            val call = mService.getBook("$name")
 
             val books = call.body()
 
@@ -187,7 +203,7 @@ class FragmentLibro : Fragment() {
 
         CoroutineScope(Dispatchers.IO).launch {
             var count: Int = 0
-            val call = getRetrofit().create(ApiService::class.java).getAllBooks()
+            val call = mService.getAllBooks()
             list = call
 
             list.forEach { _ ->
@@ -228,7 +244,7 @@ class FragmentLibro : Fragment() {
 
         CoroutineScope(Dispatchers.IO).launch {
             var count: Int = 0
-            val call = getRetrofit().create(ApiService::class.java).getAllAuthors()
+            val call = mService.getAllAuthors()
             lista = call
 
             lista.forEach { _ ->
@@ -260,7 +276,7 @@ class FragmentLibro : Fragment() {
 
         CoroutineScope(Dispatchers.IO).launch {
             var count: Int = 0
-            val call = getRetrofit().create(ApiService::class.java).getAllType()
+            val call = mService.getAllType()
             lista = call
 
             lista.forEach { _ ->
@@ -296,19 +312,6 @@ class FragmentLibro : Fragment() {
             }
         }
     }
-
-    /*override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.search_bar, menu)
-    }*/
-
-    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.BtnBusqueda){
-
-        }
-
-        return super.onOptionsItemSelected(item)
-    }*/
-
 
 
     /* Eliminar todo */

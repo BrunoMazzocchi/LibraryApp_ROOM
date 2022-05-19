@@ -23,9 +23,6 @@ interface ApiService {
     @GET("author/all")
     suspend fun getAllAuthors(): ArrayList<Author>
 
-    @GET("genre/all")
-    suspend fun getAllGenre(): ArrayList<Type>
-
     @GET("type/all")
     suspend fun getAllType(): ArrayList<Type>
 

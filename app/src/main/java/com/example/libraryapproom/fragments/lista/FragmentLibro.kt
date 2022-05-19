@@ -41,10 +41,20 @@ class FragmentLibro : Fragment() {
         val adapter = LibrosAdapter()
         val recycleView = fBinding.RcvLibro
         recycleView.adapter = adapter
-        recycleView.layoutManager =
-            LinearLayoutManager(requireContext())
-        viewModel =
-            ViewModelProvider(this).get(LibrosViewModel::class.java)
+        recycleView.layoutManager = LinearLayoutManager(requireContext())
+
+
+
+
+        //Inicializando ViewModels
+
+        //AuthorsViewModels
+        viewModelAuthor =  ViewModelProvider(this).get(AutoresViewModel::class.java)
+
+        //BooksViewModel
+        viewModel = ViewModelProvider(this).get(LibrosViewModel::class.java)
+
+        //Llenando ReclyclerView
         viewModel.lista.observe(viewLifecycleOwner, Observer
         { libro ->
             adapter.setData(libro)
@@ -61,6 +71,7 @@ class FragmentLibro : Fragment() {
         Bundle?
     ) {
         searchAllBooks()
+        searchAllAuthors()
 
         super.onViewCreated(view, savedInstanceState)
         setupViews()

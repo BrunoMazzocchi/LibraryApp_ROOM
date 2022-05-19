@@ -3,8 +3,7 @@ package com.example.libraryapproom.fragments.lista
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
+
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -13,9 +12,15 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.libraryapproom.R
 import com.example.libraryapproom.api.ApiService
+import com.example.libraryapproom.api.dataClass.Author
 import com.example.libraryapproom.api.dataClass.Books
+import com.example.libraryapproom.api.dataClass.Type
+import com.example.libraryapproom.bd.entidades.AuthorsEntity
 import com.example.libraryapproom.bd.entidades.LibrosModels
+import com.example.libraryapproom.bd.entidades.TypesEntity
+import com.example.libraryapproom.bd.viewmodel.AutoresViewModel
 import com.example.libraryapproom.bd.viewmodel.LibrosViewModel
+import com.example.libraryapproom.bd.viewmodel.TypesViewModel
 import com.example.libraryapproom.databinding.FragmentLibroBinding
 import com.example.libraryapproom.fragments.adapter.LibrosAdapter
 import kotlinx.coroutines.CoroutineScope
@@ -29,6 +34,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class FragmentLibro : Fragment() {
     lateinit var fBinding: FragmentLibroBinding
     private lateinit var viewModel: LibrosViewModel
+    private lateinit var viewModelAuthor: AutoresViewModel
+    private lateinit var viewModelType: TypesViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,10 +45,24 @@ class FragmentLibro : Fragment() {
         val adapter = LibrosAdapter()
         val recycleView = fBinding.RcvLibro
         recycleView.adapter = adapter
-        recycleView.layoutManager =
-            LinearLayoutManager(requireContext())
-        viewModel =
-            ViewModelProvider(this).get(LibrosViewModel::class.java)
+        recycleView.layoutManager = LinearLayoutManager(requireContext())
+
+
+
+
+        //Inicializando ViewModels
+
+        //TypesViewModels
+
+        viewModelType = ViewModelProvider(this).get(TypesViewModel::class.java)
+
+        //AuthorsViewModels
+        viewModelAuthor =  ViewModelProvider(this).get(AutoresViewModel::class.java)
+
+        //BooksViewModel
+        viewModel = ViewModelProvider(this).get(LibrosViewModel::class.java)
+
+        //Llenando ReclyclerView
         viewModel.lista.observe(viewLifecycleOwner, Observer
         { libro ->
             adapter.setData(libro)
@@ -58,6 +79,8 @@ class FragmentLibro : Fragment() {
         Bundle?
     ) {
         searchAllBooks()
+        searchAllAuthors()
+        searchAllTypes()
         super.onViewCreated(view, savedInstanceState)
         setupViews()
 
@@ -67,7 +90,7 @@ class FragmentLibro : Fragment() {
     private fun getRetrofit(): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl("http://192.168.0.15:9091/books/")
+            .baseUrl("http://192.168.1.3:9091/")
             .client(OkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -131,12 +154,13 @@ class FragmentLibro : Fragment() {
                     val Autor = books?.author?.name.toString() + books?.author?.surname.toString()
                     val genero = books?.typeId.toString()
                     val paginas = books?.pageCount.toString()
-                    var autorID = books?.authorId
-                    var typeID = books?.typeId
                     var point = books?.point
 
+                    var autorID = books?.authorId
+                    var typeID = books?.typeId
+
                     val libro =
-                        LibrosModels(0, nombreLibro, Autor, genero, paginas, autorID, typeID, point)
+                        LibrosModels(0, nombreLibro, Autor, genero, paginas, point,autorID, typeID)
                     viewModel.agregarLibro(libro)
 
 
@@ -198,30 +222,71 @@ class FragmentLibro : Fragment() {
 
     }
 
-    //    private fun guardarLibros(){
-//
-//        CoroutineScope(Dispatchers.Main).launch {
-//            try{
-//
-//                val call=getRetrofit().create(ApiService::class.java).getBook("1")
-//
-//                if(call.isSuccessful){
-//                    val nombre = call.body()?.name.toString()
-//                    val autor = call.body()?.author.toString()
-//                    val genero = call.body()?.typeId.toString()
-//                    val paginas = call.body()?.pageCount.toString()
-//                    val libro = LibrosModels(0, nombre, autor, genero, paginas)
-//                    viewModel.agregarLibro(libro)
-//                }else{
-//                    Toast.makeText(activity,"No se ha encontrado un registro",Toast.LENGTH_SHORT).show()
-//                }
-//            }catch (ex:Exception){
-//                val msg = Toast.makeText(activity,"Error de conexion",Toast.LENGTH_LONG)
-//                msg.setGravity(Gravity.CENTER, 0,0)
-//                msg.show()
-//            }
-//        }
-//    }
+
+    private fun searchAllAuthors() {
+        var lista: ArrayList<Author>
+
+        CoroutineScope(Dispatchers.IO).launch {
+            var count: Int = 0
+            val call = getRetrofit().create(ApiService::class.java).getAllAuthors()
+            lista = call
+
+            lista.forEach { _ ->
+                run {
+                    for (i in 0..lista.lastIndex) {
+                        val idAuthor: Int = lista[i].authorId.toString().toInt()
+                        var name: String = lista[i].name.toString()
+                        val surname: String = lista[i].surname.toString()
+                        val author = AuthorsEntity(idAuthor, name,surname)
+                        count++
+
+                        viewModelAuthor.agregarAutores(author)
+
+                    }
+                }
+
+                if (count == lista.size) {
+                    return@launch
+                }
+
+            }
+        }
+
+
+    }
+
+    private fun searchAllTypes() {
+        var lista: ArrayList<Type>
+
+        CoroutineScope(Dispatchers.IO).launch {
+            var count: Int = 0
+            val call = getRetrofit().create(ApiService::class.java).getAllType()
+            lista = call
+
+            lista.forEach { _ ->
+                run {
+                    for (i in 0..lista.lastIndex) {
+                        val type_id: Int = lista[i].typeId.toString().toInt()
+                        var name: String = lista[i].name.toString()
+                        val type =TypesEntity (type_id, name)
+                        count++
+
+                        viewModelType.agregarTypes(type)
+
+                    }
+                }
+
+                if (count == lista.size) {
+                    return@launch
+                }
+
+            }
+        }
+
+
+    }
+
+
 
     private fun setupViews() {
         with(fBinding) {

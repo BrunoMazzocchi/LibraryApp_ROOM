@@ -16,17 +16,20 @@ data class LibrosModels(
     val ID:Int = 0,
     @ColumnInfo(name = "nombreLibro")
     val nombreLibro: String,
-    @ColumnInfo(name = "autorId")
+    @ColumnInfo(name = "autor")
     val Autor: String,
     @ColumnInfo(name = "genero")
     val genero: String,
     @ColumnInfo(name = "Paginas")
     val Paginas: String,
-    @ColumnInfo(name = "point")
-    val point: Int?,
-    @ColumnInfo(name = "TypeID")
-    val typeID: Int?,
     @ColumnInfo(name = "authorID")
     val authorID: Int?,
+
+    @ColumnInfo(name = "TypeID")
+    val typeID: Int?,
+    @ColumnInfo(name = "point")
+    val point: Int?,
+
+
 
     ): Parcelable

@@ -4,25 +4,30 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.libraryapproom.bd.entidades.AutoresEntity
+import com.example.libraryapproom.bd.entidades.AuthorsEntity
 import com.example.libraryapproom.bd.entidades.LibrosModels
 import com.example.libraryapproom.bd.entidades.PrestamosEntity
+import com.example.libraryapproom.bd.entidades.TypesEntity
+import java.lang.reflect.Type
 
 interface MainDataBaseProvider {
     fun librosDao(): LibrosDao
     fun prestamosDao(): PrestamosDao
     fun autoresDao(): AutoresDao
+    fun typesDao(): TypesDao
 }
 
 @Database(
-    entities = [LibrosModels::class, PrestamosEntity::class, AutoresEntity::class],
-    version = 11
+
+    entities = [LibrosModels::class, PrestamosEntity::class, AuthorsEntity::class, TypesEntity::class],
+    version = 14
 )
 abstract class MainBaseDatos : RoomDatabase(),
     MainDataBaseProvider {
     abstract override fun librosDao(): LibrosDao
     abstract override fun prestamosDao(): PrestamosDao
     abstract override fun autoresDao(): AutoresDao
+    abstract override fun typesDao(): TypesDao
     companion object {
         @Volatile
         private var INSTANCE: MainBaseDatos? = null

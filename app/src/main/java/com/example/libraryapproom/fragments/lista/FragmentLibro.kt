@@ -80,7 +80,7 @@ class FragmentLibro : Fragment() {
     ) {
         searchAllBooks()
         searchAllAuthors()
-
+        searchAllTypes()
         super.onViewCreated(view, savedInstanceState)
         setupViews()
 
@@ -271,7 +271,7 @@ class FragmentLibro : Fragment() {
                         val type =TypesEntity (type_id, name)
                         count++
 
-                        viewModelAuthor.agregarAutores(type)
+                        viewModelType.agregarTypes(type)
 
                     }
                 }

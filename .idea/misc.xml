@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/LibraryApp_ROOM/app/src/main/res/drawable/ic_add_24.xml" value="0.1" />
+        <entry key="..\:/LibraryApp_ROOM/app/src/main/res/drawable/ic_add_library.xml" value="0.1" />
+        <entry key="..\:/LibraryApp_ROOM/app/src/main/res/layout/fragment_libro.xml" value="0.15" />
         <entry key="..\:/LibraryApp_ROOM/app/src/main/res/layout/lista_libro.xml" value="0.5" />
         <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/layout/activity_main.xml" value="0.12409420289855072" />
         <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/layout/fragment_libro.xml" value="0.18" />

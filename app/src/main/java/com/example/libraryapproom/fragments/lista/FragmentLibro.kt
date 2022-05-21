@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -76,216 +77,216 @@ class FragmentLibro : Fragment() {
         view: View, savedInstanceState:
         Bundle?
     ) {
-//        searchAllBooks()
-//        searchAllAuthors()
-//        searchAllTypes()
+        searchAllBooks()
+        searchAllAuthors()
+        searchAllTypes()
         super.onViewCreated(view, savedInstanceState)
         setupViews()
 
     }
 
 
-//    private fun getRetrofit(): Retrofit {
-//        return Retrofit
-//            .Builder()
-//            .baseUrl("http://192.168.1.3:9091/")
-//            .client(OkHttpClient())
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//    }
+    private fun getRetrofit(): Retrofit {
+        return Retrofit
+            .Builder()
+            .baseUrl("http://192.168.1.3:9091/")
+            .client(OkHttpClient())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
 
-    //    private fun searchByID(ID: Int) {
-//
-//
-//        CoroutineScope(Dispatchers.IO).launch {
-//
-//            val call = getRetrofit().create(ApiService::class.java).getBook("$ID")
-//
-//            val books = call.body()
-//
-//
-//            try {
-//                if (call.isSuccessful) {
-//                    val nombreLibro = books?.name.toString()
-//                    val Autor = books?.author?.name.toString() + books?.author?.surname.toString()
-//                    val genero = books?.typeId.toString()
-//                    val paginas = books?.pageCount.toString()
-//                    var autorID = books?.authorId
-//                    var typeID = books?.typeId
-//                    var point = books?.point
-//
-//                    val libro =
-//                        LibrosModels(0, nombreLibro, Autor, genero, paginas, autorID, typeID, point)
-//                    viewModel.agregarLibro(libro)
-//
-//
-//                } else {
-//
-//                }
-//
-//
-//            } catch (ex: Exception) {
-//                val msg = Toast.makeText(activity, "Error de conexion + $ex", Toast.LENGTH_LONG)
-//                msg.setGravity(Gravity.CENTER, 0, 0)
-//                msg.show()
-//            }
-//
-//
-//        }
-//
-//
-//    }
-//
-//    private fun searchByID(name: String) {
-//
-//
-//        CoroutineScope(Dispatchers.IO).launch {
-//
-//            val call = getRetrofit().create(ApiService::class.java).getBook("$name")
-//
-//            val books = call.body()
-//
-//
-//            try {
-//                if (call.isSuccessful) {
-//                    val nombreLibro = books?.name.toString()
-//                    val Autor = books?.author?.name.toString() + books?.author?.surname.toString()
-//                    val genero = books?.typeId.toString()
-//                    val paginas = books?.pageCount.toString()
-//                    var point = books?.point
-//
-//                    var autorID = books?.authorId
-//                    var typeID = books?.typeId
-//
-//                    val libro =
-//                        LibrosModels(0, nombreLibro, Autor, genero, paginas, point,autorID, typeID)
-//                    viewModel.agregarLibro(libro)
-//
-//
-//                } else {
-//
-//                }
-//
-//
-//            } catch (ex: Exception) {
-//                val msg = Toast.makeText(activity, "Error de conexion + $ex", Toast.LENGTH_LONG)
-//                msg.setGravity(Gravity.CENTER, 0, 0)
-//                msg.show()
-//            }
-//
-//
-//        }
-//
-//
-//    }
-//
-//
-//    private fun searchAllBooks() {
-//        var list: ArrayList<Books>
-//
-//        CoroutineScope(Dispatchers.IO).launch {
-//            var count: Int = 0
-//            val call = getRetrofit().create(ApiService::class.java).getAllBooks()
-//            list = call
-//
-//            list.forEach { _ ->
-//                run {
-//                    for (i in 0..list.lastIndex) {
-//                        var nombre: String = list[i].name.toString()
-//                        val autor: String = list[i].author?.name.toString() + " " + list[i].author?.surname.toString()
-//                        val genero: String = list[i].type?.name.toString()
-//                        val paginas: String = list[i].pageCount.toString()
-//                        val id: Int = (list[i].bookId?.toInt() ?: Int) as Int
-//                        var autorID = (list[i].authorId)
-//                        var typeID = (list[i].typeId)
-//                        var point = (list[i].point)
-//                        val libro =
-//                            LibrosModels(id, nombre, autor, genero, paginas, autorID, typeID, point)
-//                        count++
-//
-//
-//
-//                        viewModel.agregarLibro(libro)
-//
-//                    }
-//                }
-//
-//                if (count == list.size) {
-//                    return@launch
-//                }
-//
-//            }
-//        }
-//
-//
-//    }
-//
-//
-//    private fun searchAllAuthors() {
-//        var lista: ArrayList<Author>
-//
-//        CoroutineScope(Dispatchers.IO).launch {
-//            var count: Int = 0
-//            val call = getRetrofit().create(ApiService::class.java).getAllAuthors()
-//            lista = call
-//
-//            lista.forEach { _ ->
-//                run {
-//                    for (i in 0..lista.lastIndex) {
-//                        val idAuthor: Int = lista[i].authorId.toString().toInt()
-//                        var name: String = lista[i].name.toString()
-//                        val surname: String = lista[i].surname.toString()
-//                        val author = AuthorsEntity(idAuthor, name,surname)
-//                        count++
-//
-//                        viewModelAuthor.agregarAutores(author)
-//
-//                    }
-//                }
-//
-//                if (count == lista.size) {
-//                    return@launch
-//                }
-//
-//            }
-//        }
-//
-//
-//    }
-//
-//    private fun searchAllTypes() {
-//        var lista: ArrayList<Type>
-//
-//        CoroutineScope(Dispatchers.IO).launch {
-//            var count: Int = 0
-//            val call = getRetrofit().create(ApiService::class.java).getAllType()
-//            lista = call
-//
-//            lista.forEach { _ ->
-//                run {
-//                    for (i in 0..lista.lastIndex) {
-//                        val type_id: Int = lista[i].typeId.toString().toInt()
-//                        var name: String = lista[i].name.toString()
-//                        val type =TypesEntity (type_id, name)
-//                        count++
-//
-//                        viewModelType.agregarTypes(type)
-//
-//                    }
-//                }
-//
-//                if (count == lista.size) {
-//                    return@launch
-//                }
-//
-//            }
-//        }
-//
-//
-//    }
-//
-//
-//
+    private fun searchByID(ID: Int) {
+
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val call = getRetrofit().create(ApiService::class.java).getBook("$ID")
+
+            val books = call.body()
+
+
+            try {
+                if (call.isSuccessful) {
+                    val nombreLibro = books?.name.toString()
+                    val Autor = books?.author?.name.toString() + books?.author?.surname.toString()
+                    val genero = books?.typeId.toString()
+                    val paginas = books?.pageCount.toString()
+                    var autorID = books?.authorId
+                    var typeID = books?.typeId
+                    var point = books?.point
+
+                    val libro =
+                        LibrosModels(0, nombreLibro, Autor, genero, paginas, autorID, typeID, point)
+                    viewModel.agregarLibro(libro)
+
+
+                } else {
+
+                }
+
+
+            } catch (ex: Exception) {
+                val msg = Toast.makeText(activity, "Error de conexion + $ex", Toast.LENGTH_LONG)
+                msg.setGravity(Gravity.CENTER, 0, 0)
+                msg.show()
+            }
+
+
+        }
+
+
+    }
+
+    private fun searchByID(name: String) {
+
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val call = getRetrofit().create(ApiService::class.java).getBook("$name")
+
+            val books = call.body()
+
+
+            try {
+                if (call.isSuccessful) {
+                    val nombreLibro = books?.name.toString()
+                    val Autor = books?.author?.name.toString() + books?.author?.surname.toString()
+                    val genero = books?.typeId.toString()
+                    val paginas = books?.pageCount.toString()
+                    var point = books?.point
+
+                    var autorID = books?.authorId
+                    var typeID = books?.typeId
+
+                    val libro =
+                        LibrosModels(0, nombreLibro, Autor, genero, paginas, point, autorID, typeID)
+                    viewModel.agregarLibro(libro)
+
+
+                } else {
+
+                }
+
+
+            } catch (ex: Exception) {
+                val msg = Toast.makeText(activity, "Error de conexion + $ex", Toast.LENGTH_LONG)
+                msg.setGravity(Gravity.CENTER, 0, 0)
+                msg.show()
+            }
+
+
+        }
+
+
+    }
+
+
+    private fun searchAllBooks() {
+        var list: ArrayList<Books>
+
+        CoroutineScope(Dispatchers.IO).launch {
+            var count: Int = 0
+            val call = getRetrofit().create(ApiService::class.java).getAllBooks()
+            list = call
+
+            list.forEach { _ ->
+                run {
+                    for (i in 0..list.lastIndex) {
+                        var nombre: String = list[i].name.toString()
+                        val autor: String =
+                            list[i].author?.name.toString() + " " + list[i].author?.surname.toString()
+                        val genero: String = list[i].type?.name.toString()
+                        val paginas: String = list[i].pageCount.toString()
+                        val id: Int = (list[i].bookId?.toInt() ?: Int) as Int
+                        var autorID = (list[i].authorId)
+                        var typeID = (list[i].typeId)
+                        var point = (list[i].point)
+                        val libro =
+                            LibrosModels(id, nombre, autor, genero, paginas, autorID, typeID, point)
+                        count++
+
+
+
+                        viewModel.agregarLibro(libro)
+
+                    }
+                }
+
+                if (count == list.size) {
+                    return@launch
+                }
+
+            }
+        }
+
+
+    }
+
+
+    private fun searchAllAuthors() {
+        var lista: ArrayList<Author>
+
+        CoroutineScope(Dispatchers.IO).launch {
+            var count: Int = 0
+            val call = getRetrofit().create(ApiService::class.java).getAllAuthors()
+            lista = call
+
+            lista.forEach { _ ->
+                run {
+                    for (i in 0..lista.lastIndex) {
+                        val idAuthor: Int = lista[i].authorId.toString().toInt()
+                        var name: String = lista[i].name.toString()
+                        val surname: String = lista[i].surname.toString()
+                        val author = AuthorsEntity(idAuthor, name, surname)
+                        count++
+
+                        viewModelAuthor.agregarAutores(author)
+
+                    }
+                }
+
+                if (count == lista.size) {
+                    return@launch
+                }
+
+            }
+        }
+
+
+    }
+
+    private fun searchAllTypes() {
+        var lista: ArrayList<Type>
+
+        CoroutineScope(Dispatchers.IO).launch {
+            var count: Int = 0
+            val call = getRetrofit().create(ApiService::class.java).getAllType()
+            lista = call
+
+            lista.forEach { _ ->
+                run {
+                    for (i in 0..lista.lastIndex) {
+                        val type_id: Int = lista[i].typeId.toString().toInt()
+                        var name: String = lista[i].name.toString()
+                        val type = TypesEntity(type_id, name)
+                        count++
+
+                        viewModelType.agregarTypes(type)
+
+                    }
+                }
+
+                if (count == lista.size) {
+                    return@launch
+                }
+
+            }
+        }
+
+
+    }
+
+
     private fun setupViews() {
         with(fBinding) {
             BtnAgregar.setOnClickListener {
@@ -294,7 +295,7 @@ class FragmentLibro : Fragment() {
             }
         }
     }
-}
+
     /*override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.search_bar, menu)
     }*/
@@ -306,31 +307,30 @@ class FragmentLibro : Fragment() {
 
         return super.onOptionsItemSelected(item)
     }*/
-//
-//
-//
-//    /* Eliminar todo */
-//    private fun eliminarTodo() {
-//        val alerta = AlertDialog.Builder(requireContext())
-//        alerta.setPositiveButton("Si") { _, _ ->
-//            viewModel.eliminarTodo()
-//            Toast.makeText(
-//                requireContext(),
-//                "Registros eliminados satisfactoriamente...",
-//                Toast.LENGTH_LONG
-//            ).show()
-//        }
-//        alerta.setNegativeButton("No") { _, _ ->
-//            Toast.makeText(
-//                requireContext(),
-//                "Operación cancelada...",
-//                Toast.LENGTH_LONG
-//            ).show()
-//        }
-//        alerta.setTitle("Eliminando todos los registro")
-//        alerta.setMessage("¿Esta seguro de eliminar los registros?")
-//        alerta.create().show()
-//    }
-//
-//
-//}
+
+
+    /* Eliminar todo */
+    private fun eliminarTodo() {
+        val alerta = AlertDialog.Builder(requireContext())
+        alerta.setPositiveButton("Si") { _, _ ->
+            viewModel.eliminarTodo()
+            Toast.makeText(
+                requireContext(),
+                "Registros eliminados satisfactoriamente...",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+        alerta.setNegativeButton("No") { _, _ ->
+            Toast.makeText(
+                requireContext(),
+                "Operación cancelada...",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+        alerta.setTitle("Eliminando todos los registro")
+        alerta.setMessage("¿Esta seguro de eliminar los registros?")
+        alerta.create().show()
+    }
+}
+
+

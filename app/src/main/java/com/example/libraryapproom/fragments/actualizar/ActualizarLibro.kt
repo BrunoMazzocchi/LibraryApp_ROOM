@@ -43,8 +43,8 @@ class ActualizarLibro : Fragment() {
         with(fBinding) {
 
             //Desactivado
-            /*populateSpinner()
-            populateSpinnerType()*/
+            populateSpinner()
+            populateSpinnerType()
 
             txtNombre.setText(args.currentLibro.nombreLibro)
             txtPaginas.setText(args.currentLibro.Paginas)
@@ -64,7 +64,7 @@ class ActualizarLibro : Fragment() {
     private fun getRetrofit(): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl("http://192.168.1.6:9091/")
+            .baseUrl("http://192.168.56.1:9091/")
             .client(OkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -124,7 +124,7 @@ class ActualizarLibro : Fragment() {
     private fun populateSpinnerType() {
         CoroutineScope(Dispatchers.IO).launch {
             var typeArray: MutableList<Type>
-            val call = getRetrofit().create(ApiService::class.java).getAllGenre()
+            val call = getRetrofit().create(ApiService::class.java).getAllType()
             typeArray = call
             var count: Int = 0
 

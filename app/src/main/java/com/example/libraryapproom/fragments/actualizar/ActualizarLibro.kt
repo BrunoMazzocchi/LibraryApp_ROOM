@@ -13,6 +13,8 @@ import com.example.libraryapproom.R
 import com.example.libraryapproom.api.ApiService
 import com.example.libraryapproom.api.dataClass.Author
 import com.example.libraryapproom.api.dataClass.Type
+import com.example.libraryapproom.api.network.Common
+import com.example.libraryapproom.api.network.NetworkConnection
 import com.example.libraryapproom.bd.entidades.LibrosModels
 import com.example.libraryapproom.bd.viewmodel.LibrosViewModel
 import com.example.libraryapproom.databinding.FragmentActualizarLibroBinding
@@ -28,6 +30,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ActualizarLibro : Fragment() {
+    lateinit var mService: ApiService
     lateinit var fBinding: FragmentActualizarLibroBinding
     private val args by navArgs<ActualizarLibroArgs>()
     private lateinit var viewModel: LibrosViewModel
@@ -41,15 +44,11 @@ class ActualizarLibro : Fragment() {
         viewModel = ViewModelProvider(this).get(LibrosViewModel::class.java)
 
         with(fBinding) {
+            mService = Common.retrofitService
 
-            //Desactivado
-            populateSpinner()
-            populateSpinnerType()
-
+            checkInternet()
             txtNombre.setText(args.currentLibro.nombreLibro)
             txtPaginas.setText(args.currentLibro.Paginas)
-
-
 
 
             btnGuardar.setOnClickListener {
@@ -61,19 +60,31 @@ class ActualizarLibro : Fragment() {
         return fBinding.root
     }
 
-    private fun getRetrofit(): Retrofit {
-        return Retrofit
-            .Builder()
-            .baseUrl("http://192.168.56.1:9091/")
-            .client(OkHttpClient())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+    private fun checkInternet(){
+
+        val networkConnection = NetworkConnection(requireContext())
+        networkConnection.observe(viewLifecycleOwner) { isConnected ->
+            if (isConnected) {
+                populateSpinner()
+                populateSpinnerType()
+
+            }
+            else {
+                // Show No internet connection message
+                Toast.makeText(
+                    requireContext(),
+                    "No internet connection",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
+        }
     }
 
     private fun populateSpinner() {
         CoroutineScope(Dispatchers.IO).launch {
             var authorArray: MutableList<Author>
-            val call = getRetrofit().create(ApiService::class.java).getAllAuthors()
+            val call = mService.getAllAuthors()
             authorArray = call
             var count: Int = 0
             var authorArrayFinal = mutableListOf<String>()
@@ -124,7 +135,8 @@ class ActualizarLibro : Fragment() {
     private fun populateSpinnerType() {
         CoroutineScope(Dispatchers.IO).launch {
             var typeArray: MutableList<Type>
-            val call = getRetrofit().create(ApiService::class.java).getAllType()
+
+            val call = mService.getAllType()
             typeArray = call
             var count: Int = 0
 
@@ -175,7 +187,7 @@ class ActualizarLibro : Fragment() {
     private fun deleteBook(ID: Int) {
         CoroutineScope(Dispatchers.IO).launch {
 
-            getRetrofit().create(ApiService::class.java).deleteBook(ID)
+            mService.deleteBook(ID)
 
         }
 
@@ -203,7 +215,7 @@ class ActualizarLibro : Fragment() {
         val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
 
         CoroutineScope(Dispatchers.IO).launch {
-            getRetrofit().create(ApiService::class.java).editABook(requestBody)
+            mService.editABook(requestBody)
 
 
         }

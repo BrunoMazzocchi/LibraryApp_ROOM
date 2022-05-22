@@ -14,7 +14,7 @@ interface TypesDao {
     suspend fun insert(vararg types: TypesEntity)
 
     @Query("SELECT * FROM TblType")
-    suspend fun getAll(): List<TypesEntity>
+    suspend fun getAllTypes(): List<TypesEntity>
 
     @Query("SELECT * FROM TblType")
     fun getAllRealData(): LiveData<List<TypesEntity>>

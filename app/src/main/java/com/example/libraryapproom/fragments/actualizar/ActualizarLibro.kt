@@ -63,7 +63,7 @@ class ActualizarLibro : Fragment() {
     private fun getRetrofit(): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl("http://192.168.1.3:9091/")
+            .baseUrl("http://192.168.1.6:9091/")
             .client(OkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -75,7 +75,6 @@ class ActualizarLibro : Fragment() {
             val call = getRetrofit().create(ApiService::class.java).getAllAuthors()
             authorArray = call
             var count: Int = 0
-
             var authorArrayFinal = mutableListOf<String>()
             authorArray.forEach { _ ->
 
@@ -85,7 +84,7 @@ class ActualizarLibro : Fragment() {
                         var nombre: String = authorArray[i].name.toString()
                         var surname: String = authorArray[i].surname.toString()
 
-                        var author: String = " $autorID - $nombre -  $surname"
+                        var author = " $autorID - $nombre -  $surname"
 
                         authorArrayFinal.add(author)
 
@@ -105,7 +104,7 @@ class ActualizarLibro : Fragment() {
                         )
                     }
                     listView.adapter = arrayAdapter
-                    var id = args.currentLibro.authorID
+                    var id = args.currentLibro.author_ID
 
 
                     if (id != null) {
@@ -135,8 +134,7 @@ class ActualizarLibro : Fragment() {
                     for (i in 0..typeArray.lastIndex) {
                         var typeID: Int? = typeArray[i].typeId
                         var nombre: String = typeArray[i].name.toString()
-
-                        var genero: String = " $typeID - $nombre"
+                        var genero = " $typeID - $nombre"
 
                         typeArrayFinal.add(genero)
 
@@ -156,7 +154,7 @@ class ActualizarLibro : Fragment() {
                         )
                     }
                     listView.adapter = arrayAdapter
-                    var id = args.currentLibro.typeID
+                    var id = args.currentLibro.Type_ID
 
 
                     if (id != null) {
@@ -237,17 +235,15 @@ class ActualizarLibro : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.mnuEliminar) {
-            eliminarClasificacion()
+            deleteBook()
         }
         return super.onOptionsItemSelected(item)
     }
 
     //Hacer refactor y renombrar correctamente
-    private fun eliminarClasificacion() {
+    private fun deleteBook() {
         val alerta = AlertDialog.Builder(requireContext())
         alerta.setPositiveButton("Si") { _, _ ->
-
-            viewModel.eliminarLibro(args.currentLibro)
             deleteBook(args.currentLibro.ID)
             Toast.makeText(
                 requireContext(),

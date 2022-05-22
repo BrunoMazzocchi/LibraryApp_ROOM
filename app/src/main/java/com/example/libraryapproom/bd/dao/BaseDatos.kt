@@ -8,8 +8,7 @@ import com.example.libraryapproom.bd.entidades.AuthorsEntity
 import com.example.libraryapproom.bd.entidades.LibrosModels
 import com.example.libraryapproom.bd.entidades.PrestamosEntity
 import com.example.libraryapproom.bd.entidades.TypesEntity
-import com.example.libraryapproom.bd.entidades.vistas.libroView
-import java.lang.reflect.Type
+import com.example.libraryapproom.bd.entidades.vistas.view_books
 
 interface MainDataBaseProvider {
     fun librosDao(): LibrosDao
@@ -21,8 +20,9 @@ interface MainDataBaseProvider {
 @Database(
 
     entities = [LibrosModels::class, PrestamosEntity::class, AuthorsEntity::class, TypesEntity::class],
-    //views = [libroView::class],
-    version = 14
+    views = [view_books::class],
+    version = 21
+
 )
 abstract class MainBaseDatos : RoomDatabase(),
     MainDataBaseProvider {

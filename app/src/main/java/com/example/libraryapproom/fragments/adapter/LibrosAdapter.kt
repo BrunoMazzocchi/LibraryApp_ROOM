@@ -7,15 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.libraryapproom.R
 import com.example.libraryapproom.bd.entidades.LibrosModels
 import com.example.libraryapproom.bd.entidades.PrestamosEntity
+import com.example.libraryapproom.bd.entidades.vistas.view_books
 import com.example.libraryapproom.databinding.ListaLibroBinding
 import com.example.libraryapproom.fragments.lista.FragmentLibroDirections
 
 class LibrosAdapter: RecyclerView.Adapter<LibrosAdapter.LibroHolder>() {
-    var listado  = emptyList<LibrosModels>()
+    var listado:List<view_books>  = emptyList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType:
     Int): LibroHolder {
-        val binding =
-            ListaLibroBinding.inflate(
+        val binding = ListaLibroBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent, false)
         return LibroHolder(binding)
@@ -25,25 +25,22 @@ class LibrosAdapter: RecyclerView.Adapter<LibrosAdapter.LibroHolder>() {
         holder.bind(listado[position])
 
     override fun getItemCount(): Int = listado.size
-    fun setData(libro: List<LibrosModels>) {
+    fun setData(libro: List<view_books>) {
         this.listado = libro
         notifyDataSetChanged()
     }
 
-    inner class LibroHolder(val binding: ListaLibroBinding)
-        :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(libro: LibrosModels) {
+    inner class LibroHolder(val binding: ListaLibroBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(libroVW: view_books) {
             with(binding) {
-                TvId.text = libro.ID.toString()
-                TvName.text = libro.nombreLibro
-                TvAuthor.text = libro.Autor
-                TvGenre.text = libro.genero
-                TvPageCount.text = libro.Paginas
+                TvId.text = libroVW.ID.toString()
+                TvName.text = libroVW.nombreLibro
+                TvAuthor.text = libroVW.autorName
+                TvGenre.text = libroVW.typeName
+                TvPageCount.text = libroVW.Paginas
 
                 ClFila.setOnClickListener {
-                    val action =
-                        FragmentLibroDirections.irAActualizarlibro(libro)
+                    val action = FragmentLibroDirections.irAActualizarlibro(libroVW)
                     it.findNavController().navigate(action)
                 }
             }

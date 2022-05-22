@@ -1,11 +1,16 @@
 package com.example.libraryapproom.bd.entidades.relaciones
 
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.Embedded
+import androidx.room.Relation
+import com.example.libraryapproom.bd.entidades.AuthorsEntity
+import com.example.libraryapproom.bd.entidades.LibrosModels
 
 
-@Transaction
-@Query("Select * from tblautores")
-fun obtenerLibrosYAutores(): List<LibroAutor> {
-    return obtenerLibrosYAutores()
-}
+data class librosConAutores(
+    @Embedded val autores: AuthorsEntity,
+    @Relation(
+        parentColumn = "autorId",
+        entityColumn = "autorId"
+    )
+    val book: List<LibrosModels>
+)

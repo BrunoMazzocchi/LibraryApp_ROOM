@@ -24,7 +24,6 @@ data class LibrosModels(
     val Paginas: String,
     @ColumnInfo(name = "authorID")
     val authorID: Int?,
-
     @ColumnInfo(name = "TypeID")
     val typeID: Int?,
     @ColumnInfo(name = "point")

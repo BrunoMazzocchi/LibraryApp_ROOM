@@ -11,7 +11,7 @@ interface AutoresDao {
     suspend fun insert(vararg autores: AuthorsEntity)
 
     @Query("SELECT * FROM TblAutores")
-    suspend fun getAll(): List<AuthorsEntity>
+    suspend fun getAllAuthors(): List<AuthorsEntity>
 
     @Query("SELECT * FROM TblAutores")
     fun getAllRealData(): LiveData<List<AuthorsEntity>>

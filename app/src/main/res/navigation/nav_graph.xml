@@ -30,9 +30,9 @@
         android:name="com.example.libraryapproom.fragments.actualizar.ActualizarLibro"
         android:label="fragment_actualizar_libro"
         tools:layout="@layout/fragment_actualizar_libro" >
-        <argument android:name="currentLibro"
-            app:argType="com.example.libraryapproom.bd.entidades.LibrosModels" />
-        />
+        <argument
+            android:name="currentLibro"
+            app:argType="com.example.libraryapproom.bd.entidades.vistas.view_books" />
     </fragment>
     <fragment
         android:id="@+id/addPrestamoFragment"

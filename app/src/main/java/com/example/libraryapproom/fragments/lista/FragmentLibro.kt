@@ -62,6 +62,8 @@ class FragmentLibro : Fragment() {
         viewModel = ViewModelProvider(this).get(LibrosViewModel::class.java)
 
         //Llenando ReclyclerView
+
+
         viewModel.lista.observe(viewLifecycleOwner, Observer
         { libro ->
             adapter.setData(libro)
@@ -89,7 +91,7 @@ class FragmentLibro : Fragment() {
     private fun getRetrofit(): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl("http://192.168.1.3:9091/")
+            .baseUrl("http://192.168.1.6:9091/")
             .client(OkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()

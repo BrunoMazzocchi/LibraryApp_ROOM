@@ -23,6 +23,8 @@ interface ApiService {
     @GET("all")
     suspend fun getAllBorrows(): ArrayList<Borrow>
 
+    @POST("books/save")
+    suspend fun addABook(@Body requestBody: RequestBody):Response<ResponseBody>
 
     @GET("author/all")
     suspend fun getAllAuthors(): ArrayList<Author>

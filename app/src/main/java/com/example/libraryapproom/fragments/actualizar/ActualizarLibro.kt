@@ -42,8 +42,9 @@ class ActualizarLibro : Fragment() {
 
         with(fBinding) {
 
-            populateSpinner()
-            populateSpinnerType()
+            //Desactivado
+            /*populateSpinner()
+            populateSpinnerType()*/
 
             txtNombre.setText(args.currentLibro.nombreLibro)
             txtPaginas.setText(args.currentLibro.Paginas)

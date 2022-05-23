@@ -15,6 +15,7 @@ interface MainDataBaseProvider {
     fun prestamosDao(): PrestamosDao
     fun autoresDao(): AutoresDao
     fun typesDao(): TypesDao
+    fun estudiantesDao(): EstudiantesDao
 }
 
 @Database(
@@ -30,6 +31,7 @@ abstract class MainBaseDatos : RoomDatabase(),
     abstract override fun prestamosDao(): PrestamosDao
     abstract override fun autoresDao(): AutoresDao
     abstract override fun typesDao(): TypesDao
+    abstract override fun estudiantesDao(): EstudiantesDao
     companion object {
         @Volatile
         private var INSTANCE: MainBaseDatos? = null

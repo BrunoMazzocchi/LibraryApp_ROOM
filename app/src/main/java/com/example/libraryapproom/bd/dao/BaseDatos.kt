@@ -9,6 +9,7 @@ import com.example.libraryapproom.bd.entidades.LibrosModels
 import com.example.libraryapproom.bd.entidades.PrestamosEntity
 import com.example.libraryapproom.bd.entidades.TypesEntity
 import com.example.libraryapproom.bd.entidades.vistas.view_books
+import com.example.libraryapproom.bd.entidades.vistas.view_borrows
 
 interface MainDataBaseProvider {
     fun librosDao(): LibrosDao
@@ -21,7 +22,7 @@ interface MainDataBaseProvider {
 @Database(
 
     entities = [LibrosModels::class, PrestamosEntity::class, AuthorsEntity::class, TypesEntity::class],
-    views = [view_books::class],
+    views = [view_books::class, view_borrows::class],
     version = 21
 
 )

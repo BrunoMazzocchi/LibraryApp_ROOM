@@ -134,7 +134,7 @@ class FragmentLibro : Fragment() {
                     var point = books?.point
 
                     val libro =
-                        LibrosModels(0, nombreLibro, Autor, genero, paginas, autorID, typeID, point)
+                        LibrosModels(0, nombreLibro, paginas, autorID, typeID, point)
                     viewModel.agregarLibro(libro)
 
 
@@ -177,7 +177,7 @@ class FragmentLibro : Fragment() {
                     var typeID = books?.typeId
 
                     val libro =
-                        LibrosModels(0, nombreLibro, Autor, genero, paginas, point, autorID, typeID)
+                        LibrosModels(0, nombreLibro, paginas, point, autorID, typeID)
                     viewModel.agregarLibro(libro)
 
 
@@ -220,7 +220,7 @@ class FragmentLibro : Fragment() {
                         var typeID = (list[i].typeId)
                         var point = (list[i].point)
                         val libro =
-                            LibrosModels(id, nombre, autor, genero, paginas, autorID, typeID, point)
+                            LibrosModels(id, nombre, paginas, autorID, typeID, point)
                         count++
 
 

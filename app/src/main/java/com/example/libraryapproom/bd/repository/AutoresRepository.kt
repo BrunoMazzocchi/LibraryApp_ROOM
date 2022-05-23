@@ -7,8 +7,7 @@ import com.example.libraryapproom.bd.entidades.AuthorsEntity
 
 class AutoresRepository(private val dao: AutoresDao) {
 
-    val listado: LiveData<List<AuthorsEntity>> =
-        dao.getAllRealData()
+    val listado: LiveData<List<AuthorsEntity>> = dao.getAllRealData()
 
     suspend fun addAutores(autors: AuthorsEntity) {
         dao.insert(autors)

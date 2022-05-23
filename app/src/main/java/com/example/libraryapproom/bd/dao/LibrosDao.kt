@@ -26,4 +26,13 @@ interface LibrosDao {
 
     @Query("Delete from LibrosModels")
     suspend fun deleteAll()
+
+
+    //SPINERS
+    @Query("SELECT autorId FROM TblAutores where autorId= :nameA")
+    suspend fun getByStringAutores(nameA: Int): Int
+
+    @Query("SELECT type_id FROM TblType where type_id= :nameType")
+    suspend fun getByStringType(nameType: Int): Int
+
 }

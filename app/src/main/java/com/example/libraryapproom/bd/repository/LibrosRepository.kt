@@ -11,15 +11,16 @@ import com.example.libraryapproom.bd.entidades.vistas.view_books
 
 class LibrosRepository(
     private val dao: LibrosDao,
-val daoTp: TypesDao,
-val daoAu: AutoresDao) {
+    val daoTp: TypesDao,
+    val daoAu: AutoresDao
+) {
     val listadoAll: LiveData<List<view_books>> = dao.getAllRealData()
 
-    suspend fun types(): List<TypesEntity>{
+    suspend fun types(): List<TypesEntity> {
         return daoTp.getAllTypes()
     }
 
-    suspend fun authors(): List<AuthorsEntity>{
+    suspend fun authors(): List<AuthorsEntity> {
         return daoAu.getAllAuthors()
     }
 
@@ -38,5 +39,13 @@ val daoAu: AutoresDao) {
 
     suspend fun deleteAll() {
         dao.deleteAll()
+    }
+
+    suspend fun getAuthorByName(aut: Int): Int {
+        return dao.getByStringAutores(aut)
+    }
+
+    suspend fun getTypeByName(type: Int) {
+        dao.getByStringType(type)
     }
 }

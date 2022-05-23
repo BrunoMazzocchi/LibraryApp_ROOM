@@ -1,6 +1,7 @@
 package com.example.libraryapproom.fragments.agregar
 
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,13 @@ import com.example.libraryapproom.api.dataClass.Author
 import com.example.libraryapproom.api.dataClass.Type
 import com.example.libraryapproom.api.network.Common
 import com.example.libraryapproom.api.network.NetworkConnection
+import com.example.libraryapproom.bd.dao.AutoresDao
+import com.example.libraryapproom.bd.dao.LibrosDao
+import com.example.libraryapproom.bd.dao.MainBaseDatos
+import com.example.libraryapproom.bd.dao.TypesDao
+import com.example.libraryapproom.bd.entidades.AuthorsEntity
 import com.example.libraryapproom.bd.entidades.LibrosModels
+import com.example.libraryapproom.bd.entidades.TypesEntity
 import com.example.libraryapproom.bd.viewmodel.LibrosViewModel
 import com.example.libraryapproom.databinding.FragmentAddlibroBinding
 import kotlinx.android.synthetic.main.fragment_actualizar_libro.*
@@ -43,8 +50,7 @@ class FragmentAddlibro: Fragment() {
             guardarRegistro()
         }
         mService = Common.retrofitService
-
-        checkInternet()
+        initSpinner(requireContext())
         return fBinding.root
     }
 
@@ -54,8 +60,8 @@ class FragmentAddlibro: Fragment() {
         val networkConnection = NetworkConnection(requireContext())
         networkConnection.observe(viewLifecycleOwner) { isConnected ->
             if (isConnected) {
-                populateSpinner()
-                populateSpinnerType()
+                /*populateSpinner()
+                populateSpinnerType()*/
 
             }
             else {
@@ -95,7 +101,7 @@ class FragmentAddlibro: Fragment() {
                 }
                 if (count == authorArray.size) {
 
-                    var listView = fBinding.txtAutor
+                    var listView = fBinding.spAutor
 
                     var arrayAdapter = activity?.let {
                         ArrayAdapter(
@@ -140,7 +146,7 @@ class FragmentAddlibro: Fragment() {
                 }
                 if (count == typeArrayFinal.size) {
 
-                    var listView = fBinding.txtGenero
+                    var listView = fBinding.spType
 
                     var arrayAdapter = activity?.let {
                         ArrayAdapter(
@@ -168,8 +174,8 @@ class FragmentAddlibro: Fragment() {
     private fun guardarRegistro() {
         val nombre = fBinding.txtNombre.text.toString()
         val Paginas = fBinding.txtPaginas.text.toString()
-        var authorID = txtAutor.selectedItemPosition + 1
-        var generoID = txtGenero.selectedItemPosition + 1
+        var authorID = fBinding.spAutor.selectedItemPosition.toString().toInt()
+        var typeID = fBinding.spType.selectedItemPosition.toString().toInt()
         var point = 0
         var id: Int = 0
 
@@ -179,22 +185,24 @@ class FragmentAddlibro: Fragment() {
         jsonObject.put("pageCount", Paginas.toInt())
         jsonObject.put("point", point)
         jsonObject.put("authorId", authorID)
-        jsonObject.put("typeId", generoID)
+        jsonObject.put("typeId", typeID)
 
         val jsonObjectString = jsonObject.toString()
         val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
-
+        val db: MainBaseDatos = MainBaseDatos.getDataBase(requireContext().applicationContext)
+        val daoB: LibrosDao = db.librosDao()
         CoroutineScope(Dispatchers.IO).launch {
             mService.addABook(requestBody)
 
+            val idType = daoB.getByStringType(typeID)
+            val idAuthor = daoB.getByStringAutores(authorID)
 
+            var book = LibrosModels(0, nombre, Paginas, authorID, typeID, 100)
+
+            viewModel.agregarLibro(book)
         }
 
-        var book =
-            LibrosModels(id, nombre, "", "", Paginas, authorID, generoID, point)
 
-        //Actualizar
-        viewModel.agregarLibro(book)
         Toast.makeText(
             requireContext(), "Registro actualizado",
             Toast.LENGTH_LONG
@@ -202,6 +210,37 @@ class FragmentAddlibro: Fragment() {
 
 
         findNavController().navigate(R.id.ir_a_listalibro)
+    }
+
+    private fun initSpinner(context: Context){
+        val db: MainBaseDatos = MainBaseDatos.getDataBase(context)
+        val daoA: AutoresDao = db.autoresDao()
+        val daoT: TypesDao = db.typesDao()
+
+        //ArrayList de los spinners
+        var arrayAuthor:ArrayList<String> = arrayListOf("Autores..")
+        var arrayType:ArrayList<String> = arrayListOf("Genero..")
+
+        CoroutineScope(Dispatchers.Main).launch {
+            var listaAutor: List<AuthorsEntity> = daoA.getAllAuthors()
+            val listaType: List<TypesEntity> = daoT.getAllTypes()
+
+            //Llenando spinners
+            listaAutor.forEach {
+                arrayAuthor.add(it.name)
+            }
+
+            listaType.forEach {
+                arrayType.add(it.name)
+            }
+        }
+
+        val adapterAutor: ArrayAdapter<String> = ArrayAdapter<String>(context,R.layout.spinner_item, arrayAuthor)
+        fBinding.spAutor.adapter = adapterAutor
+
+        val adapterType: ArrayAdapter<String> = ArrayAdapter<String>(context,R.layout.spinner_item, arrayType)
+        fBinding.spType.adapter = adapterType
+
     }
 
 }

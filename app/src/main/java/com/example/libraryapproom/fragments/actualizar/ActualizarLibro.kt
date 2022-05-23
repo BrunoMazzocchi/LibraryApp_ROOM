@@ -45,8 +45,8 @@ class ActualizarLibro : Fragment() {
 
         with(fBinding) {
             mService = Common.retrofitService
-
-            checkInternet()
+            populateSpinner()
+            populateSpinnerType()
             txtNombre.setText(args.currentLibro.nombreLibro)
             txtPaginas.setText(args.currentLibro.Paginas)
 
@@ -65,8 +65,7 @@ class ActualizarLibro : Fragment() {
         val networkConnection = NetworkConnection(requireContext())
         networkConnection.observe(viewLifecycleOwner) { isConnected ->
             if (isConnected) {
-                populateSpinner()
-                populateSpinnerType()
+
 
             }
             else {
@@ -220,14 +219,10 @@ class ActualizarLibro : Fragment() {
 
         }
 
-        var book =
-            LibrosModels(id, nombre, Autor.toString(), Genero.toString(), Paginas, point, authorID, generoID)
+        var book = LibrosModels(id, nombre, Paginas,authorID , generoID, point)
         //Crear el objeto
         val libro =
-            LibrosModels(
-                args.currentLibro.ID,
-                nombre, Autor.toString(), Genero.toString(), Paginas, authorID, generoID, point
-            )
+            LibrosModels(args.currentLibro.ID, nombre, Paginas,authorID , generoID, point)
         //Actualizar
         viewModel.actualizarLibro(libro)
         Toast.makeText(

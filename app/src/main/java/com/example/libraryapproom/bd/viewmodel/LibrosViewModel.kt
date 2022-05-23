@@ -69,7 +69,19 @@ class LibrosViewModel (application: Application): AndroidViewModel(application) 
         }
     }
 
-    fun agregarTodosLosLibros(){
 
+    fun getAuthorByName(au: Int): Int{
+        var x = 0
+        viewModelScope.launch(Dispatchers.IO){
+            x = repository.getAuthorByName(au).toInt()
+        }
+
+        return x
+    }
+
+    fun getTypeByName(type:Int){
+        viewModelScope.launch(Dispatchers.IO){
+            repository.getTypeByName(type)
+        }
     }
 }

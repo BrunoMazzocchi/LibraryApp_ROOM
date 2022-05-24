@@ -26,6 +26,7 @@ import com.example.libraryapproom.bd.viewmodel.LibrosViewModel
 import com.example.libraryapproom.bd.viewmodel.TypesViewModel
 import com.example.libraryapproom.databinding.FragmentLibroBinding
 import com.example.libraryapproom.fragments.adapter.LibrosAdapter
+import com.example.libraryapproom.fragments.agregar.FragmentAddlibro
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -311,6 +312,7 @@ class FragmentLibro : Fragment() {
 
                 it.findNavController().navigate(R.id.action_global_fragmentAddlibro)
             }
+
         }
     }
 

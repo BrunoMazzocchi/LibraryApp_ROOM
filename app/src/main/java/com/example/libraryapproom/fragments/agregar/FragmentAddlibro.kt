@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.libraryapproom.R
 import com.example.libraryapproom.api.ApiService
 import com.example.libraryapproom.api.dataClass.Author
+import com.example.libraryapproom.api.dataClass.Books
 import com.example.libraryapproom.api.dataClass.Type
 import com.example.libraryapproom.api.network.Common
 import com.example.libraryapproom.api.network.NetworkConnection
@@ -46,130 +47,51 @@ class FragmentAddlibro: Fragment() {
 // Inflate the layout for this fragment
         fBinding = FragmentAddlibroBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this).get(LibrosViewModel::class.java)
+        checkInternet()
         fBinding.btnGuardar.setOnClickListener {
-            guardarRegistro()
+            guardarRegistroOffline()
+
         }
+
         mService = Common.retrofitService
         initSpinner(requireContext())
         return fBinding.root
     }
 
 
-    private fun checkInternet(){
 
-        val networkConnection = NetworkConnection(requireContext())
-        networkConnection.observe(viewLifecycleOwner) { isConnected ->
-            if (isConnected) {
-                /*populateSpinner()
-                populateSpinnerType()*/
 
+
+    private fun initSpinner(context: Context){
+        val db: MainBaseDatos = MainBaseDatos.getDataBase(context)
+        val daoA: AutoresDao = db.autoresDao()
+        val daoT: TypesDao = db.typesDao()
+
+        //ArrayList de los spinners
+        var arrayAuthor:ArrayList<String> = arrayListOf("Autores..")
+        var arrayType:ArrayList<String> = arrayListOf("Genero..")
+
+        CoroutineScope(Dispatchers.Main).launch {
+            var listaAutor: List<AuthorsEntity> = daoA.getAllAuthors()
+            val listaType: List<TypesEntity> = daoT.getAllTypes()
+
+            //Llenando spinners
+            listaAutor.forEach {
+                arrayAuthor.add(it.name)
             }
-            else {
-                // Show No internet connection message
-                Toast.makeText(
-                    requireContext(),
-                    "No internet connection",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
 
+            listaType.forEach {
+                arrayType.add(it.name)
+            }
         }
+
+        val adapterAutor: ArrayAdapter<String> = ArrayAdapter<String>(context,R.layout.spinner_item, arrayAuthor)
+        fBinding.spAutor.adapter = adapterAutor
+
+        val adapterType: ArrayAdapter<String> = ArrayAdapter<String>(context,R.layout.spinner_item, arrayType)
+        fBinding.spType.adapter = adapterType
+
     }
-
-    private fun populateSpinner() {
-        CoroutineScope(Dispatchers.IO).launch {
-            var authorArray: MutableList<Author>
-            val call = mService.getAllAuthors()
-            authorArray = call
-            var count: Int = 0
-            var authorArrayFinal = mutableListOf<String>()
-            authorArray.forEach { _ ->
-
-                run {
-                    for (i in 0..authorArray.lastIndex) {
-                        var autorID: Int? = authorArray[i].authorId
-                        var nombre: String = authorArray[i].name.toString()
-                        var surname: String = authorArray[i].surname.toString()
-
-                        var author = " $autorID - $nombre -  $surname"
-
-                        authorArrayFinal.add(author)
-
-                        count++
-
-                    }
-                }
-                if (count == authorArray.size) {
-
-                    var listView = fBinding.spAutor
-
-                    var arrayAdapter = activity?.let {
-                        ArrayAdapter(
-                            it,
-                            android.R.layout.simple_list_item_1,
-                            authorArrayFinal
-                        )
-                    }
-                    listView.adapter = arrayAdapter
-                    return@launch
-                }
-
-
-            }
-
-
-        }
-    }
-
-    private fun populateSpinnerType() {
-        CoroutineScope(Dispatchers.IO).launch {
-            var typeArray: MutableList<Type>
-
-            val call = mService.getAllType()
-            typeArray = call
-            var count: Int = 0
-
-            var typeArrayFinal = mutableListOf<String>()
-            typeArray.forEach { _ ->
-
-                run {
-                    for (i in 0..typeArray.lastIndex) {
-                        var typeID: Int? = typeArray[i].typeId
-                        var nombre: String = typeArray[i].name.toString()
-                        var genero = " $typeID - $nombre"
-
-                        typeArrayFinal.add(genero)
-
-                        count++
-
-                    }
-                }
-                if (count == typeArrayFinal.size) {
-
-                    var listView = fBinding.spType
-
-                    var arrayAdapter = activity?.let {
-                        ArrayAdapter(
-                            it,
-                            android.R.layout.simple_list_item_1,
-                            typeArrayFinal
-                        )
-                    }
-                    listView.adapter = arrayAdapter
-
-                    return@launch
-                }
-
-
-            }
-
-
-        }
-    }
-
-
-
-
 
     private fun guardarRegistro() {
         val nombre = fBinding.txtNombre.text.toString()
@@ -211,37 +133,144 @@ class FragmentAddlibro: Fragment() {
 
         findNavController().navigate(R.id.ir_a_listalibro)
     }
+    var noInternetArray = mutableListOf<LibrosModels>()
 
-    private fun initSpinner(context: Context){
-        val db: MainBaseDatos = MainBaseDatos.getDataBase(context)
-        val daoA: AutoresDao = db.autoresDao()
-        val daoT: TypesDao = db.typesDao()
+    fun checkInternet(){
 
-        //ArrayList de los spinners
-        var arrayAuthor:ArrayList<String> = arrayListOf("Autores..")
-        var arrayType:ArrayList<String> = arrayListOf("Genero..")
+        val networkConnection = NetworkConnection(requireContext())
+        networkConnection.observe(viewLifecycleOwner) { isConnected ->
+            if (isConnected) {
 
-        CoroutineScope(Dispatchers.Main).launch {
-            var listaAutor: List<AuthorsEntity> = daoA.getAllAuthors()
-            val listaType: List<TypesEntity> = daoT.getAllTypes()
+                val db: MainBaseDatos = MainBaseDatos.getDataBase(requireContext().applicationContext)
+                val daoB: LibrosDao = db.librosDao()
 
-            //Llenando spinners
-            listaAutor.forEach {
-                arrayAuthor.add(it.name)
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    var libros: List<LibrosModels> = daoB.getAll()
+                    var librosRet= mService.getAllBooks()
+                    var librosSize = libros.size
+                    var librosRetSize = librosRet.size
+
+                    if( librosSize > librosRetSize ){
+                        for(i in 0..libros.lastIndex){
+                            var id: Int = libros[i].ID
+                            var nombre: String = libros[i].nombreLibro
+                            var paginas: String = libros[i].Paginas
+                            var point: Int = libros[i].point?.toInt()!!
+                            var authorID: Int = libros[i].authorID!!
+                            var typeID: Int = libros[i].typeID!!
+
+
+                            val jsonObject = JSONObject()
+                            jsonObject.put("bookId", id)
+                            jsonObject.put("name", "$nombre")
+                            jsonObject.put("pageCount", paginas.toInt())
+                            jsonObject.put("point", point)
+                            jsonObject.put("authorId", authorID)
+                            jsonObject.put("typeId", typeID)
+
+
+                            val jsonObjectString = jsonObject.toString()
+                            val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+                            println("Hola antes de enviar")
+
+                            CoroutineScope(Dispatchers.IO).launch {
+                                mService.addABook(requestBody)
+
+                                println("Hola enviado")
+                            }
+                        }
+
+
+                    } else if ( librosSize == librosRetSize ) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Nada que hacer",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+
+
+
+
+
+
+
+
+
+
+
+                }
+            else {
+                // Show No internet connection message
+                Toast.makeText(
+                    requireContext(),
+                    "No internet connection",
+                    Toast.LENGTH_LONG
+                ).show()
             }
 
-            listaType.forEach {
-                arrayType.add(it.name)
+        }
+    }
+
+
+    private fun guardarRegistroOffline() {
+        val networkConnection = NetworkConnection(requireContext())
+        networkConnection.observe(viewLifecycleOwner) { isConnected ->
+            if (isConnected) {
+                guardarRegistro()
+                return@observe
             }
+            else {
+
+                val nombre = fBinding.txtNombre.text.toString()
+                val Paginas = fBinding.txtPaginas.text.toString()
+                var authorID = fBinding.spAutor.selectedItemPosition.toString().toInt()
+                var typeID = fBinding.spType.selectedItemPosition.toString().toInt()
+                var point = 0
+                var id: Int = 0
+
+
+                val db: MainBaseDatos = MainBaseDatos.getDataBase(requireContext().applicationContext)
+                val daoB: LibrosDao = db.librosDao()
+                var book = LibrosModels(0, nombre, Paginas, authorID, typeID, 100)
+                CoroutineScope(Dispatchers.IO).launch {
+
+                    println("Hola")
+
+                    val idType = daoB.getByStringType(typeID)
+                    val idAuthor = daoB.getByStringAutores(authorID)
+
+
+                    viewModel.agregarLibro(book)
+                }
+
+                noInternetArray.add(book)
+
+
+                Toast.makeText(
+                    requireContext(), "Guardado localmente ${noInternetArray.size}",
+                    Toast.LENGTH_LONG
+                ).show()
+
+
+                findNavController().navigate(R.id.ir_a_listalibro)
+
+
+                Toast.makeText(
+                    requireContext(),
+                    "No internet connection",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
         }
 
-        val adapterAutor: ArrayAdapter<String> = ArrayAdapter<String>(context,R.layout.spinner_item, arrayAuthor)
-        fBinding.spAutor.adapter = adapterAutor
 
-        val adapterType: ArrayAdapter<String> = ArrayAdapter<String>(context,R.layout.spinner_item, arrayType)
-        fBinding.spType.adapter = adapterType
 
     }
+
 
 }
 

@@ -133,7 +133,6 @@ class FragmentAddlibro: Fragment() {
 
         findNavController().navigate(R.id.ir_a_listalibro)
     }
-    var noInternetArray = mutableListOf<LibrosModels>()
 
     fun checkInternet(){
 
@@ -175,19 +174,14 @@ class FragmentAddlibro: Fragment() {
                             println("Hola antes de enviar")
 
                             CoroutineScope(Dispatchers.IO).launch {
+                                viewModel.eliminarLibro(libros[i].ID)
+
                                 mService.addABook(requestBody)
 
-                                println("Hola enviado")
                             }
                         }
 
 
-                    } else if ( librosSize == librosRetSize ) {
-                        Toast.makeText(
-                            requireContext(),
-                            "Nada que hacer",
-                            Toast.LENGTH_LONG
-                        ).show()
                     }
                 }
 
@@ -246,11 +240,9 @@ class FragmentAddlibro: Fragment() {
                     viewModel.agregarLibro(book)
                 }
 
-                noInternetArray.add(book)
-
 
                 Toast.makeText(
-                    requireContext(), "Guardado localmente ${noInternetArray.size}",
+                    requireContext(), "Guardado localmente",
                     Toast.LENGTH_LONG
                 ).show()
 

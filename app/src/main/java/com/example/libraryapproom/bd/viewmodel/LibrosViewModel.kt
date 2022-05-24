@@ -58,7 +58,7 @@ class LibrosViewModel (application: Application): AndroidViewModel(application) 
             repository.updateLibro(libros)
         }
     }
-    fun eliminarLibro(libros: LibrosModels){
+    fun eliminarLibro(libros: Int){
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteLibro(libros)
         }

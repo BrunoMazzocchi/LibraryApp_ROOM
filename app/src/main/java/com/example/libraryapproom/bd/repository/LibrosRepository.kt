@@ -33,8 +33,8 @@ class LibrosRepository(
         dao.update(libros)
     }
 
-    suspend fun deleteLibro(libros: LibrosModels) {
-        dao.delete(libros)
+    suspend fun deleteLibro(libros: Int) {
+        dao.deleteById(libros)
     }
 
     suspend fun deleteAll() {

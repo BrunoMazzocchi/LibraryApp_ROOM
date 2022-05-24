@@ -21,6 +21,10 @@ interface LibrosDao {
     @Update
     suspend fun update(libros: LibrosModels)
 
+    @Query("DELETE FROM LibrosModels WHERE ID = :id")
+    fun deleteById(id: Int)
+
+
     @Delete
     suspend fun delete(libros: LibrosModels)
 

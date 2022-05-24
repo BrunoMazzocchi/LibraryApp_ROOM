@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
+=======
+        <entry key="..\:/LibraryApp_ROOM/app/src/main/res/layout/fragment_actualizar_libro.xml" value="0.1" />
+        <entry key="..\:/LibraryApp_ROOM/app/src/main/res/layout/fragment_addlibro.xml" value="0.1" />
+        <entry key="..\:/LibraryApp_ROOM/app/src/main/res/layout/fragment_libro.xml" value="0.13796296296296295" />
+        <entry key="..\:/LibraryApp_ROOM/app/src/main/res/layout/spinner_item.xml" value="0.1" />
+>>>>>>> 5f71c5e85d8d83de2a2a5de39dcc0a5ff322f5fa
         <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/layout/activity_main.xml" value="0.12409420289855072" />
         <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/layout/fragment_libro.xml" value="0.18" />
         <entry key="..\:/Users/Bemaz/AndroidStudioProjects/LibraryAppRoom/app/src/main/res/layout/fragment_prestamo.xml" value="0.12409420289855072" />

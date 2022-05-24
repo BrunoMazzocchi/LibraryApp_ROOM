@@ -30,7 +30,7 @@
         android:inputType="text"/>
 
     <Spinner
-        android:id="@+id/txtAutor"
+        android:id="@+id/spAutor"
         android:layout_width="320dp"
         android:layout_height="43dp"
         app:layout_constraintBottom_toTopOf="@+id/txtPaginas"
@@ -43,7 +43,7 @@
 
 
     <Spinner
-        android:id="@+id/txtGenero"
+        android:id="@+id/spType"
         android:layout_width="320dp"
         android:layout_height="43dp"
         app:layout_constraintBottom_toTopOf="@+id/txtPaginas"

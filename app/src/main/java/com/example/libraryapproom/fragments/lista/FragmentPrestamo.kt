@@ -81,7 +81,7 @@ class FragmentPrestamo : Fragment() {
     fun getRetrofit():Retrofit{
         return Retrofit
             .Builder()
-            .baseUrl("http://192.168.56.1:9091/borrows/")
+            .baseUrl("http://192.168.1.6:9091/borrows/")
             .client(OkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()

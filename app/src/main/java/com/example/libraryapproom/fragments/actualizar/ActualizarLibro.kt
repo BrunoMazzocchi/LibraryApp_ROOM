@@ -47,9 +47,9 @@ class ActualizarLibro : Fragment() {
         var v: Int = 10
         with(fBinding) {
             mService = Common.retrofitService
-            fBinding.spAutor.setSelection(v)
             txtNombre.setText(args.currentLibro.nombreLibro)
             txtPaginas.setText(args.currentLibro.Paginas)
+
             btnGuardar.setOnClickListener {
                 GuardarCambios()
             }

@@ -58,10 +58,6 @@ class FragmentAddlibro: Fragment() {
         return fBinding.root
     }
 
-
-
-
-
     private fun initSpinner(context: Context){
         val db: MainBaseDatos = MainBaseDatos.getDataBase(context)
         val daoA: AutoresDao = db.autoresDao()
@@ -184,16 +180,6 @@ class FragmentAddlibro: Fragment() {
 
                     }
                 }
-
-
-
-
-
-
-
-
-
-
 
                 }
             else {

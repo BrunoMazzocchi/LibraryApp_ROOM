@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.libraryapproom.R
 import com.example.libraryapproom.api.ApiService
 import com.example.libraryapproom.api.dataClass.Borrow
+import com.example.libraryapproom.api.network.Common
 import com.example.libraryapproom.bd.entidades.PrestamosEntity
 import com.example.libraryapproom.bd.viewmodel.PrestamoViewModel
 import com.example.libraryapproom.databinding.FragmentPrestamoBinding
@@ -30,6 +31,8 @@ class FragmentPrestamo : Fragment() {
 
     private lateinit var viewModel: PrestamoViewModel
 
+    private lateinit var mService: ApiService
+
     override fun onCreateView(
 
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +50,8 @@ class FragmentPrestamo : Fragment() {
         viewModel.lista.observe(viewLifecycleOwner, Observer { pres -> adapter.setData(pres) })
 
         setHasOptionsMenu(true)
+
+        mService = Common.retrofitService
 
         return vBinding.root
     }
@@ -67,7 +72,7 @@ class FragmentPrestamo : Fragment() {
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    /*override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.delete_menu, menu)
     }
 
@@ -76,23 +81,15 @@ class FragmentPrestamo : Fragment() {
             eliminarTodo()
         }
         return super.onOptionsItemSelected(item)
-    }
+    }*/
 
-    fun getRetrofit():Retrofit{
-        return Retrofit
-            .Builder()
-            .baseUrl("http://192.168.1.6:9091/borrows/")
-            .client(OkHttpClient())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
 
     private fun searchAllBorrows() {
         var list: ArrayList<Borrow>
 
         CoroutineScope(Dispatchers.IO).launch {
             var count:  Int = 0
-            val call = getRetrofit().create(ApiService::class.java).getAllBorrows()
+            val call = mService.getAllBorrows()
 
             list = call
 

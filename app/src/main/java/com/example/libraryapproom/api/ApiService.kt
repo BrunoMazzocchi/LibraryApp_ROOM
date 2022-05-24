@@ -20,7 +20,7 @@ interface ApiService {
     @GET("books/all")
     suspend fun getAllBooks(): ArrayList<Books>
 
-    @GET("all")
+    @GET("borrows/all")
     suspend fun getAllBorrows(): ArrayList<Borrow>
 
     @POST("books/save")

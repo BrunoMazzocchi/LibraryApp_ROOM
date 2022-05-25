@@ -66,15 +66,15 @@ class ActualizarPrestamoFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean
     {
         if (item.itemId == R.id.mnuEliminar) {
-            eliminarGenero()
+            eliminarPrestamo()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun eliminarGenero() {
+    private fun eliminarPrestamo() {
         val alerta = AlertDialog.Builder(requireContext())
         alerta.setPositiveButton("Si") { _, _ ->
-            viewModel.eliminarPrestamo(args.currentPrestamo)
+            viewModel.eliminarPrestamo(args.currentPrestamo.id)
             Toast.makeText(
                 requireContext(),
                 "Registro eliminado satisfactoriamente...",
@@ -89,8 +89,8 @@ class ActualizarPrestamoFragment : Fragment() {
                 Toast.LENGTH_LONG
             ).show()
         }
-        alerta.setTitle("Eliminando ${args.currentPrestamo.student_id}")
-        alerta.setMessage("¿Esta seguro de eliminar a ${args.currentPrestamo.student_id}?")
+        alerta.setTitle("Eliminando ${args.currentPrestamo.id}")
+        alerta.setMessage("¿Esta seguro de eliminar a ${args.currentPrestamo.id}?")
         alerta.create().show()
     }
 }

@@ -14,7 +14,7 @@ import kotlinx.android.parcel.Parcelize
         "p.book_id," +
         "p.student_id," +
         "l.nombreLibro as book_name," +
-        "e.name + e.surname as student_name " +
+        "e.name as student_name " +
         "from TblPrestamos as p " +
         "inner join LibrosModels as l on l.ID = p.book_id " +
         "inner join TblEstudiantes as e on e.student_id = p.student_id")

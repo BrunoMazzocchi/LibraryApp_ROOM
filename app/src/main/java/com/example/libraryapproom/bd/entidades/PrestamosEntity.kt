@@ -11,18 +11,11 @@ import java.util.*
 @Parcelize
 @Entity (tableName = "TblPrestamos")
 data class PrestamosEntity(
-
     @PrimaryKey(autoGenerate = true)
     val id: Int,
 
-    @ColumnInfo(name = "student_name")
-    val student_name: String?,
-
     @ColumnInfo(name = "student_id")
     val student_id: Int?,
-
-    @ColumnInfo(name = "book_name")
-    val book_name: String?,
 
     @ColumnInfo(name = "book_id")
     val book_id: Int?,

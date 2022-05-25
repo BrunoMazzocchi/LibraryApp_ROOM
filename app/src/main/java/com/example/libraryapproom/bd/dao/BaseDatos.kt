@@ -20,7 +20,7 @@ interface MainDataBaseProvider {
 
     entities = [LibrosModels::class, PrestamosEntity::class, AuthorsEntity::class, TypesEntity::class, EstudiantesEntity::class],
     views = [view_books::class, view_borrows::class],
-    version = 33
+    version = 37
 
 )
 abstract class MainBaseDatos : RoomDatabase(),

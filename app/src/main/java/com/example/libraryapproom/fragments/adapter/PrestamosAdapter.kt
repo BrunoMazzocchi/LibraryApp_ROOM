@@ -5,12 +5,13 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.libraryapproom.bd.entidades.PrestamosEntity
+import com.example.libraryapproom.bd.entidades.vistas.view_borrows
 import com.example.libraryapproom.databinding.ListaPrestamoBinding
 import com.example.libraryapproom.fragments.lista.FragmentPrestamoDirections
 
 class PrestamosAdapter:
 RecyclerView.Adapter<PrestamosAdapter.PrestamosHolder>(){
-    private var listadoPrestamo = emptyList<PrestamosEntity>()
+    private var listadoPrestamo = emptyList<view_borrows>()
 
 
     override fun onCreateViewHolder(
@@ -29,13 +30,13 @@ RecyclerView.Adapter<PrestamosAdapter.PrestamosHolder>(){
 
     override fun getItemCount(): Int = listadoPrestamo.size
 
-    fun setData(prestamos: List<PrestamosEntity>){
+    fun setData(prestamos: List<view_borrows>){
         this.listadoPrestamo = prestamos
         notifyDataSetChanged()
     }
 
     inner class PrestamosHolder(val binding: ListaPrestamoBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(prestamo: PrestamosEntity){
+        fun bind(prestamo: view_borrows){
             with(binding){
                 TvId.text = prestamo.id.toString()
                 TvNombreLibro.text = prestamo.book_name

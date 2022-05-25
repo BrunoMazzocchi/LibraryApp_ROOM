@@ -46,7 +46,7 @@
         tools:layout="@layout/fragment_actualizar_prestamo" >
         <argument
             android:name="currentPrestamo"
-            app:argType="com.example.libraryapproom.bd.entidades.PrestamosEntity" />
+            app:argType="com.example.libraryapproom.bd.entidades.vistas.view_borrows" />
     </fragment>
 
     <action android:id="@+id/agregarPrestamo" app:destination="@+id/addPrestamoFragment"/>

@@ -128,32 +128,17 @@ class FragmentPrestamo : Fragment() {
             list.forEach{_ ->
                 run {
                     for (i in 0..list.lastIndex){
-                       // var estudiante: String = list[i].student?.name.toString() + " " + list[i].student?.surname.toString()
-                       // var libro: String = list[i].book?.name.toString()
                         var id: Int = (list[i].borrowId?.toInt() ?: Int) as Int
                         var studentID = (list[i].studentId)
                         var bookID = (list[i].bookId)
                         var fechaRetiro: String = list[i].takenDate.toString()
                         var fechaEntrega: String = list[i].broughtDate.toString()
 
-                        var studentId: Int = (list[i].student?.studentId?.toInt() ?: Int) as Int
-                        var name: String = list[i].student?.name.toString()
-                        var surname: String = list[i].student?.surname.toString()
-                        var dateOfBirth: String = list[i].student?.dateOfBirth.toString()
-                        var gender: String = list[i].student?.gender.toString()
-                        var classroom: String = list[i].student?.classroom.toString()
-                        var point = list[i].student?.point
-
-                        val estudiante =
-                            EstudiantesEntity(studentId,name,surname,dateOfBirth,gender,classroom,point)
-
-
                         val prestamo =
                             PrestamosEntity(id, studentID, bookID, fechaRetiro, fechaEntrega)
                         count++
 
                         viewModel.agregarPrestamo(prestamo)
-                        viewModelStudent.agregarEstudiante(estudiante)
                     }
                 }
                 if (count == list.size){
@@ -164,24 +149,24 @@ class FragmentPrestamo : Fragment() {
     }
 
     private fun searchAllStudents() {
-        var list: ArrayList<Borrow>
+        var list: ArrayList<Student>
 
         CoroutineScope(Dispatchers.IO).launch {
             var count:  Int = 0
-            val call = mService.getAllBorrows()
+            val call = mService.getAllStudents()
 
             list = call
 
             list.forEach{_ ->
                 run {
                     for (i in 0..list.lastIndex){
-                        var studentId: Int = (list[i].student?.studentId?.toInt() ?: Int) as Int
-                        var name: String = list[i].student?.name.toString()
-                        var surname: String = list[i].student?.surname.toString()
-                        var dateOfBirth: String = list[i].student?.dateOfBirth.toString()
-                        var gender: String = list[i].student?.gender.toString()
-                        var classroom: String = list[i].student?.classroom.toString()
-                        var point = list[i].student?.point
+                        var studentId: Int = (list[i].studentId?.toInt() ?: Int) as Int
+                        var name: String = list[i].name.toString()
+                        var surname: String = list[i].surname.toString()
+                        var dateOfBirth: String = list[i].dateOfBirth.toString()
+                        var gender: String = list[i].gender.toString()
+                        var classroom: String = list[i].classroom.toString()
+                        var point = list[i].point
 
                         val estudiante =
                             EstudiantesEntity(studentId,name,surname,dateOfBirth,gender,classroom,point)

@@ -9,11 +9,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.libraryapproom.R
+import com.example.libraryapproom.api.ApiService
+import com.example.libraryapproom.api.network.Common
 import com.example.libraryapproom.bd.entidades.PrestamosEntity
 import com.example.libraryapproom.bd.viewmodel.PrestamoViewModel
 import com.example.libraryapproom.databinding.FragmentActualizarPrestamoBinding
 
 class ActualizarPrestamoFragment : Fragment() {
+    lateinit var mService: ApiService
     lateinit var uBinding: FragmentActualizarPrestamoBinding
     private val args by navArgs<ActualizarPrestamoFragmentArgs>()
     private lateinit var viewModel: PrestamoViewModel
@@ -29,8 +32,7 @@ class ActualizarPrestamoFragment : Fragment() {
             ViewModelProvider(this).get(PrestamoViewModel::class.java)
 
         with(uBinding){
-            TxtLibro.setText(args.currentPrestamo.book_name)
-            TxtEstudiante.setText(args.currentPrestamo.student_name)
+            mService = Common.retrofitService
             TxtFechaRetiro.setText(args.currentPrestamo.taken_date)
             TxtFechaEntrega.setText(args.currentPrestamo.brought_date)
 

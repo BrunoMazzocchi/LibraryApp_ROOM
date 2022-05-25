@@ -14,7 +14,7 @@ data class EstudiantesEntity(
     val student_id: Int,
 
     @ColumnInfo(name = "name")
-    val name: String?,
+    val name: String,
 
     @ColumnInfo(name = "surname")
     val surname: String?,

@@ -1,9 +1,6 @@
 package com.example.libraryapproom.api
 
-import com.example.libraryapproom.api.dataClass.Author
-import com.example.libraryapproom.api.dataClass.Books
-import com.example.libraryapproom.api.dataClass.Borrow
-import com.example.libraryapproom.api.dataClass.Type
+import com.example.libraryapproom.api.dataClass.*
 import com.example.libraryapproom.bd.entidades.LibrosModels
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -23,6 +20,9 @@ interface ApiService {
     @GET("borrows/all")
     suspend fun getAllBorrows(): ArrayList<Borrow>
 
+    @POST("borrows/save")
+    suspend fun addBorrow(@Body requestBody: RequestBody):Response<ResponseBody>
+
     @POST("books/save")
     suspend fun addABook(@Body requestBody: RequestBody):Response<ResponseBody>
 
@@ -31,6 +31,9 @@ interface ApiService {
 
     @GET("type/all")
     suspend fun getAllType(): ArrayList<Type>
+
+    @GET("student/all")
+    suspend fun getAllStudents(): ArrayList<Student>
 
     @DELETE("books/delete/{id}")
     suspend fun deleteBook(@Path("id") id: Int?): Response<Void>

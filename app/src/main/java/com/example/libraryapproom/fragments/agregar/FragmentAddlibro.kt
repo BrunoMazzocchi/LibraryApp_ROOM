@@ -117,7 +117,7 @@ class FragmentAddlibro: Fragment() {
 
             var book = LibrosModels(0, nombre, Paginas, authorID, typeID, 100)
 
-            viewModel.agregarLibro(book)
+           // viewModel.agregarLibro(book)
         }
 
 

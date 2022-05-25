@@ -29,10 +29,6 @@ class PrestamoViewModel(application: Application): AndroidViewModel(application)
 
         repository = PrestamosRepository(prestamosDao, librosDao, estudiantesDao)
         lista = repository.listado
-
-        viewModelScope.launch(Dispatchers.IO) {
-
-        }
     }
 
         fun agregarPrestamo(prestamo: PrestamosEntity){
@@ -49,7 +45,7 @@ class PrestamoViewModel(application: Application): AndroidViewModel(application)
 
         fun eliminarPrestamo(prestamo: Int){
             viewModelScope.launch(Dispatchers.IO){
-                repository.deleteGenero(prestamo)
+                repository.deletePrestamo(prestamo)
             }
         }
 

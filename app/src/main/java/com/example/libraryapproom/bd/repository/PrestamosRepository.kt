@@ -32,7 +32,7 @@ class PrestamosRepository(private val dao: PrestamosDao,
         dao.update(prestamo)
     }
 
-    suspend fun deleteGenero(prestamo: Int){
+    suspend fun deletePrestamo(prestamo: Int){
         dao.delete(prestamo)
     }
 

@@ -25,4 +25,11 @@ interface PrestamosDao {
 
     @Query("DELETE FROM TblPrestamos")
     suspend fun deleteAll()
+
+    //Spiners
+    @Query("SELECT student_id FROM TblEstudiantes WHERE student_id= :nameEst")
+    suspend fun getByStringEstudiantes(nameEst: Int): Int
+
+    @Query("SELECT ID FROM LibrosModels WHERE ID= :nameLib")
+    suspend fun getByStringLibro(nameLib: Int): Int
 }

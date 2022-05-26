@@ -82,11 +82,9 @@ class FragmentLibro : Fragment() {
     }
 
     override fun onViewCreated(
-        view: View, savedInstanceState:
-        Bundle?
-    ) {
-        checkInternet()
+        view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkInternet()
         setupViews()
 
     }
@@ -127,8 +125,6 @@ class FragmentLibro : Fragment() {
             try {
                 if (call.isSuccessful) {
                     val nombreLibro = books?.name.toString()
-                    val Autor = books?.author?.name.toString() + books?.author?.surname.toString()
-                    val genero = books?.typeId.toString()
                     val paginas = books?.pageCount.toString()
                     var autorID = books?.authorId
                     var typeID = books?.typeId
@@ -169,8 +165,6 @@ class FragmentLibro : Fragment() {
             try {
                 if (call.isSuccessful) {
                     val nombreLibro = books?.name.toString()
-                    val Autor = books?.author?.name.toString() + books?.author?.surname.toString()
-                    val genero = books?.typeId.toString()
                     val paginas = books?.pageCount.toString()
                     var point = books?.point
 
@@ -212,9 +206,6 @@ class FragmentLibro : Fragment() {
                 run {
                     for (i in 0..list.lastIndex) {
                         var nombre: String = list[i].name.toString()
-                        val autor: String =
-                            list[i].author?.name.toString() + " " + list[i].author?.surname.toString()
-                        val genero: String = list[i].type?.name.toString()
                         val paginas: String = list[i].pageCount.toString()
                         val id: Int = (list[i].bookId?.toInt() ?: Int) as Int
                         var autorID = (list[i].authorId)
@@ -223,9 +214,6 @@ class FragmentLibro : Fragment() {
                         val libro =
                             LibrosModels(id, nombre, paginas, autorID, typeID, point)
                         count++
-
-
-
                         viewModel.agregarLibro(libro)
 
                     }
@@ -317,7 +305,8 @@ class FragmentLibro : Fragment() {
     }
 
     /* Eliminar todo */
-    private fun eliminarTodo() {
+    //No funcional
+    /*private fun eliminarTodo() {
         val alerta = AlertDialog.Builder(requireContext())
         alerta.setPositiveButton("Si") { _, _ ->
             viewModel.eliminarTodo()
@@ -337,7 +326,7 @@ class FragmentLibro : Fragment() {
         alerta.setTitle("Eliminando todos los registro")
         alerta.setMessage("¿Esta seguro de eliminar los registros?")
         alerta.create().show()
-    }
+    }*/
 }
 
 

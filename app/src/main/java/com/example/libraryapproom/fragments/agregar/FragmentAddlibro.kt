@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -14,9 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.libraryapproom.R
 import com.example.libraryapproom.api.ApiService
-import com.example.libraryapproom.api.dataClass.Author
-import com.example.libraryapproom.api.dataClass.Books
-import com.example.libraryapproom.api.dataClass.Type
 import com.example.libraryapproom.api.network.Common
 import com.example.libraryapproom.api.network.NetworkConnection
 import com.example.libraryapproom.bd.dao.AutoresDao
@@ -28,7 +24,6 @@ import com.example.libraryapproom.bd.entidades.LibrosModels
 import com.example.libraryapproom.bd.entidades.TypesEntity
 import com.example.libraryapproom.bd.viewmodel.LibrosViewModel
 import com.example.libraryapproom.databinding.FragmentAddlibroBinding
-import kotlinx.android.synthetic.main.fragment_actualizar_libro.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -54,38 +49,57 @@ class FragmentAddlibro: Fragment() {
         }
 
         mService = Common.retrofitService
-        initSpinner(requireContext())
+        spinnerAuthors(requireContext())
+        spinnerType(requireContext())
         return fBinding.root
     }
 
-    private fun initSpinner(context: Context){
+    //Spinners
+    private fun spinnerAuthors(context: Context){
         val db: MainBaseDatos = MainBaseDatos.getDataBase(context)
         val daoA: AutoresDao = db.autoresDao()
-        val daoT: TypesDao = db.typesDao()
+
 
         //ArrayList de los spinners
         var arrayAuthor:ArrayList<String> = arrayListOf("Autores..")
-        var arrayType:ArrayList<String> = arrayListOf("Genero..")
 
         CoroutineScope(Dispatchers.Main).launch {
             var listaAutor: List<AuthorsEntity> = daoA.getAllAuthors()
-            val listaType: List<TypesEntity> = daoT.getAllTypes()
 
             //Llenando spinners
             listaAutor.forEach {
                 arrayAuthor.add(it.name)
             }
 
+        }
+
+        var listView = fBinding.spAutor
+
+        var arrayAdapter1 = activity?.let { ArrayAdapter(it, R.layout.spinner_item,arrayAuthor)
+        }
+        listView.adapter = arrayAdapter1
+
+    }
+
+    fun spinnerType(context: Context){
+        val db: MainBaseDatos = MainBaseDatos.getDataBase(context)
+        val daoT: TypesDao = db.typesDao()
+
+        var arrayType:ArrayList<String> = arrayListOf("Genero..")
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val listaType: List<TypesEntity> = daoT.getAllTypes()
+
             listaType.forEach {
                 arrayType.add(it.name)
             }
         }
 
-        val adapterAutor: ArrayAdapter<String> = ArrayAdapter<String>(context,R.layout.spinner_item, arrayAuthor)
-        fBinding.spAutor.adapter = adapterAutor
+        var listView = fBinding.spType
 
-        val adapterType: ArrayAdapter<String> = ArrayAdapter<String>(context,R.layout.spinner_item, arrayType)
-        fBinding.spType.adapter = adapterType
+        var arrayAdapter1 = activity?.let { ArrayAdapter(it, R.layout.spinner_item,arrayType)
+        }
+        listView.adapter = arrayAdapter1
 
     }
 
@@ -219,10 +233,6 @@ class FragmentAddlibro: Fragment() {
 
                     println("Hola")
 
-                    val idType = daoB.getByStringType(typeID)
-                    val idAuthor = daoB.getByStringAutores(authorID)
-
-
                     viewModel.agregarLibro(book)
                 }
 
@@ -245,10 +255,7 @@ class FragmentAddlibro: Fragment() {
 
         }
 
-
-
     }
-
 
 }
 

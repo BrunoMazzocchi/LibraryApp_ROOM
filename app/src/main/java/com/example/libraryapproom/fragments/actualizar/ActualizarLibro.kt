@@ -3,6 +3,7 @@ package com.example.libraryapproom.fragments.actualizar
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -43,32 +44,32 @@ class ActualizarLibro : Fragment() {
         // Inflate the layout for this fragment
         fBinding = FragmentActualizarLibroBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this).get(LibrosViewModel::class.java)
+        spinnerAuthors(requireContext())
+        spinnerType(requireContext())
         var v: Int = 10
         with(fBinding) {
             mService = Common.retrofitService
             txtNombre.setText(args.currentLibro.nombreLibro)
             txtPaginas.setText(args.currentLibro.Paginas)
 
+
             btnGuardar.setOnClickListener {
                 GuardarCambios()
             }
         }
-
-        initSpinner(requireContext())
         //Agregar menu
         setHasOptionsMenu(true)
         return fBinding.root
     }
 
-    private fun checkInternet(){
+    private fun checkInternet() {
 
         val networkConnection = NetworkConnection(requireContext())
         networkConnection.observe(viewLifecycleOwner) { isConnected ->
             if (isConnected) {
 
 
-            }
-            else {
+            } else {
                 // Show No internet connection message
                 Toast.makeText(
                     requireContext(),
@@ -81,10 +82,8 @@ class ActualizarLibro : Fragment() {
     }
 
 
-
     private fun deleteBook(ID: Int) {
         CoroutineScope(Dispatchers.IO).launch {
-
             mService.deleteBook(ID)
 
         }
@@ -118,47 +117,80 @@ class ActualizarLibro : Fragment() {
 
         //Crear el objeto
         val libro =
-            LibrosModels(args.currentLibro.ID, nombre, Paginas,authorID , typeID, point)
+            LibrosModels(args.currentLibro.ID, nombre, Paginas, authorID, typeID, point)
         //Actualizar
         viewModel.actualizarLibro(libro)
         Toast.makeText(
-            requireContext(), "Registro actualizado",
-            Toast.LENGTH_LONG
+            requireContext(), "Registro actualizado", Toast.LENGTH_LONG
         ).show()
 
 
         findNavController().navigate(R.id.ir_a_listalibro)
     }
 
-    private fun initSpinner(context: Context){
+    //Spinners
+
+    private fun spinnerAuthors(context: Context) {
         val db: MainBaseDatos = MainBaseDatos.getDataBase(context)
         val daoA: AutoresDao = db.autoresDao()
-        val daoT: TypesDao = db.typesDao()
-
         //ArrayList de los spinners
-        var arrayAuthor:ArrayList<String> = arrayListOf("Autores..")
-        var arrayType:ArrayList<String> = arrayListOf("Genero..")
+        var arrayAuthor: ArrayList<String> = arrayListOf("Autores..")
 
         CoroutineScope(Dispatchers.Main).launch {
             var listaAutor: List<AuthorsEntity> = daoA.getAllAuthors()
-            val listaType: List<TypesEntity> = daoT.getAllTypes()
 
             //Llenando spinners
             listaAutor.forEach {
                 arrayAuthor.add(it.name)
             }
 
+        }
+
+        var listView = fBinding.spAutor
+
+        var arrayAdapter1 = activity?.let {
+            ArrayAdapter(it, R.layout.spinner_item, arrayAuthor)
+        }
+        listView.adapter = arrayAdapter1
+
+        //Espera de 1s para realizar el setSelection
+
+        Handler().postDelayed({
+            var id = args.currentLibro.author_ID
+
+
+            if (id != null) {
+                listView.setSelection(id)
+            }
+        }, 1000)
+
+    }
+
+    fun spinnerType(context: Context) {
+        val db: MainBaseDatos = MainBaseDatos.getDataBase(context)
+        val daoT: TypesDao = db.typesDao()
+
+        var arrayType: ArrayList<String> = arrayListOf("Genero..")
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val listaType: List<TypesEntity> = daoT.getAllTypes()
+
             listaType.forEach {
                 arrayType.add(it.name)
             }
         }
 
-        val adapterAutor: ArrayAdapter<String> = ArrayAdapter<String>(context,R.layout.spinner_item, arrayAuthor)
-        fBinding.spAutor.adapter = adapterAutor
+        var listView = fBinding.spType
 
-        val adapterType: ArrayAdapter<String> = ArrayAdapter<String>(context,R.layout.spinner_item, arrayType)
-        fBinding.spType.adapter = adapterType
+        var arrayAdapter1 = activity?.let {
+            ArrayAdapter(it, R.layout.spinner_item, arrayType)
+        }
+        listView.adapter = arrayAdapter1
 
+        //Espera de 1s para realizar el setSelection
+        Handler().postDelayed({
+            listView.setSelection(args.currentLibro.Type_ID)
+        }, 1000)
     }
 
     override fun onCreateOptionsMenu(

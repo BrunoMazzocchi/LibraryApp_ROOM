@@ -67,8 +67,8 @@ class FragmentPrestamo : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        checkInternet()
         super.onViewCreated(view, savedInstanceState)
+        checkInternet()
         setupViews()
     }
 
@@ -99,6 +99,9 @@ class FragmentPrestamo : Fragment() {
         with(vBinding){
             BtnAgregar.setOnClickListener {
                 it.findNavController().navigate(R.id.agregarPrestamo)
+            }
+            BtnUpdate.setOnClickListener {
+                searchAllBorrows()
             }
         }
     }

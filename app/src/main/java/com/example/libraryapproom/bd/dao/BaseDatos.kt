@@ -20,7 +20,7 @@ interface MainDataBaseProvider {
 
     entities = [LibrosModels::class, PrestamosEntity::class, AuthorsEntity::class, TypesEntity::class, EstudiantesEntity::class],
     views = [view_books::class, view_borrows::class],
-    version = 38
+    version = 1
 
 )
 abstract class MainBaseDatos : RoomDatabase(),
@@ -41,7 +41,7 @@ abstract class MainBaseDatos : RoomDatabase(),
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         MainBaseDatos::class.java,
-                        "main_db"
+                        "main_database"
                     ).fallbackToDestructiveMigration().build()
                     INSTANCE = instance
                 }

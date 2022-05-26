@@ -38,6 +38,9 @@ interface ApiService {
     @DELETE("books/delete/{id}")
     suspend fun deleteBook(@Path("id") id: Int?): Response<Void>
 
+    @DELETE("borrows/delete/{id}")
+    suspend fun deleteBorrow(@Path("id")id: Int?): Response<Void>
+
     @GET
     suspend fun getBook(@Url url:String):Response<Books>
 
@@ -52,4 +55,7 @@ interface ApiService {
 
     @POST("books/save")
     suspend fun editABook(@Body requestBody: RequestBody):Response<ResponseBody>
+
+    @POST("borrows/save")
+    suspend fun editBorrow(@Body requestBody: RequestBody):Response<ResponseBody>
 }

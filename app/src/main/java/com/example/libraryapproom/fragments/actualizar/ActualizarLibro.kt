@@ -42,7 +42,6 @@ class ActualizarLibro : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         fBinding = FragmentActualizarLibroBinding.inflate(layoutInflater)
-        fBinding = FragmentActualizarLibroBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this).get(LibrosViewModel::class.java)
         var v: Int = 10
         with(fBinding) {
@@ -117,7 +116,6 @@ class ActualizarLibro : Fragment() {
 
         }
 
-        var book = LibrosModels(id, nombre, Paginas,authorID , typeID, point)
         //Crear el objeto
         val libro =
             LibrosModels(args.currentLibro.ID, nombre, Paginas,authorID , typeID, point)

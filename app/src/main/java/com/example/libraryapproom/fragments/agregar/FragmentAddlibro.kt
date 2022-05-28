@@ -32,6 +32,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 
 class FragmentAddlibro: Fragment() {
+    private var count: Int = 0
     lateinit var mService: ApiService
     lateinit var fBinding: FragmentAddlibroBinding
     private lateinit var viewModel: LibrosViewModel
@@ -51,6 +52,7 @@ class FragmentAddlibro: Fragment() {
         mService = Common.retrofitService
         spinnerAuthors(requireContext())
         spinnerType(requireContext())
+        count = 0
         return fBinding.root
     }
 
@@ -124,7 +126,11 @@ class FragmentAddlibro: Fragment() {
         val db: MainBaseDatos = MainBaseDatos.getDataBase(requireContext().applicationContext)
         val daoB: LibrosDao = db.librosDao()
         CoroutineScope(Dispatchers.IO).launch {
-            mService.addABook(requestBody)
+
+            if(count == 0) {
+                mService.addABook(requestBody)
+                count == 5
+            }
 
             val idType = daoB.getByStringType(typeID)
             val idAuthor = daoB.getByStringAutores(authorID)
@@ -136,7 +142,7 @@ class FragmentAddlibro: Fragment() {
 
 
         Toast.makeText(
-            requireContext(), "Registro actualizado",
+            requireContext(), "Registro creado",
             Toast.LENGTH_LONG
         ).show()
 
@@ -185,7 +191,6 @@ class FragmentAddlibro: Fragment() {
 
                             CoroutineScope(Dispatchers.IO).launch {
                                 viewModel.eliminarLibro(libros[i].ID)
-
                                 mService.addABook(requestBody)
 
                             }
@@ -212,11 +217,7 @@ class FragmentAddlibro: Fragment() {
     private fun guardarRegistroOffline() {
         val networkConnection = NetworkConnection(requireContext())
         networkConnection.observe(viewLifecycleOwner) { isConnected ->
-            if (isConnected) {
-                guardarRegistro()
-                return@observe
-            }
-            else {
+            if (!isConnected) {
 
                 val nombre = fBinding.txtNombre.text.toString()
                 val Paginas = fBinding.txtPaginas.text.toString()
@@ -251,6 +252,9 @@ class FragmentAddlibro: Fragment() {
                     "No internet connection",
                     Toast.LENGTH_LONG
                 ).show()
+            } else {
+                guardarRegistro()
+                count = 5
             }
 
         }

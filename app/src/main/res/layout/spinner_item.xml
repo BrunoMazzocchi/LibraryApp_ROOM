@@ -6,6 +6,6 @@
     android:textSize="20sp"
     android:background="?attr/backgroundColor"
     android:padding="10sp"
-    android:textColor="#043E27"
+    android:textColor="?attr/colorOnSecondary"
 
     />

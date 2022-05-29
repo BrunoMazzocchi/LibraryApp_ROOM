@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.libraryapproom.MainActivity
 import com.example.libraryapproom.R
 import com.example.libraryapproom.api.ApiService
 import com.example.libraryapproom.api.network.Common
@@ -260,6 +261,13 @@ class FragmentAddlibro: Fragment() {
         }
 
     }
+    //Cambiando Titulos de action bar
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as MainActivity).supportActionBar?.title = "Agregar libros"
+    }
+
 
 }
+
 

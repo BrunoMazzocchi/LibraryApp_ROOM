@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.libraryapproom.MainActivity
 import com.example.libraryapproom.R
 import com.example.libraryapproom.api.ApiService
 import com.example.libraryapproom.api.network.Common
@@ -230,6 +231,12 @@ class ActualizarLibro : Fragment() {
         alerta.setTitle("Eliminando${args.currentLibro.nombreLibro}")
         alerta.setMessage("¿Esta seguro de eliminar a ${args.currentLibro.nombreLibro}?")
         alerta.create().show()
+    }
+
+    //Cambiando Titulos de action bar
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as MainActivity).supportActionBar?.title = "Actualizar Libros"
     }
 }
 

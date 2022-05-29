@@ -9,18 +9,20 @@
     app:cardCornerRadius="3dp"
     app:cardElevation="3dp"
     app:cardUseCompatPadding="true"
+    android:background="?attr/colorOnSecondary"
     >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
         >
+
         <LinearLayout
             android:id="@+id/colorCint"
             android:layout_width="8dp"
             android:layout_height="150dp"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:background="?attr/backgroundColor"
+            android:layout_alignParentTop="true"
+            android:background="?attr/colorSecondary"
             android:orientation="vertical" />
 
         <LinearLayout

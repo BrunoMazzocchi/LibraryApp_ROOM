@@ -1,6 +1,7 @@
 package com.example.libraryapproom.fragments.lista
 
 import android.app.AlertDialog
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.*
 
@@ -33,6 +34,8 @@ import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class FragmentLibro : Fragment() {
@@ -48,10 +51,10 @@ class FragmentLibro : Fragment() {
         // Inflate the layout for this fragment
         fBinding = FragmentLibroBinding.inflate(layoutInflater)
         val adapter = LibrosAdapter()
+        val ran: IntRange = 0..254
         val recycleView = fBinding.RcvLibro
         recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(requireContext())
-
 
         //Inicializando ViewModels
 
@@ -73,7 +76,6 @@ class FragmentLibro : Fragment() {
             adapter.setData(libro)
         })
         //Agregar el menu
-        setHasOptionsMenu(true)
         // searchByID(2)
 
 

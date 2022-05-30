@@ -3,7 +3,9 @@ package com.example.libraryapproom.bd.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.libraryapproom.bd.entidades.PrestamosEntity
+import com.example.libraryapproom.bd.entidades.vistas.view_books
 import com.example.libraryapproom.bd.entidades.vistas.view_borrows
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PrestamosDao {
@@ -32,4 +34,7 @@ interface PrestamosDao {
 
     @Query("SELECT ID FROM LibrosModels WHERE ID= :nameLib")
     suspend fun getByStringLibro(nameLib: Int): Int
+
+    @Query("SELECT * FROM view_borrows WHERE student_name LIKE :query")
+    fun searchDatabase(query: String): Flow<List<view_borrows>>
 }

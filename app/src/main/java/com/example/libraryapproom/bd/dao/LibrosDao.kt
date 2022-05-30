@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.libraryapproom.bd.entidades.LibrosModels
 import com.example.libraryapproom.bd.entidades.vistas.view_books
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LibrosDao {
@@ -39,4 +40,6 @@ interface LibrosDao {
     @Query("SELECT type_id FROM TblType where type_id= :nameType")
     suspend fun getByStringType(nameType: Int): Int
 
+    @Query("SELECT * FROM view_books WHERE nombreLibro LIKE :query")
+    fun searchDatabase(query: String): Flow<List<view_books>>
 }

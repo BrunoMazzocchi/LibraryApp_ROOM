@@ -7,7 +7,9 @@ import com.example.libraryapproom.bd.dao.PrestamosDao
 import com.example.libraryapproom.bd.entidades.EstudiantesEntity
 import com.example.libraryapproom.bd.entidades.LibrosModels
 import com.example.libraryapproom.bd.entidades.PrestamosEntity
+import com.example.libraryapproom.bd.entidades.vistas.view_books
 import com.example.libraryapproom.bd.entidades.vistas.view_borrows
+import kotlinx.coroutines.flow.Flow
 
 class PrestamosRepository(private val dao: PrestamosDao,
     val daoBooks: LibrosDao,
@@ -38,5 +40,9 @@ class PrestamosRepository(private val dao: PrestamosDao,
 
     suspend fun deleteAll(){
         dao.deleteAll()
+    }
+
+    fun searchDatabase(query: String): Flow<List<view_borrows>> {
+        return dao.searchDatabase(query)
     }
 }

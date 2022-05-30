@@ -2,24 +2,30 @@ package com.example.libraryapproom
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.libraryapproom.bd.viewmodel.LibrosViewModel
+import com.example.libraryapproom.bd.viewmodel.PrestamoViewModel
+import com.example.libraryapproom.bd.viewmodel.viewmodelFactory.LibrosViewModelFactory
+import com.example.libraryapproom.bd.viewmodel.viewmodelFactory.PrestamoViewModelFactory
 import com.example.libraryapproom.databinding.ActivityMainBinding
-import com.example.libraryapproom.databinding.FragmentLibroBinding
-import com.example.libraryapproom.fragments.lista.FragmentLibro
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+    lateinit var viewModel: LibrosViewModel
+    lateinit var viewModelP: PrestamoViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         NavHost()
+        setUpViewModelLibro()
+        setUpViewModelPrestamo()
 
 
 
@@ -32,6 +38,20 @@ class MainActivity : AppCompatActivity() {
 
         //BottomNavegation
         binding.bottomNavigationView.setupWithNavController(navController)
+    }
+
+    private fun setUpViewModelLibro(){
+        val viewModelProviderFactory = LibrosViewModelFactory(application)
+
+        viewModel =
+            ViewModelProvider(this, viewModelProviderFactory).get(LibrosViewModel::class.java)
+    }
+
+    private fun setUpViewModelPrestamo(){
+        val viewModelProviderFactoryPrestamo = PrestamoViewModelFactory(application)
+
+        viewModelP =
+            ViewModelProvider(this, viewModelProviderFactoryPrestamo).get(PrestamoViewModel::class.java)
     }
 
 }

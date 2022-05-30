@@ -3,6 +3,7 @@ package com.example.libraryapproom.bd.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.libraryapproom.bd.dao.MainBaseDatos
 import com.example.libraryapproom.bd.entidades.LibrosModels
@@ -84,4 +85,9 @@ class LibrosViewModel (application: Application): AndroidViewModel(application) 
             repository.getTypeByName(type)
         }
     }
+
+    fun searchDatabase(query: String): LiveData<List<view_books>> {
+        return repository.searchDatabase(query).asLiveData()
+    }
+
 }

@@ -3,9 +3,11 @@ package com.example.libraryapproom.bd.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.libraryapproom.bd.dao.MainBaseDatos
 import com.example.libraryapproom.bd.entidades.PrestamosEntity
+import com.example.libraryapproom.bd.entidades.vistas.view_books
 import com.example.libraryapproom.bd.entidades.vistas.view_borrows
 import com.example.libraryapproom.bd.repository.PrestamosRepository
 import kotlinx.coroutines.Dispatchers
@@ -54,6 +56,8 @@ class PrestamoViewModel(application: Application): AndroidViewModel(application)
                 repository.deleteAll()
             }
         }
-
+        fun searchDatabase(query: String): LiveData<List<view_borrows>> {
+            return repository.searchDatabase(query).asLiveData()
+        }
 
 }

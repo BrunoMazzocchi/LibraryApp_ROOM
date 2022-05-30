@@ -8,6 +8,7 @@ import com.example.libraryapproom.bd.entidades.AuthorsEntity
 import com.example.libraryapproom.bd.entidades.LibrosModels
 import com.example.libraryapproom.bd.entidades.TypesEntity
 import com.example.libraryapproom.bd.entidades.vistas.view_books
+import kotlinx.coroutines.flow.Flow
 
 class LibrosRepository(
     private val dao: LibrosDao,
@@ -47,5 +48,8 @@ class LibrosRepository(
 
     suspend fun getTypeByName(type: Int) {
         dao.getByStringType(type)
+    }
+    fun searchDatabase(query: String): Flow<List<view_books>> {
+        return dao.searchDatabase(query)
     }
 }

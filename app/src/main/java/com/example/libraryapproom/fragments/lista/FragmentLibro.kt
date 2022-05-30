@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.*
 
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -39,19 +40,23 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class FragmentLibro : Fragment() {
-    lateinit var fBinding: FragmentLibroBinding
+class FragmentLibro : Fragment(), SearchView.OnQueryTextListener {
+    private var _binding: FragmentLibroBinding? = null
+    private val fBinding get() = _binding!!
     private lateinit var viewModel: LibrosViewModel
     private lateinit var viewModelAuthor: AutoresViewModel
     private lateinit var viewModelType: TypesViewModel
     private lateinit var mService: ApiService
+    private lateinit var adapter : LibrosAdapter
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        fBinding = FragmentLibroBinding.inflate(layoutInflater)
-        val adapter = LibrosAdapter()
+        _binding = FragmentLibroBinding.inflate(inflater, container, false)
+        adapter = LibrosAdapter()
         val ran: IntRange = 0..254
         val recycleView = fBinding.RcvLibro
         recycleView.adapter = adapter
@@ -76,11 +81,13 @@ class FragmentLibro : Fragment() {
         { libro ->
             adapter.setData(libro)
         })
+
         //Agregar el menu
+        setHasOptionsMenu(true)
+
         // searchByID(2)
-
-
         mService = Common.retrofitService
+
         return fBinding.root
     }
 
@@ -335,6 +342,37 @@ class FragmentLibro : Fragment() {
         alerta.setMessage("¿Esta seguro de eliminar los registros?")
         alerta.create().show()
     }*/
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
+    {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_search, menu)
+
+        val search = menu.findItem(R.id.menu_search2)
+        val searchView = search.actionView as SearchView
+        searchView.isSubmitButtonEnabled = true
+        searchView.setOnQueryTextListener(this)
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return true
+    }
+
+    override fun onQueryTextChange(query: String?): Boolean {
+        if(query != null){
+            searchDatabase(query)
+        }
+        return true
+    }
+    private fun searchDatabase(query: String) {
+        val searchQuery = "%$query%"
+        viewModel = (activity as MainActivity).viewModel
+        viewModel.searchDatabase(searchQuery).observe(this, { list ->
+
+            adapter.setData(list)
+
+        })
+    }
 }
 
 

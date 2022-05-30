@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +23,7 @@ import com.example.libraryapproom.bd.viewmodel.EstudiantesViewModel
 import com.example.libraryapproom.bd.viewmodel.LibrosViewModel
 import com.example.libraryapproom.bd.viewmodel.PrestamoViewModel
 import com.example.libraryapproom.databinding.FragmentPrestamoBinding
+import com.example.libraryapproom.fragments.adapter.LibrosAdapter
 import com.example.libraryapproom.fragments.adapter.PrestamosAdapter
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
@@ -32,8 +34,9 @@ import okhttp3.Request
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class FragmentPrestamo : Fragment() {
-    lateinit var vBinding: FragmentPrestamoBinding
+class FragmentPrestamo : Fragment(), SearchView.OnQueryTextListener {
+    private var _binding: FragmentPrestamoBinding? = null
+    private val vBinding get() = _binding!!
 
     private lateinit var viewModel: PrestamoViewModel
 
@@ -41,14 +44,16 @@ class FragmentPrestamo : Fragment() {
 
     private lateinit var mService: ApiService
 
+    private lateinit var adapter : PrestamosAdapter
+
     override fun onCreateView(
 
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        vBinding = FragmentPrestamoBinding.inflate(inflater,container,false)
+        _binding = FragmentPrestamoBinding.inflate(inflater,container,false)
 
-        val adapter = PrestamosAdapter()
+        adapter = PrestamosAdapter()
         val recycleView = vBinding.RcvPrestamos
 
         recycleView.adapter = adapter
@@ -212,6 +217,37 @@ class FragmentPrestamo : Fragment() {
         alerta.setTitle("Eliminando todos los registro")
         alerta.setMessage("¿Esta seguro de eliminar los registros?")
         alerta.create().show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
+    {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_search, menu)
+
+        val search = menu.findItem(R.id.menu_search2)
+        val searchView = search.actionView as SearchView
+        searchView.isSubmitButtonEnabled = true
+        searchView.setOnQueryTextListener(this)
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return true
+    }
+
+    override fun onQueryTextChange(query: String?): Boolean {
+        if(query != null){
+            searchDatabase(query)
+        }
+        return true
+    }
+    private fun searchDatabase(query: String) {
+        val searchQuery = "%$query%"
+        viewModel = (activity as MainActivity).viewModelP
+        viewModel.searchDatabase(searchQuery).observe(this, { list ->
+
+            adapter.setData(list)
+
+        })
     }
 
 }

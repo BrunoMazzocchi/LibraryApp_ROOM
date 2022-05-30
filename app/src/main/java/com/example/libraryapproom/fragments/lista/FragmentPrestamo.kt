@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.libraryapproom.MainActivity
 import com.example.libraryapproom.R
 import com.example.libraryapproom.api.ApiService
 import com.example.libraryapproom.api.dataClass.Borrow
@@ -64,6 +65,12 @@ class FragmentPrestamo : Fragment() {
         mService = Common.retrofitService
 
         return vBinding.root
+    }
+
+    //Cambiando Titulos de action bar
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as MainActivity).supportActionBar?.title = "Prestamos"
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

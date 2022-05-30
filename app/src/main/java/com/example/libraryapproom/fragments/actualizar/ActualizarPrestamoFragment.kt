@@ -3,6 +3,7 @@ package com.example.libraryapproom.fragments.actualizar
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.libraryapproom.MainActivity
 import com.example.libraryapproom.R
 import com.example.libraryapproom.api.ApiService
 import com.example.libraryapproom.api.network.Common
@@ -47,7 +49,8 @@ class ActualizarPrestamoFragment : Fragment() {
 
         var v: Int = 10
 
-        initSpinner(requireContext())
+        initSpinnerEst(requireContext())
+        initSpinnerLibro(requireContext())
         with(uBinding){
             mService = Common.retrofitService
             TxtFechaRetiro.setText(args.currentPrestamo.taken_date)
@@ -61,18 +64,21 @@ class ActualizarPrestamoFragment : Fragment() {
         return uBinding.root
     }
 
-    private fun initSpinner(context: Context){
+    //Cambiando Titulos de action bar
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as MainActivity).supportActionBar?.title = "Actualizar Prestamos"
+    }
+
+    private fun initSpinnerEst(context: Context){
         val db: MainBaseDatos = MainBaseDatos.getDataBase(context)
         val daoEst: EstudiantesDao = db.estudiantesDao()
-        val daoLib: LibrosDao = db.librosDao()
 
         //Arraylist para los spinners
         var arrayEst: ArrayList<String> = arrayListOf("Estudiantes...")
-        var arrayLib: ArrayList<String> = arrayListOf("Libros...")
 
         CoroutineScope(Dispatchers.Main).launch {
             var listaEst: List<EstudiantesEntity> = daoEst.getAllStudents()
-            var listaLibro: List<LibrosModels> = daoLib.getAll()
 
             //Lenan spinners
 
@@ -80,16 +86,61 @@ class ActualizarPrestamoFragment : Fragment() {
                 arrayEst.add(it.name)
             }
 
+            var listView = uBinding.spEstudiante
+
+            var arrayAdapter1 = activity?.let {
+                ArrayAdapter(it, R.layout.spinner_item, arrayEst)
+            }
+            listView.adapter = arrayAdapter1
+
+            //Espera de 0.5s para realizar el setSelection
+
+            Handler().postDelayed({
+                var id = args.currentPrestamo.student_id
+
+
+                if (id != null) {
+                    listView.setSelection(id)
+                }
+            }, 500)
+
+        }
+    }
+    private fun initSpinnerLibro(context: Context){
+        val db: MainBaseDatos = MainBaseDatos.getDataBase(context)
+        val daoLib: LibrosDao = db.librosDao()
+
+        //Arraylist para los spinners
+        var arrayLib: ArrayList<String> = arrayListOf("Libros...")
+
+        CoroutineScope(Dispatchers.Main).launch {
+            var listaLibro: List<LibrosModels> = daoLib.getAll()
+
+            //Lenan spinners
+
             listaLibro.forEach{
                 arrayLib.add(it.nombreLibro)
             }
+
+            var listView = uBinding.spLibro
+
+            var arrayAdapter1 = activity?.let {
+                ArrayAdapter(it, R.layout.spinner_item, arrayLib)
+            }
+            listView.adapter = arrayAdapter1
+
+            //Espera de 0.5s para realizar el setSelection
+
+            Handler().postDelayed({
+                var id = args.currentPrestamo.book_id
+
+
+                if (id != null) {
+                    listView.setSelection(id)
+                }
+            }, 500)
+
         }
-
-        val  adapterEst: ArrayAdapter<String> = ArrayAdapter<String>(context, R.layout.spinner_item, arrayEst)
-        uBinding.spEstudiante.adapter = adapterEst
-
-        val adapterLib: ArrayAdapter<String> = ArrayAdapter<String>(context, R.layout.spinner_item, arrayLib)
-        uBinding.spLibro.adapter = adapterLib
     }
 
     private fun guardarCambios() {
@@ -113,7 +164,6 @@ class ActualizarPrestamoFragment : Fragment() {
                 mService.editBorrow(requestBody)
 
         }
-
         //Crea Objeto
         val prestamo =
             PrestamosEntity(id, est, libro, fechaR, fechaE)

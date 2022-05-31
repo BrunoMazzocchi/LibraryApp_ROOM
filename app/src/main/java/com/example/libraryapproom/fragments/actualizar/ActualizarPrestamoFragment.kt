@@ -67,7 +67,7 @@ class ActualizarPrestamoFragment : Fragment() {
     //Cambiando Titulos de action bar
     override fun onResume() {
         super.onResume()
-        (requireActivity() as MainActivity).supportActionBar?.title = "Actualizar Prestamos"
+        (requireActivity() as MainActivity).supportActionBar?.title = "Actualizar prestamo"
     }
 
     private fun initSpinnerEst(context: Context){

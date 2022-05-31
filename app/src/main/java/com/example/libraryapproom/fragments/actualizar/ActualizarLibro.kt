@@ -236,7 +236,7 @@ class ActualizarLibro : Fragment() {
     //Cambiando Titulos de action bar
     override fun onResume() {
         super.onResume()
-        (requireActivity() as MainActivity).supportActionBar?.title = "Actualizar Libros"
+        (requireActivity() as MainActivity).supportActionBar?.title = "Actualizar libro"
     }
 }
 

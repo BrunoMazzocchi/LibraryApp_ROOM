@@ -6,9 +6,10 @@
         <item name="colorPrimaryVariant">#1F1B24</item>
         <item name="colorOnPrimary">#FFFFFF</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">#f86e30</item>
+        <item name="colorSecondary">#332940</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/white</item>
+        <item name="cardBackgroundColor">@color/black</item>
         <item name="backgroundColor">#1F1B24</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>

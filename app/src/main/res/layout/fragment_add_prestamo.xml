@@ -7,6 +7,18 @@
     tools:context=".fragments.agregar.AddPrestamoFragment"
     android:background="?attr/backgroundColor">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="30dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_rawRes="@raw/personread"/>
+
     <Spinner
         android:id="@+id/spEstudiante"
         android:layout_width="320dp"
@@ -35,7 +47,7 @@
         android:drawableStart="@drawable/ic_date_24"
         android:hint="Fecha de Retiro"
         android:textAlignment="center"
-        android:inputType="text"
+        android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -48,7 +60,7 @@
         android:drawableStart="@drawable/ic_date_24"
         android:hint="Fecha de Entrega"
         android:textAlignment="center"
-        android:inputType="text"
+        android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

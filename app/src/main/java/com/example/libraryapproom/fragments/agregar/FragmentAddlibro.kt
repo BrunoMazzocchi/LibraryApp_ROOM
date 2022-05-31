@@ -283,7 +283,7 @@ class FragmentAddlibro: Fragment() {
     //Cambiando Titulos de action bar
     override fun onResume() {
         super.onResume()
-        (requireActivity() as MainActivity).supportActionBar?.title = "Agregar"
+        (requireActivity() as MainActivity).supportActionBar?.title = "Agregar libro"
     }
 
 

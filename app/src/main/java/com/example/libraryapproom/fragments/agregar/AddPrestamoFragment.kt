@@ -62,7 +62,7 @@ class AddPrestamoFragment : Fragment() {
     //Cambiando Titulos de action bar
     override fun onResume() {
         super.onResume()
-        (requireActivity() as MainActivity).supportActionBar?.title = "Agregar Prestamos"
+        (requireActivity() as MainActivity).supportActionBar?.title = "Nuevo prestamo"
     }
 
     private fun initSpinner(context: Context){
@@ -100,8 +100,8 @@ class AddPrestamoFragment : Fragment() {
 
         var studentID = aBinding.spEstudiante.selectedItemPosition.toString().toInt()
         var bookID = aBinding.spLibro.selectedItemPosition.toString().toInt()
-        var fechaR = aBinding.TxtFechaRetiro.text.toString()
-        var fechaE = aBinding.TxtFechaEntrega.text.toString()
+        var fechaR = aBinding.TxtFechaRetiro.text.toString().replace('/', '-')
+        var fechaE = aBinding.TxtFechaEntrega.text.toString().replace('/', '-')
         var id: Int = 0
 
         val jsonObject = JSONObject()

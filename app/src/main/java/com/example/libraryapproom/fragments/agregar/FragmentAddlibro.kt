@@ -3,9 +3,7 @@ package com.example.libraryapproom.fragments.agregar
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -44,9 +42,15 @@ class FragmentAddlibro: Fragment() {
 // Inflate the layout for this fragment
         fBinding = FragmentAddlibroBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this).get(LibrosViewModel::class.java)
-        checkInternet()
+
         fBinding.btnGuardar.setOnClickListener {
             guardarRegistroOffline()
+
+        }
+
+        fBinding.BtnUpdate.setOnClickListener {
+            checkInternet()
+            findNavController().navigate(R.id.ir_a_listalibro)
 
         }
 
@@ -138,7 +142,7 @@ class FragmentAddlibro: Fragment() {
 
             var book = LibrosModels(0, nombre, Paginas, authorID, typeID, 100)
 
-           // viewModel.agregarLibro(book)
+            // viewModel.agregarLibro(book)
         }
 
 
@@ -150,13 +154,27 @@ class FragmentAddlibro: Fragment() {
 
         findNavController().navigate(R.id.ir_a_listalibro)
     }
-
     fun checkInternet(){
+
+        var flag: Boolean = true
 
         val networkConnection = NetworkConnection(requireContext())
         networkConnection.observe(viewLifecycleOwner) { isConnected ->
-            if (isConnected) {
 
+
+
+            if (!isConnected) {
+
+                // Show No internet connection message
+                Toast.makeText(
+                    requireContext(),
+                    "No hay internet o no hay que actualizar",
+                    Toast.LENGTH_LONG
+                ).show()
+
+            }
+            else {
+                fBinding.BtnUpdate.setVisibility(View.VISIBLE);
                 val db: MainBaseDatos = MainBaseDatos.getDataBase(requireContext().applicationContext)
                 val daoB: LibrosDao = db.librosDao()
 
@@ -201,18 +219,19 @@ class FragmentAddlibro: Fragment() {
                     }
                 }
 
-                }
-            else {
-                // Show No internet connection message
-                Toast.makeText(
-                    requireContext(),
-                    "No internet connection",
-                    Toast.LENGTH_LONG
-                ).show()
             }
 
         }
     }
+
+    override fun onCreateOptionsMenu(
+        menu: Menu, inflater:
+        MenuInflater
+    ) {
+        inflater.inflate(R.menu.update_menu, menu)
+    }
+
+
 
 
     private fun guardarRegistroOffline() {
@@ -264,7 +283,7 @@ class FragmentAddlibro: Fragment() {
     //Cambiando Titulos de action bar
     override fun onResume() {
         super.onResume()
-        (requireActivity() as MainActivity).supportActionBar?.title = "Agregar libros"
+        (requireActivity() as MainActivity).supportActionBar?.title = "Agregar"
     }
 
 
